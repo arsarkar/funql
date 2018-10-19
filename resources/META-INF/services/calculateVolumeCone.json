@@ -1,0 +1,74 @@
+{
+    "serviceProfile": {
+      "serviceName": "calculateVolumeCone1",
+      "serviceCategory": "ConicSection",
+      "textDescription": "Calculate the Volume of a Cone from its diameter and height",
+      "contactInformation": [
+        "Arkopaul Sarkar"
+      ],
+      "prefixNSMapping": [
+        {
+          "prefix": "ivoao",
+          "nameSpace": "http://www.astro.umd.edu/~eshaya/astro-onto/owl/IVOAO.owl#"
+        },
+        {
+          "prefix": "geom",
+          "nameSpace": "http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl#"
+        }
+      ],
+      "actor": {
+        "actorType": "java-method",
+        "source": "edu.ohiou.mfgresearch.functions.ConicSection",
+        "endPoint": "calculateVolume"
+      },
+      "input": [
+        {
+          "parameter": "height",
+          "parameterType": "geom:height"
+        },
+        {
+          "parameter": "diameter",
+          "parameterType": "geom:diameter"
+        }
+      ],
+      "output": {
+        "parameter": "volume",
+        "parameterType": "geom:volume"
+      },
+      "result": null
+    },
+    "serviceGrounding": {
+      "inputGrounding": [
+        {
+          "parameter": "height",
+          "grounding": [
+            {
+              "dataProperty": "ivoao:hasValue",
+              "dataType": "xsd:double",
+              "arg": 1
+            }
+          ]
+        },
+        {
+          "parameter": "diameter",
+          "grounding": [
+            {
+              "arg": 2,
+              "dataProperty": "ivoao:hasValue",
+              "dataType": "xsd:double"
+            }
+          ]
+        }
+      ],
+      "outputGrounding": {
+        "parameter": "volume",
+        "grounding": [
+          {
+            "arg": 1,
+            "dataProperty": "ivoao:hasVolume",
+            "dataType": "xsd:double"
+          }
+        ]
+      }
+    }
+  }

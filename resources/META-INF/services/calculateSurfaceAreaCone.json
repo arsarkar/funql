@@ -1,0 +1,70 @@
+{
+    "serviceProfile": {
+      "serviceName": "calculateSurfaceAreaCone1",
+      "serviceCategory": "ConicSection",
+      "textDescription": "Calculate the Surface Area of a Cone from its diameter and height",
+      "contactInformation": [
+        "Arkopaul Sarkar"
+      ],
+      "prefixNSMapping": [
+        {
+          "prefix": "ivoao",
+          "nameSpace": "http://www.astro.umd.edu/~eshaya/astro-onto/owl/IVOAO.owl#"
+        }
+      ],
+      "actor": {
+        "actorType": "java-method",
+        "source": "edu.ohiou.mfgresearch.service.endpoint.ConicSection",
+        "endPoint": "getSurfaceArea"
+      },
+      "input": [
+        {
+          "parameter": "height",
+          "parameterType": "ivoao:height"
+        },
+        {
+          "parameter": "diameter",
+          "parameterType": "ivoao:diameter"
+        }
+      ],
+      "output": {
+        "parameter": "surfaceArea",
+        "parameterType": "ivoao:SurfaceArea"
+      },
+      "result": null
+    },
+    "serviceGrounding": {
+      "inputGrounding": [
+        {
+          "parameter": "height",
+          "grounding": [
+            {
+              "dataProperty": "ivoao:hasValue",
+              "dataType": "xsd:double",
+              "arg": 1
+            }
+          ]
+        },
+        {
+          "parameter": "diameter",
+          "grounding": [
+            {
+              "arg": 2,
+              "dataProperty": "ivoao:hasValue",
+              "dataType": "xsd:double"
+            }
+          ]
+        }
+      ],
+      "outputGrounding": {
+        "parameter": "surfaceArea",
+        "grounding": [
+          {
+            "arg": 1,
+            "dataProperty": "ivoao:hasValue",
+            "dataType": "xsd:double"
+          }
+        ]
+      }
+    }
+  }

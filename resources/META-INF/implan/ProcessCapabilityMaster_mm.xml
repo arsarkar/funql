@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProcessRelation>
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#TwistDrilling</iri>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Boring</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#PrecisionBoring</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.0625" iri="http://www.ohio.edu/ontologies/IMPML#SmallestToolDiameter"/>
+		<Parameter largestToolDiameter="2.0000" iri="http://www.ohio.edu/ontologies/IMPML#LargestToolDiameter"/>
+		<Parameter negativeTolerance="(* 0.007(sqrt ?dia ) )" iri="http://www.ohio.edu/ontologies/IMPML#NegativeTolerance"/>
+		<Parameter positiveTolerance="(+ (* 0.007(sqrt ?dia) ) 0.003)" iri="http://www.ohio.edu/ontologies/IMPML#PositiveTolerance"/>
+		<Parameter straightness="(+ (* 0.005(** (/ ?depth ?dia) 3)) 0.002)" iri="http://www.ohio.edu/ontologies/IMPML#StraightNess"/>
+		<Parameter roundness="0.004" iri="http://www.ohio.edu/ontologies/IMPML#Roundness"/>
+		<Parameter parallelism="(+ (* (** (/ ?depth ?dia) 3) 0.001) 0.003)" iri="http://www.ohio.edu/ontologies/IMPML#Parallelism"/>
+		<Parameter depthLimit="(* 12 ?dia)" iri="http://www.ohio.edu/ontologies/IMPML#DepthLimit"/>
+		<Parameter truePosition="0.008" iri="http://www.ohio.edu/ontologies/IMPML#TruePosition"/>
+		<Parameter surfaceFinish="100" iri="http://www.ohio.edu/ontologies/IMPML#SurfaceFinish"/>
+	</process>
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#EndDrilling</iri>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Boring</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#PrecisionBoring</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.1250" iri="http://www.ohio.edu/ontologies/IMPML#SmallestToolDiameter"/>
+		<Parameter largestToolDiameter="1.0000" iri="http://www.ohio.edu/ontologies/IMPML#LargestToolDiameter"/>
+		<Parameter negativeTolerance="0.0010" iri="http://www.ohio.edu/ontologies/IMPML#NegativeTolerance"/>
+		<Parameter positiveTolerance="0.0010" iri="http://www.ohio.edu/ontologies/IMPML#PositiveTolerance"/>
+		<Parameter straightness="0.0025" iri="http://www.ohio.edu/ontologies/IMPML#StraightNess"/>
+		<Parameter roundness="0.004" iri="http://www.ohio.edu/ontologies/IMPML#Roundness"/>
+		<Parameter parallelism="0.0035" iri="http://www.ohio.edu/ontologies/IMPML#Parallelism"/>
+		<Parameter depthLimit="(* 2 ?dia)" iri="http://www.ohio.edu/ontologies/IMPML#DepthLimit"/>
+		<Parameter truePosition="0.008" iri="http://www.ohio.edu/ontologies/IMPML#TruePosition"/>
+		<Parameter surfaceFinish="63" iri="http://www.ohio.edu/ontologies/IMPML#SurfaceFinish"/>
+	</process>
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#Boring</iri>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#HoleGrinding</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Honing</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.375" iri="http://www.ohio.edu/ontologies/IMPML#SmallestToolDiameter"/>
+		<Parameter largestToolDiameter="10.000" iri="http://www.ohio.edu/ontologies/IMPML#LargestToolDiameter"/>
+		<Parameter negativeTolerance="0.0003" iri="http://www.ohio.edu/ontologies/IMPML#NegativeTolerance"/>
+		<Parameter positiveTolerance="0.0003" iri="http://www.ohio.edu/ontologies/IMPML#PositiveTolerance"/>
+		<Parameter straightness="0.0005" iri="http://www.ohio.edu/ontologies/IMPML#StraightNess"/>
+		<Parameter roundness="0.0005" iri="http://www.ohio.edu/ontologies/IMPML#Roundness"/>
+		<Parameter parallelism="0.0010" iri="http://www.ohio.edu/ontologies/IMPML#Parallelism"/>
+		<Parameter depthLimit="(* 9 ?dia)" iri="http://www.ohio.edu/ontologies/IMPML#DepthLimit"/>
+		<Parameter truePosition="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#TruePosition"/>
+		<Parameter surfaceFinish="8" iri="http://www.ohio.edu/ontologies/IMPML#SurfaceFinish"/>
+	</process>
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#SpadeDrilling</iri>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Boring</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#PrecisionBoring</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.7500" iri="http://www.ohio.edu/ontologies/IMPML#SmallestToolDiameter"/>
+		<Parameter largestToolDiameter=" 4.0000" iri="http://www.ohio.edu/ontologies/IMPML#LargestToolDiameter"/>
+		<Parameter negativeTolerance="(+ (* 0.004 (sqrt ?dia ) ) 0.0025)" iri="http://www.ohio.edu/ontologies/IMPML#NegativeTolerance"/>
+		<Parameter positiveTolerance="(+ (* 0.005 (sqrt ?dia) ) 0.003)" iri="http://www.ohio.edu/ontologies/IMPML#PositiveTolerance"/>
+		<Parameter straightness="(+ (* 0.0003 (** (/ ?depth ?dia) 3)) 0.002)" iri="http://www.ohio.edu/ontologies/IMPML#StraightNess"/>
+		<Parameter roundness="0.004" iri="http://www.ohio.edu/ontologies/IMPML#Roundness"/>
+		<Parameter parallelism="(+ (* 0.006 (** (/ ?depth ?dia) 3)) 0.003)" iri="http://www.ohio.edu/ontologies/IMPML#Parallelism"/>
+		<Parameter depthLimit="(* 4 ?dia)" iri="http://www.ohio.edu/ontologies/IMPML#DepthLimit"/>
+		<Parameter truePosition="0.008" iri="http://www.ohio.edu/ontologies/IMPML#TruePosition"/>
+		<Parameter surfaceFinish="100" iri="http://www.ohio.edu/ontologies/IMPML#SurfaceFinish"/>
+	</process>
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#PrecisionBoring</iri>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#HoleGrinding</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Honing</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.3750" iri="http://www.ohio.edu/ontologies/IMPML#SmallestToolDiameter"/>
+		<Parameter largestToolDiameter="10.000" iri="http://www.ohio.edu/ontologies/IMPML#LargestToolDiameter"/>
+		<Parameter negativeTolerance="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#NegativeTolerance"/>
+		<Parameter positiveTolerance="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#PositiveTolerance"/>
+		<Parameter straightness="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#StraightNess"/>
+		<Parameter roundness="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#Roundness"/>
+		<Parameter parallelism="0.0035" iri="http://www.ohio.edu/ontologies/IMPML#Parallelism"/>
+		<Parameter depthLimit="(* 9 ?dia)" iri="http://www.ohio.edu/ontologies/IMPML#DepthLimit"/>
+		<Parameter truePosition="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#TruePosition"/>
+		<Parameter surfaceFinish="8" iri="http://www.ohio.edu/ontologies/IMPML#SurfaceFinish"/>
+	</process>
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#Reaming</iri>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#HoleGrinding</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#Honing</precedes>
+		<Parameter smallestToolDiameter= "0.0625" iri="http://www.ohio.edu/ontologies/IMPML#SmallestToolDiameter"/>
+		<Parameter largestToolDiameter=" 4.0000" iri="http://www.ohio.edu/ontologies/IMPML#LargestToolDiameter"/>
+		<Parameter negativeTolerance="0.0004" iri="http://www.ohio.edu/ontologies/IMPML#NegativeTolerance"/>
+		<Parameter positiveTolerance="0.0004" iri="http://www.ohio.edu/ontologies/IMPML#PositiveTolerance"/>
+		<Parameter straightness="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#StraightNess"/>
+		<Parameter roundness="0.0005" iri="http://www.ohio.edu/ontologies/IMPML#Roundness"/>
+		<Parameter parallelism="0.01" iri="http://www.ohio.edu/ontologies/IMPML#Parallelism"/>
+		<Parameter depthLimit="(* 16 ?dia)" iri="http://www.ohio.edu/ontologies/IMPML#DepthLimit"/>
+		<Parameter truePosition="0.01" iri="http://www.ohio.edu/ontologies/IMPML#TruePosition"/>
+		<Parameter surfaceFinish="16" iri="http://www.ohio.edu/ontologies/IMPML#SurfaceFinish"/>
+	</process>
+
+	<!--<http://www.ohio.edu/ontologies/IMPML#GunDrilling>
+		<Parameter smallestToolDiameter= "0.0750"/>
+		<Parameter largestToolDiameter="2.0000"/>
+		<Parameter negativeTolerance="0.0024"/>
+		<Parameter positiveTolerance="0.0029"/>
+		<Parameter straightness="(+ (* 0.0003 (** (/ ?depth ?dia) 3)) 0.001)" />
+		<Parameter roundness="0.002"/>
+		<Parameter parallelism="(+ (* 0.001 (** (/ ?depth ?dia) 3)) 0.003)" />
+		<Parameter depthLimit="(* 40 ?dia)"/>
+		<Parameter truePosition="0.002"/>
+		<Parameter surfaceFinish="30"/>
+	</http://www.ohio.edu/ontologies/IMPML#GunDrilling>
+	-->
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#Honing</iri>
+		<Parameter negativeTolerance="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#NegativeTolerance"/>
+		<Parameter positiveTolerance="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#PositiveTolerance"/>
+		<Parameter surfaceFinish="2"/>
+	</process>
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#HoleGrinding</iri>
+		<Parameter negativeTolerance="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#NegativeTolerance"/>
+		<Parameter positiveTolerance="0.0001" iri="http://www.ohio.edu/ontologies/IMPML#PositiveTolerance"/>
+		<Parameter surfaceFinish="4"/>
+	</process>
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#CenterDrilling</iri>
+	    <precedes>http://www.ohio.edu/ontologies/IMPML#EndDrilling</precedes>
+		<!--<precedes>http://www.ohio.edu/ontologies/IMPML#GunDrilling</precedes> -->
+		<precedes>http://www.ohio.edu/ontologies/IMPML#SpadeDrilling</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#TwistDrilling</precedes>
+	</process>
+
+	<process>
+		<iri>http://www.ohio.edu/ontologies/IMPML#SpotDrilling</iri>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#EndDrilling</precedes>
+		<!--<precedes>http://www.ohio.edu/ontologies/IMPML#GunDrilling</precedes> -->
+		<precedes>http://www.ohio.edu/ontologies/IMPML#SpadeDrilling</precedes>
+		<precedes>http://www.ohio.edu/ontologies/IMPML#TwistDrilling</precedes>
+		<Parameter truePosition="0.000154" iri="http://www.ohio.edu/ontologies/IMPML#TruePosition"/>
+       
+ 	</process>
+
+
+</ProcessRelation>

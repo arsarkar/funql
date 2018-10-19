@@ -1,0 +1,1581 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<MfgPartModel partName="ANC101-with-slabs-V4" partMaterial="CarbonSteel" batchSize="50">
+    <Stock>edu.ohiou.mfgresearch.implanner.geometry.Stock needs to implement writeXML() method</Stock>
+    <featureList>
+                <edu.ohiou.mfgresearch.implanner.features.Slab  featureName="RECTANGULAR_POCKET(14)">
+                        <Dimensions PocketPoint = '198 70 111'        bottomDistance = '-90.0'        Normal = '0.5 0 0.866'/>
+<nextFeature name = "SIMPLE HOLE(37)">
+</nextFeature>
+<previousFeature name = "GENERAL_POCKET(17)">
+</previousFeature>
+<Tolerances>
+</Tolerances>
+        <processList>          
+		<edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(14)" processingTime ="8.836994991997933">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(14)" processingTime ="6.226639501404947">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(14)" processingTime ="4.441739361900728">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(14)" processingTime ="4.020497779483596">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.SlabMilling procName="slab-milling-RECTANGULAR_POCKET(14)" processingTime ="0.2181661564992912">
+              <Tool Name="T802" FluteLength="0.0" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SlabMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(14)" processingTime ="6.954527082110697">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(14)" processingTime ="7.2146314210093045">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slab>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="GENERAL_POCKET(23)">
+                        <Dimensions PocketPoint = '126 123 76'        bottomDistance = '-7.0'        Normal = '0 -1 0'/>
+<previousFeature name = "RECTANGULAR_POCKET(8)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.5"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(23)" processingTime ="6.920450397329041">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(23)" processingTime ="5.8553290603527985">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(23)" processingTime ="6.602605551166675">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(23)" processingTime ="5.296235073113285">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(23)" processingTime ="3.368589595581903">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(23)" processingTime ="6.6395602385692385">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Slab  featureName="RECTANGULAR_POCKET(5)">
+                        <Dimensions PocketPoint = '136 0 68'        bottomDistance = '-1.0'        Normal = '0 -1 0'/>
+<nextFeature name = "RECTANGULAR_SLOT(48)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(8)">
+</nextFeature>
+<nextFeature name = "GENERAL_POCKET(42)">
+</nextFeature>
+<Tolerances>
+<Parameter perpendicularity="0.01"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(5)" processingTime ="5.222618455893212">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(5)" processingTime ="5.067934005490791">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(5)" processingTime ="5.213343924346351">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(5)" processingTime ="8.727899556095768">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.SlabMilling procName="slab-milling-RECTANGULAR_POCKET(5)" processingTime ="0.2181661564992912">
+              <Tool Name="T802" FluteLength="0.0" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SlabMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(5)" processingTime ="7.279229161696681">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(5)" processingTime ="8.518363343992103">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slab>
+                <edu.ohiou.mfgresearch.implanner.features.Slab  featureName="RECTANGULAR_POCKET(4)">
+                        <Dimensions PocketPoint = '136 132 69'        bottomDistance = '-1.0'        Normal = '0 1 0'/>
+<nextFeature name = "RECTANGULAR_POCKET(7)">
+</nextFeature>
+<Tolerances>
+<Parameter profile="0.5"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(4)" processingTime ="6.110544527443305">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(4)" processingTime ="8.986730097945536">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(4)" processingTime ="4.307724715155192">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(4)" processingTime ="3.836901718624082">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.SlabMilling procName="slab-milling-RECTANGULAR_POCKET(4)" processingTime ="0.2181661564992912">
+              <Tool Name="T802" FluteLength="0.0" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SlabMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(4)" processingTime ="6.466767977612241">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(4)" processingTime ="6.820458519076878">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slab>
+                <edu.ohiou.mfgresearch.implanner.features.Slab  featureName="RECTANGULAR_POCKET(3)">
+                        <Dimensions PocketPoint = '0 65 68'        bottomDistance = '-1.0'        Normal = '-1 0 0'/>
+<nextFeature name = "RECTANGULAR_POCKET(9)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_SLOT(48)">
+</nextFeature>
+<Tolerances>
+<Parameter perpendicularity="0.1"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(3)" processingTime ="4.759122802511242">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(3)" processingTime ="5.247606078086439">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(3)" processingTime ="6.500376974679627">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(3)" processingTime ="6.469026848600475">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.SlabMilling procName="slab-milling-RECTANGULAR_POCKET(3)" processingTime ="0.2181661564992912">
+              <Tool Name="T802" FluteLength="0.0" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SlabMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(3)" processingTime ="6.492095969986899">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(3)" processingTime ="6.613544921007949">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slab>
+                <edu.ohiou.mfgresearch.implanner.features.Slot  featureName="RECTANGULAR_SLOT(53)">
+                         <Dimensions slotPoint = '276 106 15.5'        normal = '1 0 0'        sweep = '0 1 0'        width = '6.0'        bottomDist = '-1.0'        positiveSweepLength = '10.0'        negativeSweepLength = '10.0'/>
+<nextFeature name = "GENERAL_POCKET(50)">
+</nextFeature>
+<previousFeature name = "RECTANGULAR_POCKET(2)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.501"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(53)" processingTime ="3.4161452453189423">
+              <Tool Name="T615" FluteLength="10.0" Material="Carbide" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(53)" processingTime ="8.008164464429477">
+              <Tool Name="T215" FluteLength="10.0" Material="Hss" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(53)" processingTime ="20.258285960648465">
+              <Tool Name="T216" FluteLength="10.0" Material="Hss" Diameter="5.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(53)" processingTime ="6.0713215751306615">
+              <Tool Name="T615" FluteLength="10.0" Material="Carbide" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(53)" processingTime ="2.8361600344907854">
+              <Tool Name="T616" FluteLength="2.0" Material="Carbide" Diameter="5.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(53)" processingTime ="8.164010017548563">
+              <Tool Name="T215" FluteLength="10.0" Material="Hss" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(53)" processingTime ="5.047409228440386">
+              <Tool Name="T215" FluteLength="10.0" Material="Hss" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(53)" processingTime ="20.258285960648465">
+              <Tool Name="T216" FluteLength="10.0" Material="Hss" Diameter="5.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(53)" processingTime ="6.310134169375818">
+              <Tool Name="T615" FluteLength="10.0" Material="Carbide" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(53)" processingTime ="6.779910839554277">
+              <Tool Name="T615" FluteLength="10.0" Material="Carbide" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(53)" processingTime ="2.8361600344907854">
+              <Tool Name="T616" FluteLength="2.0" Material="Carbide" Diameter="5.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slot>
+                <edu.ohiou.mfgresearch.implanner.features.Slot  featureName="RECTANGULAR_SLOT(54)">
+                         <Dimensions slotPoint = '276 26 15.5'        normal = '1 0 0'        sweep = '0 1 0'        width = '6.0'        bottomDist = '-1.0'        positiveSweepLength = '10.0'        negativeSweepLength = '10.0'/>
+<nextFeature name = "GENERAL_POCKET(51)">
+</nextFeature>
+<previousFeature name = "RECTANGULAR_POCKET(2)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.501"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(54)" processingTime ="6.2420038671744305">
+              <Tool Name="T615" FluteLength="10.0" Material="Carbide" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(54)" processingTime ="6.536488458439395">
+              <Tool Name="T215" FluteLength="10.0" Material="Hss" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(54)" processingTime ="20.258285960648465">
+              <Tool Name="T216" FluteLength="10.0" Material="Hss" Diameter="5.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(54)" processingTime ="6.986394199665666">
+              <Tool Name="T615" FluteLength="10.0" Material="Carbide" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(54)" processingTime ="2.8361600344907854">
+              <Tool Name="T616" FluteLength="2.0" Material="Carbide" Diameter="5.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(54)" processingTime ="7.439116372596214">
+              <Tool Name="T215" FluteLength="10.0" Material="Hss" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(54)" processingTime ="8.451826656376065">
+              <Tool Name="T215" FluteLength="10.0" Material="Hss" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(54)" processingTime ="20.258285960648465">
+              <Tool Name="T216" FluteLength="10.0" Material="Hss" Diameter="5.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(54)" processingTime ="8.27840764172527">
+              <Tool Name="T615" FluteLength="10.0" Material="Carbide" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(54)" processingTime ="5.0347723369122654">
+              <Tool Name="T615" FluteLength="10.0" Material="Carbide" Diameter="6.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(54)" processingTime ="2.8361600344907854">
+              <Tool Name="T616" FluteLength="2.0" Material="Carbide" Diameter="5.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slot>
+                <edu.ohiou.mfgresearch.implanner.features.Slab  featureName="RECTANGULAR_POCKET(2)">
+                        <Dimensions PocketPoint = '277 65 73'        bottomDistance = '-1.0'        Normal = '1 0 0'/>
+<nextFeature name = "RECTANGULAR_SLOT(53)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_SLOT(54)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(20)">
+</nextFeature>
+<nextFeature name = "GENERAL_POCKET(51)">
+</nextFeature>
+<nextFeature name = "GENERAL_POCKET(50)">
+</nextFeature>
+<Tolerances>
+<Parameter profile="0.5"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(2)" processingTime ="6.7515684771558435">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(2)" processingTime ="7.0065051777473855">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(2)" processingTime ="8.44475789663074">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(2)" processingTime ="7.55241816709541">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.SlabMilling procName="slab-milling-RECTANGULAR_POCKET(2)" processingTime ="0.2181661564992912">
+              <Tool Name="T802" FluteLength="0.0" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SlabMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(2)" processingTime ="4.9448315022150755">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(2)" processingTime ="5.432230549627258">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slab>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="RECTANGULAR_POCKET(9)">
+                        <Dimensions PocketPoint = '1 66 104'        bottomDistance = '-50.0'        Normal = '-1 0 0'/>
+<previousFeature name = "RECTANGULAR_POCKET(3)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(47)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(46)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(45)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(44)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.5"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(9)" processingTime ="3.9338241509615703">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(9)" processingTime ="6.451973518122167">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(9)" processingTime ="5.990124018481412">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(9)" processingTime ="6.08189036814762">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(9)" processingTime ="7.559908338869839">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(9)" processingTime ="4.632071164456293">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="RECTANGULAR_POCKET(20)">
+                        <Dimensions PocketPoint = '276 66 69'        bottomDistance = '-45.0'        Normal = '1 0 0'/>
+<previousFeature name = "RECTANGULAR_POCKET(2)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(47)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(46)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(45)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(44)">
+</previousFeature>
+<Tolerances>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(20)" processingTime ="5.606589921731652">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(20)" processingTime ="6.1422062903806935">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(20)" processingTime ="8.699071368276929">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(20)" processingTime ="7.504444629219563">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(20)" processingTime ="6.63455512385395">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(20)" processingTime ="7.988906487880313">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(56)">
+                                <Dimensions        radius = '32.5'        holeAxis = '-0 -0 -1'        axisPoint = '101 66 7'        bottomDistance = '-7.0'/>
+<nextFeature name = "SIMPLE HOLE(26)">
+</nextFeature>
+<previousFeature name = "SIMPLE HOLE(55)">
+</previousFeature>
+<Tolerances>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(56)" processingTime ="5.450314968032852">
+              <Tool Name="T502" FluteLength="0.25" Material="Carbide" Diameter="65.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implannner.features.Slot  featureName="RECTANGULAR_SLOT(48)">
+                         <Dimensions slotPoint = '1 28.5 19.25'        normal = '-1 0 0'        sweep = '0 -1 0'        width = '12.5'        bottomDist = '-1.0'        positiveSweepLength = '37.5'        negativeSweepLength = '37.5'/>
+<previousFeature name = "RECTANGULAR_POCKET(5)">
+</previousFeature>
+<previousFeature name = "RECTANGULAR_POCKET(3)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(48)" processingTime ="7.168604748285015">
+              <Tool Name="T217" FluteLength="10.0" Material="Hss" Diameter="12.5">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(48)" processingTime ="6.171752966219738">
+              <Tool Name="T217" FluteLength="10.0" Material="Hss" Diameter="12.5">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(48)" processingTime ="40.51657192129693">
+              <Tool Name="T218" FluteLength="10.0" Material="Hss" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(48)" processingTime ="5.851788139976672">
+              <Tool Name="T217" FluteLength="10.0" Material="Hss" Diameter="12.5">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting procName="end-milling-slotting-RECTANGULAR_SLOT(48)" processingTime ="4.650520764855282">
+              <Tool Name="T217" FluteLength="10.0" Material="Hss" Diameter="12.5">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingSlotting>
+          <edu.ohiou.mfgresearch.implanner.processes.SideMilling procName="side-milling-RECTANGULAR_SLOT(48)" processingTime ="40.51657192129693">
+              <Tool Name="T218" FluteLength="10.0" Material="Hss" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SideMilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slot>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="RECTANGULAR_POCKET(7)">
+                        <Dimensions PocketPoint = '139 131 104'        bottomDistance = '-8.0'        Normal = '0 1 0'/>
+<previousFeature name = "RECTANGULAR_POCKET(4)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(47)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(46)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(45)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(44)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.5"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(7)" processingTime ="6.851206938037421">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(7)" processingTime ="8.114546681738815">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(7)" processingTime ="8.796443045932396">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(7)" processingTime ="7.798263737669142">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(7)" processingTime ="4.4909110443781515">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(7)" processingTime ="4.431722985260137">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(55)">
+                                <Dimensions        radius = '25.0'        holeAxis = '-0 -0 1'        axisPoint = '101 66 103'        bottomDistance = '-102.0'/>
+<nextFeature name = "SIMPLE HOLE(56)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(25)">
+</nextFeature>
+<Tolerances>
+<Parameter truePosition="0.05"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(55)" processingTime ="4.011843382580723">
+              <Tool Name="T503" FluteLength="1.0" Material="Carbide" Diameter="50.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="GENERAL_POCKET(51)">
+                        <Dimensions PocketPoint = '276 51 26'        bottomDistance = '-7.0'        Normal = '1 0 0'/>
+<previousFeature name = "RECTANGULAR_SLOT(54)">
+</previousFeature>
+<previousFeature name = "RECTANGULAR_POCKET(2)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.501"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(51)" processingTime ="8.095908034290693">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(51)" processingTime ="8.550699999388307">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(51)" processingTime ="6.621482730109633">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(51)" processingTime ="8.312907019751512">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(51)" processingTime ="6.411196112512887">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(51)" processingTime ="8.27830333110009">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="GENERAL_POCKET(50)">
+                        <Dimensions PocketPoint = '276 78 24'        bottomDistance = '-7.0'        Normal = '1 0 0'/>
+<previousFeature name = "RECTANGULAR_SLOT(53)">
+</previousFeature>
+<previousFeature name = "RECTANGULAR_POCKET(2)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.501"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(50)" processingTime ="7.362794471297169">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(50)" processingTime ="3.6245833449034377">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(50)" processingTime ="5.9888368103558385">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(50)" processingTime ="6.711536283878875">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(50)" processingTime ="3.3703302936704413">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(50)" processingTime ="8.008919363374964">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="RECTANGULAR_POCKET(8)">
+                        <Dimensions PocketPoint = '139 1 104'        bottomDistance = '-15.0'        Normal = '0 -1 0'/>
+<nextFeature name = "GENERAL_POCKET(23)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(40)">
+</nextFeature>
+<previousFeature name = "RECTANGULAR_POCKET(5)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(47)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(46)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(45)">
+</previousFeature>
+<previousFeature name = "SIMPLE HOLE(44)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.5"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(8)" processingTime ="5.209392305174679">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(8)" processingTime ="3.7390420917055955">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(8)" processingTime ="7.897744289209365">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(8)" processingTime ="3.528993554447985">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(8)" processingTime ="6.597065766873001">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(8)" processingTime ="4.478094939300602">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(47)">
+                                <Dimensions        radius = '6.5'        holeAxis = '-0 -0 1'        axisPoint = '20 21 39'        bottomDistance = 'NaN'/>
+<nextFeature name = "RECTANGULAR_POCKET(9)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(20)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(7)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(8)">
+</nextFeature>
+<previousFeature name = "RECTANGULAR_POCKET(6)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.2"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(47)" processingTime ="3.207105936959225">
+              <Tool Name="T504" FluteLength="1.0" Material="Carbide" Diameter="13.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Slab  featureName="RECTANGULAR_POCKET(21)">
+                        <Dimensions PocketPoint = '101 63 141'        bottomDistance = '-25.0'        Normal = '0 0 1'/>
+<nextFeature name = "SIMPLE HOLE(25)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(36)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(35)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(34)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(33)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(32)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(31)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(30)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(29)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(28)">
+</nextFeature>
+<Tolerances>
+<Parameter profile="0.5"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(21)" processingTime ="7.913522353488674">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(21)" processingTime ="4.6197839487366075">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(21)" processingTime ="5.119793108428922">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(21)" processingTime ="5.632844755144982">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.SlabMilling procName="slab-milling-RECTANGULAR_POCKET(21)" processingTime ="0.2181661564992912">
+              <Tool Name="T802" FluteLength="0.0" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SlabMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(21)" processingTime ="6.593366217160476">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(21)" processingTime ="8.604267815412733">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                
+		</edu.ohiou.mfgresearch.implanner.features.Slab>
+                <edu.ohiou.mfgresearch.implanner.features.Slab  featureName="RECTANGULAR_POCKET(6)">
+                        <Dimensions PocketPoint = '141 74 0'        bottomDistance = '-1.0'        Normal = '0 0 -1'/>
+<nextFeature name = "SIMPLE HOLE(47)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(46)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(45)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(26)">
+</nextFeature>
+<nextFeature name = "SIMPLE HOLE(44)">
+</nextFeature>
+<Tolerances>
+<Parameter flatness="0.05"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(6)" processingTime ="8.21814243081516">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(6)" processingTime ="4.616609239594143">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(6)" processingTime ="5.226086776920027">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(6)" processingTime ="4.3055818923150415">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.SlabMilling procName="slab-milling-RECTANGULAR_POCKET(6)" processingTime ="0.2181661564992912">
+              <Tool Name="T802" FluteLength="0.0" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.SlabMilling>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(6)" processingTime ="4.163206696838303">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-RECTANGULAR_POCKET(6)" processingTime ="4.274991202837733">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Slab>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(46)">
+                                <Dimensions        radius = '6.5'        holeAxis = '-0 -0 1'        axisPoint = '20 111 39'        bottomDistance = 'NaN'/>
+<nextFeature name = "RECTANGULAR_POCKET(9)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(20)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(7)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(8)">
+</nextFeature>
+<previousFeature name = "RECTANGULAR_POCKET(6)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.2"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(46)" processingTime ="8.30712626433709">
+              <Tool Name="T504" FluteLength="1.0" Material="Carbide" Diameter="13.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="GENERAL_POCKET(17)">
+                        <Dimensions PocketPoint = '150 70 138'        bottomDistance = '-25.0'        Normal = '0.5 0 0.866'/>
+<nextFeature name = "RECTANGULAR_POCKET(14)">
+</nextFeature>
+<Tolerances>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(17)" processingTime ="6.32494781431601">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(17)" processingTime ="5.279665950958261">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(17)" processingTime ="7.68511385957712">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(17)" processingTime ="4.886102710409165">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(17)" processingTime ="7.6614062595184995">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(17)" processingTime ="3.6308037144346033">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="GENERAL_POCKET(19)">
+                        <Dimensions PocketPoint = '150 16 138'        bottomDistance = '-25.0'        Normal = '0.5 0 0.866'/>
+<Tolerances>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(19)" processingTime ="4.133626936087186">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(19)" processingTime ="3.764136250726855">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(19)" processingTime ="6.21220763887555">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(19)" processingTime ="7.1841092679301966">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(19)" processingTime ="8.072700972061398">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(19)" processingTime ="5.84304499722635">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(45)">
+                                <Dimensions        radius = '6.5'        holeAxis = '-0 -0 1'        axisPoint = '255 111 39'        bottomDistance = 'NaN'/>
+<nextFeature name = "RECTANGULAR_POCKET(9)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(20)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(7)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(8)">
+</nextFeature>
+<previousFeature name = "RECTANGULAR_POCKET(6)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.2"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(45)" processingTime ="7.003607809626091">
+              <Tool Name="T504" FluteLength="1.0" Material="Carbide" Diameter="13.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(26)">
+                                <Dimensions        radius = '37.5'        holeAxis = '-0 -0 -1'        axisPoint = '101 66 1'        bottomDistance = '-6.0'/>
+<previousFeature name = "SIMPLE HOLE(56)">
+</previousFeature>
+<previousFeature name = "RECTANGULAR_POCKET(6)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(26)" processingTime ="5.50835703966155">
+              <Tool Name="T501" FluteLength="1.7" Material="Carbide" Diameter="75.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(25)">
+                                <Dimensions        radius = '32.5'        holeAxis = '-0 -0 1'        axisPoint = '101 66 116'        bottomDistance = '-13.0'/>
+<previousFeature name = "SIMPLE HOLE(55)">
+</previousFeature>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.12"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(25)" processingTime ="3.462157786764524">
+              <Tool Name="T502" FluteLength="0.25" Material="Carbide" Diameter="65.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(44)">
+                                <Dimensions        radius = '6.5'        holeAxis = '-0 -0 1'        axisPoint = '255 21 39'        bottomDistance = 'NaN'/>
+<nextFeature name = "RECTANGULAR_POCKET(9)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(20)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(7)">
+</nextFeature>
+<nextFeature name = "RECTANGULAR_POCKET(8)">
+</nextFeature>
+<previousFeature name = "RECTANGULAR_POCKET(6)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.2"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(44)" processingTime ="4.52966817973665">
+              <Tool Name="T504" FluteLength="1.0" Material="Carbide" Diameter="13.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="GENERAL_POCKET(42)">
+                        <Dimensions PocketPoint = '161 1 27'        bottomDistance = '-3.0'        Normal = '0 -1 0'/>
+<previousFeature name = "RECTANGULAR_POCKET(5)">
+</previousFeature>
+<Tolerances>
+<Parameter profile="0.2"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(42)" processingTime ="7.338045160282511">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(42)" processingTime ="7.623196500865511">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(42)" processingTime ="6.5499243636897315">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(42)" processingTime ="6.2684990043227575">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(42)" processingTime ="7.885466713233788">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(42)" processingTime ="5.010955362300442">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(40)">
+                                <Dimensions        radius = '6.5'        holeAxis = '-0 -1 -0'        axisPoint = '171 16 64.5'        bottomDistance = '-20.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(8)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.2501"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(40)" processingTime ="5.953539668766415">
+              <Tool Name="T504" FluteLength="1.0" Material="Carbide" Diameter="13.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Pocket  featureName="GENERAL_POCKET(39)">
+                        <Dimensions PocketPoint = '51 92 63'        bottomDistance = '-6.0'        Normal = '1 0 0'/>
+<Tolerances>
+<Parameter profile="0.2"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(39)" processingTime ="4.383229996368935">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(39)" processingTime ="8.025874954994134">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(39)" processingTime ="6.126533535253548">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(39)" processingTime ="5.153494249787451">
+              <Tool Name="T304" FluteLength="51.0" Material="Hss" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(39)" processingTime ="6.452734680041965">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+          <edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral procName="end-milling-peripheral-GENERAL_POCKET(39)" processingTime ="8.466956575199958">
+              <Tool Name="T704" FluteLength="51.0" Material="Carbide" Diameter="2.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.EndMillingPeripheral>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Pocket>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(37)">
+                                <Dimensions        radius = '12.5'        holeAxis = '0.5 0 0.866'        axisPoint = '196.791077 69.5 112.10393'        bottomDistance = '-75.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(14)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(37)" processingTime ="7.004937310864485">
+              <Tool Name="T506" FluteLength="1.455" Material="Carbide" Diameter="25.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(36)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '121.5 101.507042 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(36)" processingTime ="3.1947294250279192">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(35)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '121.5 30.30691 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(35)" processingTime ="8.42943415324653">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(34)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '101 25 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(34)" processingTime ="6.31495787327385">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(33)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '80.5 30.492958 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(33)" processingTime ="3.7671715390221903">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(32)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '65.492958 45.5 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(32)" processingTime ="4.515666278197674">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(31)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '60 66 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(31)" processingTime ="7.627916060701455">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(30)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '65.492958 86.5 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(30)" processingTime ="7.3687624541429795">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(29)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '80.5 101.507042 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(29)" processingTime ="4.963883786145748">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+                <edu.ohiou.mfgresearch.implanner.features.Hole  featureName="SIMPLE HOLE(28)">
+                                <Dimensions        radius = '5.0'        holeAxis = '-0 -0 1'        axisPoint = '101 107 116'        bottomDistance = '-15.0'/>
+<previousFeature name = "RECTANGULAR_POCKET(21)">
+</previousFeature>
+<Tolerances>
+<Parameter truePosition="0.25"/>
+</Tolerances>
+        <processList>          <edu.ohiou.mfgresearch.implanner.processes.TwistDrilling procName="drilling-SIMPLE HOLE(28)" processingTime ="4.384685621371465">
+              <Tool Name="T505" FluteLength="1.455" Material="Carbide" Diameter="10.0">
+                  <InitPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <CurrPosition X="10.0" Y="10.0" Z="10.0"/>
+                  <Normal X="0.0" Y="1.0" Z="0.0"/>
+              </Tool>
+          </edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+        </processList>                </edu.ohiou.mfgresearch.implanner.features.Hole>
+    </featureList>
+</MfgPartModel>

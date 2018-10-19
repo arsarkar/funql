@@ -1,0 +1,76 @@
+{
+		    "serviceProfile": {
+		      "serviceName": "Name of the Service",
+		      "textDescription":"Long description of the service",
+		      "actor":{
+		        
+		      },
+		      "input":[
+		          {
+		            "parameter": 1,
+		            "type": "classURI"
+		          },
+		          {
+		            "parameter": 2,
+		            "type": "classURI"
+		          }
+		        ],
+		      "output":
+		          {
+		            "type": "classURI"
+		          },
+		       "result":[
+		       		"propertyURI",
+		       		"proeprtyURI"	
+		       ]
+		    },
+		    "serviceGrounding":{
+		      "inputGrounding":[
+		          {
+		            "parameter": 1,
+		            "grounding":[
+		              {
+		              	"arg":1,
+		                "dataProperty": "propertyURI",
+		                "dataType": "xsd:string"
+		              },
+		              {
+		              	"arg":2,
+		                "dataProperty": "propertyURI",
+		                "dataType": "xsd:string"
+		              }
+		            ]
+		          },
+		          {
+		            "parameter": 2,
+		            "grounding":[
+		              {
+		              	"arg":3,
+		                "dataProperty": "propertyURI",
+		                "dataType": "xsd:string"
+		              },
+		              {
+		              	"arg":4,
+		                "dataProperty": "propertyURI",
+		                "dataType": "xsd:string"
+		              }
+		            ]
+		          }
+		        ],
+		      "outputGrounding":
+		          {
+		            "grounding":[
+		              {
+		              	"arg":1,
+		                "dataProperty": "anURI",
+		                "dataType": "xsd:string"
+		              },
+		              {
+		              	"arg":2,
+		                "dataProperty": "anURI",
+		                "dataType": "xsd:string"
+		              }
+		            ]
+		          }
+		    }
+		  }

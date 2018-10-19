@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProcessRelation>
+	<edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Boring</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.PrecisionBoring</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.0625" type="MinCapability"/>
+		<Parameter largestToolDiameter="2.0000" type="MaxCapability"/>
+		<Parameter negativeTolerance="(* 0.007(sqrt ?dia ) )" type="MinRuleCapability" dia="Diameter"/>
+		<Parameter positiveTolerance="(+ (* 0.007(sqrt ?dia) ) 0.003)" type="MinRuleCapability" dia="Diameter"/>
+		<Parameter straightness="(+ (* 0.005(** (/ ?depth ?dia) 3)) 0.002)" type="MinRuleCapability" dia="Diameter"/>
+		<Parameter roundness="0.004" type="MinCapability"/>
+		<Parameter parallelism="(+ (* (** (/ ?depth ?dia) 3) 0.001) 0.003)" type="MinRuleCapability" depth="Depth" dia="Diameter"/>
+		<Parameter depthLimit="(* 12 ?dia)" type="MaxRuleCapability" dia="Diameter" canMatch="Depth"/>
+		<Parameter truePosition="0.008" type="MinCapability"/>
+		<Parameter surfaceFinish="100" type="MinCapability"/>
+	</edu.ohiou.mfgresearch.implanner.processes.TwistDrilling>
+
+	<edu.ohiou.mfgresearch.implanner.processes.EndDrilling>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Boring</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.PrecisionBoring</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.1250" type="MinCapability"/>
+		<Parameter largestToolDiameter="1.0000" type="MaxCapability"/>
+		<Parameter negativeTolerance="0.0010" type="MinCapability"/>
+		<Parameter positiveTolerance="0.0010" type="MinCapability"/>
+		<Parameter straightness="0.0025" type="MinCapability"/>
+		<Parameter roundness="0.004" type="MinCapability"/>
+		<Parameter parallelism="0.0035" type="MinCapability"/>
+		<Parameter depthLimit="(* 2 ?dia)" type="MaxRuleCapability" dia="Diameter"/>
+		<Parameter truePosition="0.008" type="MinCapability"/>
+		<Parameter surfaceFinish="63" type="MinCapability"/>
+	</edu.ohiou.mfgresearch.implanner.processes.EndDrilling>
+
+	<edu.ohiou.mfgresearch.implanner.processes.Boring>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.HoleGrinding</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Honing</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.375" type="MinCapability"/>
+		<Parameter largestToolDiameter="10.000" type="MaxCapability"/>
+		<Parameter negativeTolerance="0.0003" type="MinCapability"/>
+		<Parameter positiveTolerance="0.0003" type="MinCapability"/>
+		<Parameter straightness="0.0005" type="MinCapability"/>
+		<Parameter roundness="0.0005" type="MinCapability"/>
+		<Parameter parallelism="0.0010" type="MinCapability"/>
+		<Parameter depthLimit="(* 9 ?dia)" type="MaxRuleCapability" dia="Diameter"/>
+		<Parameter truePosition="0.0001" type="MinCapability"/>
+		<Parameter surfaceFinish="8" type="MinCapability"/>
+	</edu.ohiou.mfgresearch.implanner.processes.Boring>
+
+	<edu.ohiou.mfgresearch.implanner.processes.SpadeDrilling>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Boring</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.PrecisionBoring</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.7500" type="MinCapability"/>
+		<Parameter largestToolDiameter=" 4.0000" type="MaxCapability"/>
+		<Parameter negativeTolerance="(+ (* 0.004 (sqrt ?dia ) ) 0.0025)" type="MinRuleCapability" dia="Diameter"/>
+		<Parameter positiveTolerance="(+ (* 0.005 (sqrt ?dia) ) 0.003)" type="MinRuleCapability" dia="Diameter"/>
+		<Parameter straightness="(+ (* 0.0003 (** (/ ?depth ?dia) 3)) 0.002)" type="MinRuleCapability" depth="Depth" dia="Diameter"//>
+		<Parameter roundness="0.004" type="MaxRuleCapability" dia="Diameter"/>
+		<Parameter parallelism="(+ (* 0.006 (** (/ ?depth ?dia) 3)) 0.003)" type="MinRuleCapability" dia="Depth" depth="Diameter"//>
+		<Parameter depthLimit="(* 4 ?dia)" type="MaxRuleCapability" dia="Diameter"//>
+		<Parameter truePosition="0.008"/>
+		<Parameter surfaceFinish="100"/>
+	</edu.ohiou.mfgresearch.implanner.processes.SpadeDrilling>
+
+	<edu.ohiou.mfgresearch.implanner.processes.PrecisionBoring>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.HoleGrinding</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Honing</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Reaming</precedes>
+		<Parameter smallestToolDiameter= "0.3750" type="MinCapability"/>
+		<Parameter largestToolDiameter="10.000" type="MaxCapability"/>
+		<Parameter negativeTolerance="0.0001" type="MinCapability"/>
+		<Parameter positiveTolerance="0.0001" type="MinCapability"/>
+		<Parameter straightness="0.0001" type="MinCapability"/>
+		<Parameter roundness="0.0001" type="MinCapability"/>
+		<Parameter parallelism="0.0035" type="MinCapability"/>
+		<Parameter depthLimit="(* 9 ?dia)" type="MaxRuleCapability" dia="Diameter"//>
+		<Parameter truePosition="0.0001" type="MinCapability"/>
+		<Parameter surfaceFinish="8" type="MinCapability"/>
+	</edu.ohiou.mfgresearch.implanner.processes.PrecisionBoring>
+
+	<edu.ohiou.mfgresearch.implanner.processes.Reaming>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.HoleGrinding</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.Honing</precedes>
+		<Parameter smallestToolDiameter= "0.0625" type="MinCapability"/>
+		<Parameter largestToolDiameter=" 4.0000" type="MaxCapability"/>
+		<Parameter negativeTolerance="0.0004" type="MinCapability"/>
+		<Parameter positiveTolerance="0.0004" type="MinCapability"/>
+		<Parameter straightness="0.0001" type="MinCapability"/>
+		<Parameter roundness="0.0005" type="MinCapability"/>
+		<Parameter parallelism="0.01" type="MinCapability"/>
+		<Parameter depthLimit="(* 16 ?dia)"  type="MaxRuleCapability" dia="Diameter"/>
+		<Parameter truePosition="0.01" type="MinCapability"/>
+		<Parameter surfaceFinish="16" type="MinCapability"/>
+	</edu.ohiou.mfgresearch.implanner.processes.Reaming>
+
+	<edu.ohiou.mfgresearch.implanner.processes.GunDrilling>
+		<Parameter smallestToolDiameter= "0.0750" type="MinCapability"/>
+		<Parameter largestToolDiameter="2.0000" type="MaxCapability"/>
+		<Parameter negativeTolerance="0.0024" type="MinCapability"/>
+		<Parameter positiveTolerance="0.0029" type="MinCapability"/>
+		<Parameter straightness="(+ (* 0.0003 (** (/ ?depth ?dia) 3)) 0.001)" type="MinRuleCapability" depth="Depth" dia="Diameter"/>
+		<Parameter roundness="0.002" type="MinCapability"/>
+		<Parameter parallelism="(+ (* 0.001 (** (/ ?depth ?dia) 3)) 0.003)" type="MinRuleCapability" depth="Depth" dia="Diameter"/>
+		<Parameter depthLimit="(* 40 ?dia)" type="MaxRuleCapability" dia=Diameter/>
+		<Parameter truePosition="0.002" type="MinCapability"/>
+		<Parameter surfaceFinish="30" type="MinCapability"/>
+	</edu.ohiou.mfgresearch.implanner.processes.GunDrilling>
+
+	<edu.ohiou.mfgresearch.implanner.processes.Honing>
+		<Parameter negativeTolerance="0.0001" type="MinCapability"/>
+		<Parameter positiveTolerance="0.0001" type="MinCapability"/>
+		<Parameter surfaceFinish="2" type="MinCapability"/>
+	</edu.ohiou.mfgresearch.implanner.processes.Honing>
+
+	<edu.ohiou.mfgresearch.implanner.processes.HoleGrinding>
+		<Parameter negativeTolerance="0.0001" type="MinCapability"/>
+		<Parameter positiveTolerance="0.0001" type="MinCapability"/>
+		<Parameter surfaceFinish="4" type="MinCapability"/>
+	</edu.ohiou.mfgresearch.implanner.processes.HoleGrinding>
+
+	<edu.ohiou.mfgresearch.implanner.processes.CenterDrilling>
+	    <precedes>edu.ohiou.mfgresearch.implanner.processes.EndDrilling</precedes>
+		<!--<precedes>edu.ohiou.mfgresearch.implanner.processes.GunDrilling</precedes> -->
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.SpadeDrilling</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.TwistDrilling</precedes>
+	</edu.ohiou.mfgresearch.implanner.processes.CenterDrilling>
+
+	<edu.ohiou.mfgresearch.implanner.processes.SpotDrilling>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.EndDrilling</precedes>
+		<!--<precedes>edu.ohiou.mfgresearch.implanner.processes.GunDrilling</precedes> -->
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.SpadeDrilling</precedes>
+		<precedes>edu.ohiou.mfgresearch.implanner.processes.TwistDrilling</precedes>
+		<Parameter truePosition="0.000154" type="MinCapability"/>
+       
+ </edu.ohiou.mfgresearch.implanner.processes.SpotDrilling>
+
+
+</ProcessRelation>

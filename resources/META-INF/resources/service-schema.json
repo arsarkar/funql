@@ -1,0 +1,395 @@
+{
+  "definitions": {}, 
+  "$schema": "http://json-schema.org/draft-07/schema#", 
+  "$id": "http://example.com/root.json", 
+  "type": "object", 
+  "title": "The Root Schema", 
+  "required": [
+    "service"
+  ], 
+  "properties": {
+    "service": {
+      "$id": "#/properties/service", 
+      "type": "object", 
+      "title": "The Service Schema", 
+      "required": [
+        "serviceProfile", 
+        "serviceGrounding"
+      ], 
+      "properties": {
+        "serviceProfile": {
+          "$id": "#/properties/service/properties/serviceProfile", 
+          "type": "object", 
+          "title": "The Serviceprofile Schema", 
+          "required": [
+            "serviceName", 
+            "actor", 
+            "output"
+          ], 
+          "properties": {
+            "serviceName": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/serviceName", 
+              "type": "string", 
+              "title": "The Servicename Schema", 
+              "default": "", 
+              "examples": [
+                "calculateVolumeCone1"
+              ], 
+              "pattern": "^(.*)$"
+            }, 
+            "serviceCategory": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/serviceCategory", 
+              "type": "string", 
+              "title": "The Servicecategory Schema", 
+              "default": "", 
+              "examples": [
+                "solid-geometry"
+              ], 
+              "pattern": "^(.*)$"
+            }, 
+            "textDescription": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/textDescription", 
+              "type": "string", 
+              "title": "The Textdescription Schema", 
+              "default": "", 
+              "examples": [
+                "Calculate the Volume of a Cone from its diameter and height"
+              ], 
+              "pattern": "^(.*)$"
+            }, 
+            "contactInformation": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/contactInformation", 
+              "type": "array", 
+              "title": "The Contactinformation Schema", 
+              "default": null, 
+              "items": {
+                "$id": "#/properties/service/properties/serviceProfile/properties/contactInformation/items", 
+                "type": "string", 
+                "title": "The Items Schema", 
+                "default": "", 
+                "examples": [
+                  "FunQL", 
+                  "Arko"
+                ], 
+                "pattern": "^(.*)$"
+              }
+            }, 
+            "prefixNSMapping": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/prefixNSMapping", 
+              "type": "array", 
+              "title": "The Prefixnsmapping Schema", 
+              "default": null, 
+              "items": {
+                "$id": "#/properties/service/properties/serviceProfile/properties/prefixNSMapping/items", 
+                "type": "object", 
+                "title": "The Items Schema", 
+                "required": [
+                  "prefix", 
+                  "nameSpace"
+                ], 
+                "properties": {
+                  "prefix": {
+                    "$id": "#/properties/service/properties/serviceProfile/properties/prefixNSMapping/items/properties/prefix", 
+                    "type": "string", 
+                    "title": "The Prefix Schema", 
+                    "default": "", 
+                    "examples": [
+                      "ivoao"
+                    ], 
+                    "pattern": "^(.*)$"
+                  }, 
+                  "nameSpace": {
+                    "$id": "#/properties/service/properties/serviceProfile/properties/prefixNSMapping/items/properties/nameSpace", 
+                    "type": "string", 
+                    "title": "The Namespace Schema", 
+                    "default": "", 
+                    "examples": [
+                      "http://www.astro.umd.edu/~eshaya/astro-onto/owl/IVOAO#"
+                    ], 
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }, 
+            "actor": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/actor", 
+              "type": "object", 
+              "title": "The Actor Schema", 
+              "required": [
+                "actorType", 
+                "source", 
+                "endPoint"
+              ], 
+              "properties": {
+                "actorType": {
+                  "$id": "#/properties/service/properties/serviceProfile/properties/actor/properties/actorType", 
+                  "type": "string", 
+                  "title": "The Actortype Schema", 
+                  "default": "", 
+                  "examples": [
+                    "method"
+                  ], 
+                  "pattern": "^(.*)$"
+                }, 
+                "source": {
+                  "$id": "#/properties/service/properties/serviceProfile/properties/actor/properties/source", 
+                  "type": "string", 
+                  "title": "The Source Schema", 
+                  "default": "", 
+                  "examples": [
+                    ""
+                  ], 
+                  "pattern": "^(.*)$"
+                }, 
+                "endPoint": {
+                  "$id": "#/properties/service/properties/serviceProfile/properties/actor/properties/endPoint", 
+                  "type": "string", 
+                  "title": "The Endpoint Schema", 
+                  "default": "", 
+                  "examples": [
+                    ""
+                  ], 
+                  "pattern": "^(.*)$"
+                }
+              }
+            }, 
+            "input": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/input", 
+              "type": "array", 
+              "title": "The Input Schema", 
+              "default": null, 
+              "items": {
+                "$id": "#/properties/service/properties/serviceProfile/properties/input/items", 
+                "type": "object", 
+                "title": "The Items Schema", 
+                "required": [
+                  "parameter", 
+                  "parameterType"
+                ], 
+                "properties": {
+                  "parameter": {
+                    "$id": "#/properties/service/properties/serviceProfile/properties/input/items/properties/parameter", 
+                    "type": "string", 
+                    "title": "The Parameter Schema", 
+                    "default": "", 
+                    "examples": [
+                      "heightOfCone"
+                    ], 
+                    "pattern": "^(.*)$"
+                  }, 
+                  "parameterType": {
+                    "$id": "#/properties/service/properties/serviceProfile/properties/input/items/properties/parameterType", 
+                    "type": "string", 
+                    "title": "The Parametertype Schema", 
+                    "default": "", 
+                    "examples": [
+                      "ivoao:height"
+                    ], 
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }, 
+            "output": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/output", 
+              "type": "object", 
+              "title": "The Output Schema", 
+              "required": [
+                "parameter", 
+                "parameterType"
+              ], 
+              "properties": {
+                "parameter": {
+                  "$id": "#/properties/service/properties/serviceProfile/properties/output/properties/parameter", 
+                  "type": "string", 
+                  "title": "The Parameter Schema", 
+                  "default": "", 
+                  "examples": [
+                    "volumeOfCone"
+                  ], 
+                  "pattern": "^(.*)$"
+                }, 
+                "parameterType": {
+                  "$id": "#/properties/service/properties/serviceProfile/properties/output/properties/parameterType", 
+                  "type": "string", 
+                  "title": "The Parametertype Schema", 
+                  "default": "", 
+                  "examples": [
+                    "ivoao:Volume"
+                  ], 
+                  "pattern": "^(.*)$"
+                }
+              }
+            }, 
+            "result": {
+              "$id": "#/properties/service/properties/serviceProfile/properties/result", 
+              "type": "array", 
+              "title": "The Result Schema", 
+              "default": null, 
+              "items": {
+                "$id": "#/properties/service/properties/serviceProfile/properties/result/items", 
+                "type": "string", 
+                "title": "The Items Schema", 
+                "default": "", 
+                "examples": [
+                  "ivoao:hasVolume"
+                ], 
+                "pattern": "^(.*)$"
+              }
+            }
+          }
+        }, 
+        "serviceGrounding": {
+          "$id": "#/properties/service/properties/serviceGrounding", 
+          "type": "object", 
+          "title": "The Servicegrounding Schema", 
+          "properties": {
+            "inputGrounding": {
+              "$id": "#/properties/service/properties/serviceGrounding/properties/inputGrounding", 
+              "type": "array", 
+              "title": "The Inputgrounding Schema", 
+              "default": null, 
+              "items": {
+                "$id": "#/properties/service/properties/serviceGrounding/properties/inputGrounding/items", 
+                "type": "object", 
+                "title": "The Items Schema", 
+                "required": [
+                  "parameter", 
+                  "grounding"
+                ], 
+                "properties": {
+                  "parameter": {
+                    "$id": "#/properties/service/properties/serviceGrounding/properties/inputGrounding/items/properties/parameter", 
+                    "type": "string", 
+                    "title": "The Parameter Schema", 
+                    "default": "", 
+                    "examples": [
+                      "heightOfCone"
+                    ], 
+                    "pattern": "^(.*)$"
+                  }, 
+                  "grounding": {
+                    "$id": "#/properties/service/properties/serviceGrounding/properties/inputGrounding/items/properties/grounding", 
+                    "type": "array", 
+                    "title": "The Grounding Schema", 
+                    "items": {
+                      "$id": "#/properties/service/properties/serviceGrounding/properties/inputGrounding/items/properties/grounding/items", 
+                      "type": "object", 
+                      "title": "The Items Schema", 
+                      "required": [
+                        "arg", 
+                        "dataProperty", 
+                        "dataType"
+                      ], 
+                      "properties": {
+                        "arg": {
+                          "$id": "#/properties/service/properties/serviceGrounding/properties/inputGrounding/items/properties/grounding/items/properties/arg", 
+                          "type": "integer", 
+                          "title": "The Arg Schema", 
+                          "default": 0, 
+                          "examples": [
+                            1
+                          ]
+                        }, 
+                        "dataProperty": {
+                          "$id": "#/properties/service/properties/serviceGrounding/properties/inputGrounding/items/properties/grounding/items/properties/dataProperty", 
+                          "type": "string", 
+                          "title": "The Dataproperty Schema", 
+                          "default": "", 
+                          "examples": [
+                            "ivoao:hasValue"
+                          ], 
+                          "pattern": "^(.*)$"
+                        }, 
+                        "dataType": {
+                          "$id": "#/properties/service/properties/serviceGrounding/properties/inputGrounding/items/properties/grounding/items/properties/dataType", 
+                          "type": "string", 
+                          "title": "The Datatype Schema", 
+                          "default": "", 
+                          "examples": [
+                            "xsd:double"
+                          ], 
+                          "pattern": "^(.*)$"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }, 
+            "outputGrounding": {
+              "$id": "#/properties/service/properties/serviceGrounding/properties/outputGrounding", 
+              "type": "object", 
+              "title": "The Outputgrounding Schema", 
+              "required": [
+                "parameter", 
+                "grounding"
+              ], 
+              "properties": {
+                "parameter": {
+                  "$id": "#/properties/service/properties/serviceGrounding/properties/outputGrounding/properties/parameter", 
+                  "type": "string", 
+                  "title": "The Parameter Schema", 
+                  "default": "", 
+                  "examples": [
+                    "volumeOfCone"
+                  ], 
+                  "pattern": "^(.*)$"
+                }, 
+                "grounding": {
+                  "$id": "#/properties/service/properties/serviceGrounding/properties/outputGrounding/properties/grounding", 
+                  "type": "array", 
+                  "title": "The Grounding Schema", 
+                  "items": {
+                    "$id": "#/properties/service/properties/serviceGrounding/properties/outputGrounding/properties/grounding/items", 
+                    "type": "object", 
+                    "title": "The Items Schema", 
+                    "required": [
+                      "arg", 
+                      "dataProperty", 
+                      "dataType"
+                    ], 
+                    "properties": {
+                      "arg": {
+                        "$id": "#/properties/service/properties/serviceGrounding/properties/outputGrounding/properties/grounding/items/properties/arg", 
+                        "type": "integer", 
+                        "title": "The Arg Schema", 
+                        "default": 0, 
+                        "examples": [
+                          1
+                        ]
+                      }, 
+                      "dataProperty": {
+                        "$id": "#/properties/service/properties/serviceGrounding/properties/outputGrounding/properties/grounding/items/properties/dataProperty", 
+                        "type": "string", 
+                        "title": "The Dataproperty Schema", 
+                        "default": "", 
+                        "examples": [
+                          "ivoao:hasValue"
+                        ], 
+                        "pattern": "^(.*)$"
+                      }, 
+                      "dataType": {
+                        "$id": "#/properties/service/properties/serviceGrounding/properties/outputGrounding/properties/grounding/items/properties/dataType", 
+                        "type": "string", 
+                        "title": "The Datatype Schema", 
+                        "default": "", 
+                        "examples": [
+                          "xsd:double"
+                        ], 
+                        "pattern": "^(.*)$"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          "required": [
+            "outputGrounding"
+          ]
+        }
+      }
+    }
+  }
+}
