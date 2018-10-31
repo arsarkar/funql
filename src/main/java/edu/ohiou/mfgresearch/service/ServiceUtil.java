@@ -1,30 +1,14 @@
 package edu.ohiou.mfgresearch.service;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-
-import org.apache.jena.graph.Node;
-import org.apache.jena.graph.Triple;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.sparql.algebra.Table;
-import org.apache.jena.sparql.core.Var;
-import org.apache.jena.sparql.engine.binding.Binding;
 import org.semanticweb.owlapi.model.IRI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.ohiou.mfgresearch.lambda.Omni;
 import edu.ohiou.mfgresearch.lambda.Uni;
-import edu.ohiou.mfgresearch.lambda.functions.Suppl;
 import edu.ohiou.mfgresearch.service.base.Service;
-import jade.util.leap.Collection;
 
 public class ServiceUtil {
 	static Logger log = LoggerFactory.getLogger(ServiceRegistry.class);

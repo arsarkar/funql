@@ -31,7 +31,6 @@ import edu.ohiou.mfgresearch.lambda.Success;
 import edu.ohiou.mfgresearch.lambda.Uni;
 import edu.ohiou.mfgresearch.lambda.functions.Cons;
 import edu.ohiou.mfgresearch.lambda.functions.Pred;
-import nxopen.cam.InspectionCmmCommandBuilder.VarTypes;
 import ru.avicomp.ontapi.OntologyModel;
 
 public class IPlan {

@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>sparkle</name>
+	<name>funql</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -97,29 +97,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.jena</groupId>
-			<artifactId>jena-querybuilder</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.hashids</groupId>
 			<artifactId>hashids</artifactId>
 			<version>1.0.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.jena</groupId>
-			<artifactId>jena-querybuilder</artifactId>
-			<version>3.8.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>Ontology</groupId>
-			<artifactId>OwlAPIConnection</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<groupId>net.sourceforge.owlapi</groupId>
-					<artifactId>owlapi-osgidistribution</artifactId>
-				</exclusion>
-			</exclusions>
+		    <groupId>org.apache.jena</groupId>
+		    <artifactId>jena-querybuilder</artifactId>
+		    <version>3.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -143,6 +128,11 @@
 		    <artifactId>ontapi</artifactId>
 		    <version>1.1.0</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>edu.ohiou.mfgresearch</groupId>
+			<artifactId>LambdaUtil</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

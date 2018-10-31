@@ -81,8 +81,8 @@ public class TestFunQL {
 	public void testB2APlan1() {
 		try {
 			FunQL.main(new String[]
-								{"-query", "C:\\Users\\sarkara1\\git\\sparkle\\resources\\META-INF\\query\\construct-volume-cone2.q", 
-								 "-service", "C:\\Users\\sarkara1\\git\\sparkle\\resources\\META-INF\\services\\calculateVolumeCone.json" ,
+								{"-query", "C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-volume-cone2.q", 
+								 "-service", "C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\services\\calculateVolumeCone.json" ,
 								 "-belief",  "http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl", 
 								 "-knowledge", "C:\\Users\\sarkara1\\git\\SIMPOM\\geometry\\geom-ind1.owl"});
 		} catch (Exception e) {

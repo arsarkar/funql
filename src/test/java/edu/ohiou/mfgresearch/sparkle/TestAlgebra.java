@@ -21,7 +21,6 @@ import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.binding.Binding;
 import org.apache.jena.sparql.engine.binding.BindingFactory;
 import org.apache.jena.sparql.engine.binding.BindingUtils;
-import org.drools.compiler.rule.builder.QueryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
