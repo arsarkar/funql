@@ -1,5 +1,7 @@
 package edu.ohiou.mfgresearch.io;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.sparql.core.BasicPattern;
 import org.apache.jena.sparql.core.Var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +27,7 @@ import edu.ohiou.mfgresearch.lambda.functions.Func;
 import edu.ohiou.mfgresearch.plan.IPlan;
 import edu.ohiou.mfgresearch.service.ServiceFinder;
 import edu.ohiou.mfgresearch.service.ServiceRegistry;
+import edu.ohiou.mfgresearch.service.ServiceUtil;
 import edu.ohiou.mfgresearch.service.base.Actor;
 import edu.ohiou.mfgresearch.service.base.Grounding;
 import edu.ohiou.mfgresearch.service.base.Input;
@@ -155,52 +159,93 @@ public class M {
 			}
 		}
 		//incomplete! need to add input and output, as well as grounding
-		registry.addService(createService(actors[0], actors[1], var, args));
+		registry.addService(createJavaService(actors[0], actors[1], var, args));
 		return this;
 	}
 	
-	private Service createService(String source, String endPoint, String var, String[] args){
+	private Service createJavaService(String source, String endPoint, String var, String[] args) throws Exception{
 		
+		Map<String, String> paramMap	= new HashMap<>();
+		
+		//instantiate the function
+		Method func = ServiceUtil.instantiateJavaService(source, endPoint);
+		if(func==null){
+			throw new Exception("The function is not invocable!");
+		}
+		
+		//collect all the input argument XSD types
+		List<String> argTypes = 
+				Omni.of(func.getParameterTypes())
+					.map(c->c.getName())
+					.toList();
+		if(argTypes.size()!=args.length){
+			throw new Exception("The function does not have equal number of arguents as specified!");
+		}
+		
+		//collect all the input argument XSD types
+		String oArgTypes = 
+				Uni.of(func.getReturnType())
+					.map(c->c.getName())
+					.get();		
+		
+		//collect prefix map from ontology
+		//first from supplied ontology
 		Map<String, String> pmap = belief.getPrefixMap();
 		List<PrefixNSMapping> prefixNSMapping = new LinkedList<>();
 		pmap.forEach((p,n)-> prefixNSMapping.add(Uni.of(PrefixNSMapping::new)
 													.set(pn->pn.setPrefix(p))
 													.set(pn->pn.setNameSpace(n))
-													.get()));
-		
-		Omni.of(args)
-			.set(arg->{
-				Omni.of(plan.getDTypeTriples(plan.getWhereBasicPattern(), Var.alloc(arg), false))
-				;
-			});
-				
-		
+													.get()));		
 		
 		//collect input params
 		List<Input> inputs = new LinkedList<>();
 		IntStream.range(1, args.length)
 			.forEach(i->Uni.of(Input::new)
 							.set(in->in.setParameter("in_param"+i))
-							.set(in->in.setParameterType(getParamType(args[i])))
-							.set(in->inputs.add(in)));
-		
+							.set(in->{
+								String pType = getParamType(plan.getWhereBasicPattern(), args[i]);
+								paramMap.put(args[i], pType);
+								in.setParameterType(pType);
+							})
+							.set(in->inputs.add(in)));		
 		
 		//collects output params
 		Output output =
 		Uni.of(Output::new)
 		   .set(o->o.setParameter("out_param1"))
-		   .set(o->o.setParameterType(getParamType(var)))
+		   .set(o->{
+			   String pType = getParamType(plan.getConstructBasicPattern(), var);
+			   paramMap.put(var, pType);
+			   o.setParameterType(pType);
+		   })
 		   .get();
 		
 		List<InputGrounding> InputGroundings = new LinkedList<>();
 		List<Grounding> grounding = new LinkedList<>();
+		
+		IntStream.range(1, args.length)
+				.forEach(i->Uni.of(Input::new)
+								.set(in->in.setParameter("in_param"+i))
+								.set(in->{
+									String pType = getParamType(plan.getWhereBasicPattern(), args[i]);
+									paramMap.put(args[i], pType);
+									in.setParameterType(pType);
+								})
+								.set(in->inputs.add(in)));	
+//		Uni.of(Grounding::new)
+//		   .set(ig->ig.setArg(1))
+//		   .set(ig->ig.setDataProperty(dataProperty))
+//		   .set(ig->ig.setDataType(dataType));
+		
 		IntStream.range(1, args.length)
 				.forEach(i->Uni.of(InputGrounding::new)
 								.set(in->in.setParameter("in_param"+i))
-								.set(in->in.setGrounding(grounding ))
+								.set(in->in.setGrounding(grounding))
 								.set(in->InputGroundings.add(in)));
 		
 		OutputGrounding outputGrounding = null;
+		
+		
 		//collect servicegrounding
 		ServiceGrounding serviceGrounding =
 		Uni.of(ServiceGrounding::new)
@@ -227,8 +272,11 @@ public class M {
 		   .get();
 	}
 
-	private String getParamType(String var) {
-		return plan.getVarTypes(Var.alloc(var)).get(0);
+	private String getParamType(BasicPattern p, String arg) {
+		//get all triples with dtype property and the arg is as var in object
+		Triple t = plan.getDTypeTriples(p, Var.alloc(arg), false).get(0);
+		//get the type of indi variable of type 
+		return plan.getVarTypes(Var.alloc(t.getSubject())).get(0);
 	}
 	
 }

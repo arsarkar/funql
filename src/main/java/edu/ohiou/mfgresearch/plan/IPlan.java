@@ -53,8 +53,8 @@ public class IPlan {
 	List<Boolean> isKnownVar = new ArrayList<Boolean>(); //true = the var is in the select query thus grounded 
 	Map<Var, List<String>> varTypes = new HashMap<Var, List<String>>();
 	public PlanType type;
-	private BasicPattern constructBP = new BasicPattern();
-	private BasicPattern whereBP = new BasicPattern();
+	private BasicPattern constructBP = null;
+	private BasicPattern whereBP = null;
 	
 	
 	public BasicPattern getConstructBasicPattern() {
@@ -398,9 +398,7 @@ public class IPlan {
 	 * @return
 	 */
 	public String getUnknownVarType() {
-		return Uni.of(getUnknownVar())
-				.fMap(v->Omni.of(varTypes.get(v)))
-				.toList().get(0);
+		return varTypes.get(getUnknownVar()).get(0);
 	}
 	
 	/**

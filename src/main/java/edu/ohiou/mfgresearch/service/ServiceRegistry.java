@@ -52,7 +52,7 @@ public class ServiceRegistry {
 			
 	}
 	
-	private void addJavaFunctionAsService(Service s) {
+	public void addJavaFunctionAsService(Service s) {
 		Uni.of(s.getServiceProfile().getActor())
 		   .map(a->ServiceUtil.instantiateJavaService(a.getSource(), a.getEndPoint()))
 		   .set(m->javaFunctions.put(s.getServiceProfile().getServiceName(), new JavaServiceInvoker(m)))
