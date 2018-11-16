@@ -17,6 +17,7 @@ import edu.ohiou.mfgresearch.belief.Belief;
 import edu.ohiou.mfgresearch.lambda.Omni;
 import edu.ohiou.mfgresearch.lambda.Uni;
 import edu.ohiou.mfgresearch.lambda.functions.Cons;
+import edu.ohiou.mfgresearch.lambda.functions.Func;
 import edu.ohiou.mfgresearch.lambda.functions.Pred;
 import edu.ohiou.mfgresearch.plan.IPlan;
 import edu.ohiou.mfgresearch.plan.IPlanner;
@@ -32,23 +33,44 @@ public class FunQL {
 	
 	static Logger log = LoggerFactory.getLogger(FunQL.class);
 	
-	static List<IPlan> plans = new LinkedList<IPlan>();
-	static ServiceRegistry registry = new ServiceRegistry();
-	static Belief belief = new Belief("RDFXML"); //RDFXML is defaulted as the format but should have provision to set from outside
-	private static Pred<String> isQueryArg = arg->arg.trim().equals("-query");
-	private static Pred<String> isServiceArg = arg->arg.trim().equals("-service");
-	private static Pred<String> isBeliefArg = arg->arg.trim().equals("-belief");
-	private static Pred<String> isKnowledgeArg = arg->arg.trim().equals("-knowledge");
-	public static Cons<String> parseQueryToPlan = qs->plans.add(new IPlan(qs.trim()));
-	public static Cons<String> parseServiceToRegistry = ss->registry.addService(new FileInputStream(ss)); //service string is assumed to be a path, but can also be an url
-	public static Cons<String> parseOntologyToBelief = bs->belief.addTBox(bs.trim()); //is assumed to be from url but can also be from file, may be handled internally by JENA API
-	public static Cons<String> parseKnowledgeToABox = kb->belief.addABox(kb.trim());
+	List<IPlan> plans = new LinkedList<IPlan>();
+	ServiceRegistry registry = new ServiceRegistry();
+	Belief belief = new Belief("RDFXML"); //RDFXML is defaulted as the format but should have provision to set from outside
+	private Pred<String> isQueryArg = arg->arg.trim().equals("-query");
+	private Pred<String> isServiceArg = arg->arg.trim().equals("-service");
+	private Pred<String> isBeliefArg = arg->arg.trim().equals("-belief");
+	private Pred<String> isKnowledgeArg = arg->arg.trim().equals("-knowledge");
+	public Cons<String> parseQueryToPlan = qs->plans.add(new IPlan(qs.trim()));
+	public Cons<String> parseServiceToRegistry = ss->registry.addService(new FileInputStream(ss)); //service string is assumed to be a path, but can also be an url
+	public Cons<String> parseOntologyToBelief = bs->belief.addTBox(bs.trim()); //is assumed to be from url but can also be from file, may be handled internally by JENA API
+	public Cons<String> parseKnowledgeToABox = kb->belief.addABox(kb.trim());	
+	
+//	Func<String, Func<String, Func<String, Func<String, FunQL>>>> q = tbox->{
+//		return abox->{
+//			return body->{
+//				return head->{
+//					FunQL ql = new FunQL();
+//					//add the tbox
+//					ql.parseOntologyToBelief.accept(tbox);
+//					//add the abox
+//					ql.parseKnowledgeToABox.accept(abox);
+//					//add the query
+//					
+//					return ql;
+//				};				
+//			};
+//		};
+//	};
 	
 	public static void main(String[] args) throws Exception {	
 		String currArg = "";
 		log.debug("debug ..");
 		log.trace("trace...");
 		log.info("Starting to parse query.....");
+		
+		//create a new FunQL instance
+		FunQL q = new FunQL();
+		
 		for(int i=0;i<args.length;i++){			
 			//store currentArg
 			if(args[i].startsWith("-") && !currArg.equals(args[i])){
@@ -57,41 +79,41 @@ public class FunQL {
 			}			
 			final String value = args[i];
 			Uni.of(currArg)
-			   .select(isQueryArg, a->log.trace("Parsing query from " + a))	
-			   .select(isQueryArg, a->parseQueryToPlan.accept(value)) //if the current token is after -query
-			   .select(isServiceArg, a->log.trace("Parsing service from " + a))
-			   .select(isServiceArg, a->parseServiceToRegistry.accept(value)) // if the token value is after -service 
-			   .select(isBeliefArg, a->log.trace("Parsing ontology (belief) from " + a))
-			   .select(isBeliefArg, a->parseOntologyToBelief.accept(value)) //if the current token is after -belief	
-			   .select(isKnowledgeArg, a->log.trace("Parsing knowledge from " + a))
-			   .select(isKnowledgeArg, a->parseKnowledgeToABox .accept(value)); //if the current token is after -knowledge	
+			   .select(q.isQueryArg, a->log.trace("Parsing query from " + a))	
+			   .select(q.isQueryArg, a->q.parseQueryToPlan.accept(value)) //if the current token is after -query
+			   .select(q.isServiceArg, a->log.trace("Parsing service from " + a))
+			   .select(q.isServiceArg, a->q.parseServiceToRegistry.accept(value)) // if the token value is after -service 
+			   .select(q.isBeliefArg, a->log.trace("Parsing ontology (belief) from " + a))
+			   .select(q.isBeliefArg, a->q.parseOntologyToBelief.accept(value)) //if the current token is after -belief	
+			   .select(q.isKnowledgeArg, a->log.trace("Parsing knowledge from " + a))
+			   .select(q.isKnowledgeArg, a->q.parseKnowledgeToABox .accept(value)); //if the current token is after -knowledge	
 			
 		}
 		log.info("Parsing completed....");
 		
 		//print parsed query, service, knowledge and belief
-		Omni.of(plans)
+		Omni.of(q.plans)
 			.map(p->p.getQuery().toString(Syntax.defaultQuerySyntax))
 			.set(qs->log.info("Query parsed :: \n"+qs));
 		
-		Omni.of(registry.getServices())
+		Omni.of(q.registry.getServices())
 			.set(p->log.info("Service regisered :"+p));
 		
-		log.info("Belief found : " + belief.gettBox().toString());
-		log.info("Knowledge found : " + belief.getaBox().getNsPrefixURI(""));			
-		execute();
+		log.info("Belief found : " + q.belief.gettBox().toString());
+		log.info("Knowledge found : " + q.belief.getaBox().getNsPrefixURI(""));			
+		execute(q);
 		
 	}
 
-	public static void execute() {
+	public static void execute(FunQL q) {
 		//analyze query and classify
-		Omni.of(plans)
-			.set(p->p.deconstructQuery(belief.gettBox()))
+		Omni.of(q.plans)
+			.set(p->p.deconstructQuery(q.belief.gettBox()))
 			.set(p->log.info("Type of plan is "+p.type.toString()));		
 		
 		Cons<IPlan> executeA1Plan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());
+			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(q.belief.getaBox());
 			//display the result, should come from visualization package
 			Function<Table, String> display = tab->{
 				log.info(tab.toString());
@@ -102,9 +124,9 @@ public class FunQL {
 		
 		Cons<IPlan> executeB1Plan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
+			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(q.belief.getaBox());	
 			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
-			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
+			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(q.belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
 				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
@@ -112,12 +134,12 @@ public class FunQL {
 		}; 
 		
 		Cons<IPlan> executeA2Plan = p->{
-			ServiceFinder finder = new ServiceFinder(p, belief, registry);
+			ServiceFinder finder = new ServiceFinder(p, q.belief, q.registry);
 		};
 		
 		Cons<IPlan> executeB2Plan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
+			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(q.belief.getaBox());	
 //will move to B2A/B plans 
 //			ServiceFinder servieFinder = new ServiceFinder(p, belief, registry);
 //			List<Service> servicesFound = servieFinder.findService();
@@ -128,11 +150,11 @@ public class FunQL {
 			oBind.setArgPos(0);
 			oBind.setParamType(oType);
 			oBind.setVar(p.getUnknownVar());
-			ServiceInvoker invoker = new DefaultIndividualSupplier(oBind, belief.getaBox().getNsPrefixURI(""));
+			ServiceInvoker invoker = new DefaultIndividualSupplier(oBind, q.belief.getaBox().getNsPrefixURI(""));
 			Function<Table, Table> mapUnknownVar = IPlanner.createServiceResultMapper_deafault(invoker);
 			
 			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
-			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
+			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(q.belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
 				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
@@ -142,15 +164,15 @@ public class FunQL {
 		
 		Cons<IPlan> executeB2APlan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
+			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(q.belief.getaBox());	
 			
-			ServiceFinder servieFinder = new ServiceFinder(p, belief, registry);
+			ServiceFinder servieFinder = new ServiceFinder(p, q.belief, q.registry);
 			List<Service> servicesFound = servieFinder.findService();
 			List<ServiceInvoker> serviceInvoker = servieFinder.createServiceInvoker(servicesFound.get(0));
 			Function<Table, Table> mapUnknownVar = IPlanner.createServiceResultMapper(serviceInvoker);
 			
 			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
-			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
+			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(q.belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
 				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
@@ -159,7 +181,7 @@ public class FunQL {
 		};
 		
 		
-		Omni.of(plans)
+		Omni.of(q.plans)
 		//if there is no need to match service then just execute the query and return result
 			.select(p->p.type==IPlan.PlanType.A1, executeA1Plan)
 			.select(p->p.type==IPlan.PlanType.B1, executeB1Plan)	

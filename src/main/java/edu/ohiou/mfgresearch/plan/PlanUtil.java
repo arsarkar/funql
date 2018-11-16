@@ -101,8 +101,9 @@ public final class PlanUtil {
 //							!t.getPredicate().getName().equals("rdf:type"), t->b.addWhere(t));
 						}))
 			.get();
-		//add order by
-		if(q.hasOrderBy()) q.getOrderBy().forEach(sc->builder.addOrderBy(sc));
+		//add group by
+		if(q.hasGroupBy()) 
+			q.getGroupBy().forEachExpr((v, e)->builder.addGroupBy(v, e));
 		return builder.build();
 	}	
 
@@ -196,16 +197,6 @@ public final class PlanUtil {
 	 */
 	public static OntClass getInputType(OntModel m, String URI){
 		return m.getIndividual(URI).getOntClass();
-	}
-	
-	/**
-	 * Get the type of input Individual 
-	 * @param m OntoModel
-	 * @param URI URI of the individual
-	 * @return
-	 */
-	public static List<OWLClass> getInputTypes(Belief b, String URI){
-		return b.getIndividualType(URI);
 	}
 
 

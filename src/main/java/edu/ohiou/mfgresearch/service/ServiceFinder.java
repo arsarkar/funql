@@ -94,6 +94,12 @@ public class ServiceFinder {
 		return inParamBindings.get(matchedServices.indexOf(s));
 	}
 	
+	/**
+	 * Finding a service by matching the input and output types
+	 * this will create input and output param grounding 
+	 * no need to call this function when explicit grounding is provided
+	 * @return
+	 */
 	public List<Service> findService(){
 		
 		findServiceMatchngOutput();
@@ -247,7 +253,7 @@ public class ServiceFinder {
 	
 	/**
 	 * case B2A
-	 * 		bind service to data grounding, bind default individual for indi var
+	 * 	bind service to data grounding, bind default individual for indi var
 	 *	Prepare a ServiceInvoker and return for the current services found 
 	 * @param service
 	 * @return
@@ -261,7 +267,7 @@ public class ServiceFinder {
 		 for(String param:mapping.keySet()){
 			 //find all the datatype tripls from where clause which has the parameter in the subject
 			 Var v = mapping.get(param);
-			 List<Triple> planInPGnds = p.getDTypeTriples(p.getWhereBasicPattern(), v);
+			 List<Triple> planInPGnds = p.getDTypeTriples(p.getWhereBasicPattern(), v, true);
 			 //grounding for the parameter 
 			 Omni.of(service.getServiceGrounding().getInputGrounding())
 				.filter(ig->{
@@ -318,7 +324,7 @@ public class ServiceFinder {
 		//find all the datatype tripls from where clause which has the indi out var in the subject
 		 Var outV = obind.get(oGround.getParameter());
 		 String oURI = ServiceUtil.mapIRI(service, oGround.getGrounding().get(0).getDataProperty()).getIRIString();
-		 List<Triple> planOutPGnds = p.getDTypeTriples(p.getConstructBasicPattern(), outV);
+		 List<Triple> planOutPGnds = p.getDTypeTriples(p.getConstructBasicPattern(), outV, true);
 		 Triple oTriple = planOutPGnds.stream()
 				 					  .filter(t->t.getPredicate().getURI().equals(oURI))
 				 					  .findFirst().get();

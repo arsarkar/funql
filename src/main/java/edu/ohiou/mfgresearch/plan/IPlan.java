@@ -6,30 +6,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.jena.datatypes.RDFDatatype;
-import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Triple;
-import org.apache.jena.ontology.OntClass;
-import org.apache.jena.ontology.OntModel;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.core.BasicPattern;
-import org.apache.jena.sparql.core.Substitute;
 import org.apache.jena.sparql.core.Var;
-import org.apache.jena.sparql.engine.binding.Binding;
-import org.apache.jena.sparql.engine.binding.BindingFactory;
-import org.apache.jena.sparql.graph.GraphFactory;
 import org.semanticweb.owlapi.model.IRI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.ohiou.mfgresearch.lambda.Omni;
-import edu.ohiou.mfgresearch.lambda.Success;
 import edu.ohiou.mfgresearch.lambda.Uni;
-import edu.ohiou.mfgresearch.lambda.functions.Cons;
 import edu.ohiou.mfgresearch.lambda.functions.Pred;
 import ru.avicomp.ontapi.OntologyModel;
 
@@ -66,32 +53,9 @@ public class IPlan {
 	List<Boolean> isKnownVar = new ArrayList<Boolean>(); //true = the var is in the select query thus grounded 
 	Map<Var, List<String>> varTypes = new HashMap<Var, List<String>>();
 	public PlanType type;
-	private BasicPattern constructBP = null;
-	private BasicPattern whereBP = null;
+	private BasicPattern constructBP = new BasicPattern();
+	private BasicPattern whereBP = new BasicPattern();
 	
-	
-	
-//	private Cons<Var> addKnownIndVar = v->{
-//		vars.add(v);
-//		isKnownVar.add(true);
-//		isDataVar.add(false);
-//	};	
-	
-	//assumed the query is of construct type 
-//	Cons<Query> getConstructVars = q->{
-//		vars.addAll(PlanUtil.getConstructVars(q));
-//		Omni.of(PlanUtil.getConstructBasicPattern(q).getList())
-//			.select(t->t.getSubject().isVariable(), t->addKnownIndVar.accept(Var.alloc(t.getSubject())))
-//			.select(t->t.getObject().isVariable(), t->addKnownIndVar.accept(Var.alloc(t.getObject())));
-//	};
-	
-	
-//	Cons<Query> getSelectVars = q->{
-//		Omni.of(q.getResultVars())
-//			.map(vs->Var.alloc(vs))
-//			.set(v->vars.add(v));
-//	};
-//	
 	
 	public BasicPattern getConstructBasicPattern() {
 		if(constructBP==null) constructBP = PlanUtil.getConstructBasicPattern(q);
@@ -110,11 +74,25 @@ public class IPlan {
 	public void add2whereBasicPattern(Triple t) {
 		whereBP.add(t);
 	}
-
-	public IPlan(String url){
-		Uni.of(url)
-		   .map(u->QueryFactory.read(url))
-		   .onFailure(e->log.error(e.getMessage()))
+	
+	public IPlan(){
+	}
+	
+	/**
+	 * Create a new Plan based on the supplied query
+	 * either as file path or url or raw string
+	 * @param q
+	 */
+	public IPlan(String q){
+		Uni.of(q)
+		   .map(u->QueryFactory.read(q)) //first treat the string as a path or url
+		   .onFailure(e->{
+			   log.error(e.getMessage());
+			   this.q = Uni.of(q)
+					   .map(u->QueryFactory.create(q)) //then treat the string as raq query
+					   .onFailure(e1->log.error(e1.getMessage()))
+					   .get();
+		   })
 		   .onSuccess(query->this.q=query);
 	}
 	
@@ -124,8 +102,15 @@ public class IPlan {
 
 	public Query getQuery(){
 		return q;
-	}
+	}	
 	
+	/**
+	 * creates a query from the where and construct clauses 
+	 * with group by
+	 */
+	public void createQuery(){
+		
+	}
 	
 	/**
 	 * Deconstruct query to perform the following tasks
@@ -494,13 +479,41 @@ public class IPlan {
 	
 	/**
 	 * returns the triples which has the variable in the subject 
-	 * and the object is a data variable. 
+	 * and the object is a data variable if isSubject is true. 
 	 * @param v
 	 * @return
 	 */
-	public List<Triple> getDTypeTriples(BasicPattern p, Var v){
+	public List<Triple> getDTypeTriples(BasicPattern p, Var v, boolean isSubject){
 		Pred<Triple> isVarInSubject = t->{
 			return t.getSubject().isVariable() && Var.alloc(t.getSubject()).equals(v);
+		};
+		
+		Pred<Triple> isVarInObject = t->{
+			return t.getObject().isVariable() && Var.alloc(t.getObject()).equals(v);
+		};
+		
+		Pred<Triple> isObjectDVar = t->{
+			return t.getObject().isVariable() && isDataVar.get(vars.indexOf(Var.alloc(t.getObject())));
+		};
+		
+		if(isSubject){
+			return Omni.of(p.getList())
+						.filter(isVarInSubject)
+						.filter(isObjectDVar)
+						.toList();
+		}
+		else{
+			return Omni.of(p.getList())
+					.filter(isVarInObject)
+					.filter(isObjectDVar)
+					.toList();			
+		}
+		
+	}
+	
+	public List<Triple> getDTypeVarTriples(BasicPattern p, Var v, boolean isSubject){
+		Pred<Triple> isVarInObject = t->{
+			return t.getObject().isVariable() && Var.alloc(t.getObject()).equals(v);
 		};
 		
 		Pred<Triple> isObjectDVar = t->{
@@ -509,10 +522,9 @@ public class IPlan {
 		
 		return
 		Omni.of(p.getList())
-			.filter(isVarInSubject)
+			.filter(isVarInObject)
 			.filter(isObjectDVar)
 			.toList();
 	}
-	
 	
 }
