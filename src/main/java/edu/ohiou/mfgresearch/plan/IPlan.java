@@ -1,5 +1,7 @@
 package edu.ohiou.mfgresearch.plan;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -79,22 +81,34 @@ public class IPlan {
 	}
 	
 	/**
-	 * Create a new Plan based on the supplied query
-	 * either as file path or url or raw string
+	 * Create a new Plan based on the supplied query as raw string
 	 * @param q
 	 */
 	public IPlan(String q){
-		Uni.of(q)
-		   .map(u->QueryFactory.read(q)) //first treat the string as a path or url
-		   .onFailure(e->{
-			   log.error(e.getMessage());
-			   this.q = Uni.of(q)
-					   .map(u->QueryFactory.create(q)) //then treat the string as raq query
-					   .onFailure(e1->log.error(e1.getMessage()))
-					   .get();
-		   })
-		   .onSuccess(query->this.q=query);
+		   this.q = 
+				Uni.of(q)
+				   .map(u->QueryFactory.create(q)) //then treat the string as raw query string
+				   .onFailure(e1->log.error(e1.getMessage()))
+				   .get();
 	}
+//	
+//	public IPlan(URI q){
+//		this.q = 
+//		Uni.of(q)
+//		   .map(u->u.toString())
+//		   .map(u->QueryFactory.read(u)) //first treat the string as a url
+//		   .onFailure(e->log.error(e.getMessage()))
+//		   .get();
+//	}
+//	
+//	public IPlan(File q){
+//		this.q = 
+//		Uni.of(q)
+//		   .map(q1->q1.getPath())
+//		   .map(u->QueryFactory.read(u)) //first treat the string as a path 
+//		   .onFailure(e->log.error(e.getMessage()))
+//		   .get();
+//	}
 	
 	public IPlan(Query q){
 		this.q = q;

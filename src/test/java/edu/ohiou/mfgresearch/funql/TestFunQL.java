@@ -1,10 +1,13 @@
 package edu.ohiou.mfgresearch.funql;
 
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 
 import edu.ohiou.mfgresearch.io.FunQL;
+import edu.ohiou.mfgresearch.lambda.Uni;
 
 public class TestFunQL {
 
@@ -90,4 +93,22 @@ public class TestFunQL {
 		}
 	}
 	
+	@Test
+	public void testQueryService() {
+//		Query q = QueryFactory.read("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-volume-cone3.q");
+//		System.out.println(q.toString());
+//		System.out.println(q.getPrefix("conic"));
+		
+		try {
+			Uni.of(FunQL::new).get()
+			 .addTBox("http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl")
+			 .addABox("C:\\Users\\sarkara1\\git\\SIMPOM\\geometry\\geom-ind1.owl")
+			 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-volume-cone2.q",
+					  "?vol", "conic.calculateVolume(?dia, ?ht)")
+			 .execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
