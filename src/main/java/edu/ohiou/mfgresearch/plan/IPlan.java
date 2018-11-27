@@ -87,7 +87,10 @@ public class IPlan {
 	public IPlan(String q){
 		   this.q = 
 				Uni.of(q)
-				   .map(u->QueryFactory.create(q)) //then treat the string as raw query string
+				   .map(u->{
+					   Query query = QueryFactory.create(u);
+					   return query;
+				   }) //then treat the string as raw query string
 				   .onFailure(e1->log.error(e1.getMessage()))
 				   .get();
 	}

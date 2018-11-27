@@ -2,6 +2,7 @@ package edu.ohiou.mfgresearch.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,7 +72,7 @@ public class FunQL {
 	private Pred<String> isServiceArg = arg->arg.trim().equals("-service");
 	private Pred<String> isBeliefArg = arg->arg.trim().equals("-belief");
 	private Pred<String> isKnowledgeArg = arg->arg.trim().equals("-knowledge");
-	public Cons<String> parseQueryToPlan = qs->plans.add(new IPlan(qs.trim()));
+	public Cons<String> parseQueryToPlan = qs->plans.add(new IPlan(parseQueryFromFile(qs.trim())));
 	public Cons<String> parseServiceToRegistry = ss->registry.addService(new FileInputStream(ss)); //service string is assumed to be a path, but can also be an url
 	public Cons<String> parseOntologyToBelief = bs->belief.addTBox(bs.trim()); //is assumed to be from url but can also be from file, may be handled internally by JENA API
 	public Cons<String> parseKnowledgeToABox = kb->belief.addABox(kb.trim());	
@@ -166,10 +167,27 @@ public class FunQL {
 	 * @return
 	 * @throws IOException 
 	 */
-	private String parseQueryFromURL(URL url) throws IOException{
+	private String parseQueryFromURL(String urlString) throws IOException{
 		String contents = "";
 		BufferedReader reader = new BufferedReader(
-		        new InputStreamReader(url.openStream()));
+		        new InputStreamReader(new URL(urlString).openStream()));
+		String inputLine;
+        while ((inputLine = reader.readLine()) != null)
+            contents += inputLine; 
+        reader.close();
+        return contents;
+	}
+	
+	/**
+	 * Utility method to parse content from given url
+	 * @param url
+	 * @return
+	 * @throws IOException 
+	 */
+	private String parseQueryFromFile(String path) throws IOException{
+		String contents = "";
+		BufferedReader reader = new BufferedReader(
+		        new InputStreamReader(new File(path).toURI().toURL().openStream()));
 		String inputLine;
         while ((inputLine = reader.readLine()) != null)
             contents += inputLine; 
@@ -185,7 +203,7 @@ public class FunQL {
 	 * @return
 	 * @throws Exception
 	 */
-	public IPlan addPlan(String query) throws Exception {
+	public FunQL addPlan(String query) throws Exception {
 		if(belief.gettBox()==null){
 			throw new Exception("No Ontology (T-Box) is provided! Please add a T-box first.");
 		}
@@ -194,15 +212,24 @@ public class FunQL {
 		Func<String, String> parseQuery = 
 				q->{
 					//parse url into content
-					String content = 
+					String contentURL = 
 					Uni.of(q)
-						.map(URL::new)
-						.map(url->parseQueryFromURL(url))
-						.onFailure(e->log.warn("Couldn't read the given query from the URL due to \n"+e.getMessage()
-												+"\n will treat the string as raw query!"))
+						.map(q1->parseQueryFromURL(q1))
+						.onFailure(e->{
+							log.warn("The query source is not a web address and may be a file path");
+						})												
+						.get();
+					if(contentURL!=null) return contentURL;
+					//parse filepath into content
+					String contentFile = 
+					Uni.of(q)
+						.map(q1->parseQueryFromFile(q1))
+						.onFailure(e->{
+							log.warn("Couldn't read the given query from the URL due to \n"+e.getMessage()+"\n will treat the string as raw query!");
+						})												
 						.get();
 					//if content is null then it is a raw string 
-			        return content!=null?content:q;
+			        return contentFile!=null?contentFile:q;
 				};	
 				
 		//extract the var from the complete Funtion string 
@@ -225,7 +252,7 @@ public class FunQL {
 		   	  .get();
 	    };
 		
-		return
+		
 		Uni.of(query)
 		   .map(parseQuery)
 		 //check if the content of the query has a function string
@@ -260,6 +287,7 @@ public class FunQL {
 				
 			})
 		   .get();
+		return this;
 	}
 	
 	/**
@@ -271,7 +299,7 @@ public class FunQL {
 	 * @throws Exception
 	 */
 	public IPlan addPlan(String query, String var, String function) throws Exception{
-		IPlan plan = addPlan(query);
+		IPlan plan = new IPlan(query);
 		if(plan==null){
 			throw new Exception("No Plan is found! Please add a plan first");
 		}
