@@ -7,6 +7,7 @@ import org.junit.Test;
 import edu.ohiou.mfgresearch.io.FunQL;
 
 public class TestFunQL {
+	String folder = "C:/Users/sormaz/Documents/GitHub/";
 
 	@Before
 	public void setUp() throws Exception {
@@ -16,7 +17,7 @@ public class TestFunQL {
 	public void testA1PlanNoService1(){
 		try {
 			FunQL.main(new String[]
-					{"-query", "C:\\Users\\sarkara1\\git\\sparkle\\resources\\META-INF\\query\\select-psl-before.q", 
+					{"-query", folder + "funql/resources\\META-INF\\query\\select-psl-before.q", 
 					 "-belief",  "https://raw.githubusercontent.com/arsarkar/SIMPOM/master/psl/psl_ext_2.0.owl", 
 					 "-knowledge", "C:\\Users\\sarkara1\\git\\SIMPOM\\psl\\psl_ind_1.owl"});
 		} catch (Exception e) {
@@ -81,10 +82,23 @@ public class TestFunQL {
 	public void testB2APlan1() {
 		try {
 			FunQL.main(new String[]
-								{"-query", "C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-volume-cone2.q", 
-								 "-service", "C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\services\\calculateVolumeCone.json" ,
+								{"-query", folder + "funql/resources\\META-INF\\query\\construct-volume-cone2.q", 
+								 "-service", folder + "funql/resources\\META-INF\\services\\calculateVolumeCone.json" ,
 								 "-belief",  "http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl", 
-								 "-knowledge", "C:\\Users\\sarkara1\\git\\SIMPOM\\geometry\\geom-ind1.owl"});
+								 "-knowledge", folder + "SIMPOM\\geometry\\geom-ind1.owl"});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void makeCubeFromCone() {
+		try {
+			FunQL.main(new String[]
+								{"-query", folder + "funql/resources\\META-INF\\query\\make-cube-from-cone.q", 
+								 "-service", folder + "funql/resources\\META-INF\\services\\make-cube-from-cone.json" ,
+								 "-belief",  "http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl", 
+								 "-knowledge", folder + "SIMPOM\\geometry\\cube-ind1.owl"});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -322,6 +322,7 @@ public class ServiceFinder {
 		 Triple oTriple = planOutPGnds.stream()
 				 					  .filter(t->t.getPredicate().getURI().equals(oURI))
 				 					  .findFirst().get();
+		 
 		 // if no data type with any of the groundings are not found then add new
 		 if(oTriple==null){
 			 oTriple = createDTypeTriples(oURI, outV);

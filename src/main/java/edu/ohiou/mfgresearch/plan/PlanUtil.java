@@ -34,7 +34,6 @@ import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.Plan;
 import org.apache.jena.sparql.engine.binding.BindingUtils;
 import org.apache.jena.sparql.syntax.Template;
-import org.hamcrest.core.IsInstanceOf;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;

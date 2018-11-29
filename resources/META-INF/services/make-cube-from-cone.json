@@ -1,0 +1,74 @@
+{
+    "serviceProfile": {
+      "serviceName": "makeCube",
+      "serviceCategory": "ConicSection",
+      "textDescription": "Make a Cube for the Cone from its diameter and height",
+      "contactInformation": [
+        "DNS"
+      ],
+      "prefixNSMapping": [
+        {
+          "prefix": "ivoao",
+          "nameSpace": "http://www.astro.umd.edu/~eshaya/astro-onto/owl/IVOAO.owl#"
+        },
+        {
+          "prefix": "geom",
+          "nameSpace": "http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl#"
+        }
+      ],
+      "actor": {
+        "actorType": "java-method",
+        "source": "edu.ohiou.mfgresearch.functions.ConicSection",
+        "endPoint": "makeCube"
+      },
+      "input": [
+        {
+          "parameter": "height",
+          "parameterType": "geom:height"
+        },
+        {
+          "parameter": "diameter",
+          "parameterType": "geom:diameter"
+        }
+      ],
+      "output": {
+        "parameter": "length",
+        "parameterType": "ivoao:length"
+      },
+      "result": null
+    },
+    "serviceGrounding": {
+      "inputGrounding": [
+        {
+          "parameter": "height",
+          "grounding": [
+            {
+              "dataProperty": "ivoao:hasValue",
+              "dataType": "xsd:double",
+              "arg": 1
+            }
+          ]
+        },
+        {
+          "parameter": "diameter",
+          "grounding": [
+            {
+              "arg": 2,
+              "dataProperty": "ivoao:hasValue",
+              "dataType": "xsd:double"
+            }
+          ]
+        }
+      ],
+      "outputGrounding": {
+        "parameter": "length",
+        "grounding": [
+          {
+            "arg": 1,
+            "dataProperty": "ivoao:hasValue",
+            "dataType": "xsd:double"
+          }
+        ]
+      }
+    }
+  }

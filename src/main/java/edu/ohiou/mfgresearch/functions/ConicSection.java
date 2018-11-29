@@ -28,5 +28,9 @@ public class ConicSection {
 	public static double calculateSurfaceArea(double h, double d){
 		return Math.PI*(d/2)*(d/2+Math.pow((h*h+(d/2)*(d/2)), 0.5));
 	}
+	
+	public static double makeCube (double h, double d) {
+		return Math.max(h, d);
+	}
 
 }
