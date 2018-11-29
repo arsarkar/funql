@@ -94,6 +94,12 @@ public class ServiceFinder {
 		return inParamBindings.get(matchedServices.indexOf(s));
 	}
 	
+	/**
+	 * Finding a service by matching the input and output types
+	 * this will create input and output param grounding 
+	 * no need to call this function when explicit grounding is provided
+	 * @return
+	 */
 	public List<Service> findService(){
 		
 		findServiceMatchngOutput();
@@ -121,7 +127,7 @@ public class ServiceFinder {
 		for(String c:oTypes){
 			for(Service s: serviceList){
 				Output out = s.getServiceProfile().getOutput();
-				IRI servOType = ServiceUtil.mapIRI(s, out.getParameterType());
+				IRI servOType = out.getParameterType().contains("http")?IRI.create(out.getParameterType()):ServiceUtil.mapIRI(s, out.getParameterType());
 				if(servOType.equals(IRI.create(c))){
 					if(!matchedServices.contains(s)){
 						matchedServices.add(s);
@@ -182,7 +188,8 @@ public class ServiceFinder {
 					boolean doBreak = false;
 					for(String varType: varTypes){ //need to first check the asserted type and then the inferred type
 						for(Input param:inParams){
-							if(IRI.create(varType).equals(ServiceUtil.mapIRI(serviceList.get(servi), param.getParameterType()))){ //may need to add prefix
+							IRI ipType = param.getParameterType().contains("http")?IRI.create(param.getParameterType()):ServiceUtil.mapIRI(serviceList.get(servi), param.getParameterType());
+							if(IRI.create(varType).equals(ipType)){ //may need to add prefix
 								//if matched store the binding
 								inParamBinding.put(param.getParameter(), v);
 								doBreak = true;
@@ -247,7 +254,7 @@ public class ServiceFinder {
 	
 	/**
 	 * case B2A
-	 * 		bind service to data grounding, bind default individual for indi var
+	 * 	bind service to data grounding, bind default individual for indi var
 	 *	Prepare a ServiceInvoker and return for the current services found 
 	 * @param service
 	 * @return
@@ -259,9 +266,9 @@ public class ServiceFinder {
 		 //repair Input grounding
 		 Map<String, Var> mapping = getInParamBinding(service); //get the param and var mapping
 		 for(String param:mapping.keySet()){
-			 //find all the datatype tripls from where clause which has the parameter in the subject
+			 //find all the datatype triples from where clause which has the parameter in the subject
 			 Var v = mapping.get(param);
-			 List<Triple> planInPGnds = p.getDTypeTriples(p.getWhereBasicPattern(), v);
+			 List<Triple> planInPGnds = p.getDTypeTriples(p.getWhereBasicPattern(), v, true);
 			 //grounding for the parameter 
 			 Omni.of(service.getServiceGrounding().getInputGrounding())
 				.filter(ig->{
@@ -275,7 +282,7 @@ public class ServiceFinder {
 							.set(g->{
 						 		  	
 									//find the triples in the where clause which has the datatype in the grounding as predicate
-									String uri = ServiceUtil.mapIRI(service, g.getDataProperty()).getIRIString();
+									String uri = g.getDataProperty().contains("http")?g.getDataProperty():ServiceUtil.mapIRI(service, g.getDataProperty()).getIRIString();
 									Triple dTypeT = Omni.of(planInPGnds)
 										 		    	.find(t->{
 										 		    		return t.getPredicate().getURI().equals(uri);
@@ -289,11 +296,13 @@ public class ServiceFinder {
 									}
 									//add the input grounding in the input grounding
 									Var dVar = Var.alloc(dTypeT.getObject());
+									RDFDatatype dType = g.getDataType().contains("http")?new XSDDatatype(g.getDataType().substring(g.getDataType().indexOf("#")+1, g.getDataType().length()))
+																						:new XSDDatatype(g.getDataType().replaceAll("xsd:", ""));
 									ArgBinding iBind = Uni.of(ArgBinding::new)
 														  .set(ab->ab.setArgPos(g.getArg())) //set argument position
 														  .set(ab->ab.setParamName(ig.getParameter())) //set the parameter
 														  .set(ab->ab.setVar(dVar)) //set the variable
-														  .set(ab->ab.setVarType(new XSDDatatype(g.getDataType().replaceAll("xsd:", "")))) //set the variable type
+														  .set(ab->ab.setVarType(dType)) //set the variable type
 														  .onFailure(e->log.error("Error in creating the input param grounding due to "+ e.getMessage()))
 														  .get();
 									inParamGrounding.add(iBind); // set the XSD type		 		    
@@ -317,8 +326,9 @@ public class ServiceFinder {
 		 OutputGrounding oGround = service.getServiceGrounding().getOutputGrounding();
 		//find all the datatype tripls from where clause which has the indi out var in the subject
 		 Var outV = obind.get(oGround.getParameter());
-		 String oURI = ServiceUtil.mapIRI(service, oGround.getGrounding().get(0).getDataProperty()).getIRIString();
-		 List<Triple> planOutPGnds = p.getDTypeTriples(p.getConstructBasicPattern(), outV);
+		 String ogDProp = oGround.getGrounding().get(0).getDataProperty();
+		 String oURI = ogDProp.contains("http")?ogDProp:ServiceUtil.mapIRI(service, ogDProp).getIRIString();
+		 List<Triple> planOutPGnds = p.getDTypeTriples(p.getConstructBasicPattern(), outV, true);
 		 Triple oTriple = planOutPGnds.stream()
 				 					  .filter(t->t.getPredicate().getURI().equals(oURI))
 				 					  .findFirst().get();
@@ -332,11 +342,15 @@ public class ServiceFinder {
 		 
 		 //add output grounding
 		 Var ovv = Var.alloc(oTriple.getObject());
+		 String ogDType = oGround.getGrounding().get(0).getDataType();
+		 RDFDatatype dType = ogDType.contains("http")
+				 					?new XSDDatatype(ogDType.substring(ogDType.indexOf("#")+1, ogDType.length()))
+				 					:new XSDDatatype(oGround.getGrounding().get(0).getDataType().replaceAll("xsd:", ""));
 		 ArgBinding oArgBind = Uni.of(ArgBinding::new)
 							  .set(ab->ab.setArgPos(oGround.getGrounding().get(0).getArg())) //set argument position
 							  .set(ab->ab.setParamName(oGround.getParameter())) //set the parameter
 							  .set(ab->ab.setVar(ovv)) //set the variable
-							  .set(ab->ab.setVarType(new XSDDatatype(oGround.getGrounding().get(0).getDataType().replaceAll("xsd:", "")))) //set the variable type
+							  .set(ab->ab.setVarType(dType)) //set the variable type
 							  .get();
 		 //save the output grounding for the service
 		 if(outParamGroundings.size()-1 >= matchedServices.indexOf(service)){

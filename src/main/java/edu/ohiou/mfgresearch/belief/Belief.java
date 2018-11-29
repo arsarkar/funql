@@ -1,7 +1,9 @@
 package edu.ohiou.mfgresearch.belief;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.jena.atlas.logging.Log;
 import org.apache.jena.ontology.OntModelSpec;
@@ -30,7 +32,7 @@ public class Belief {
 	private String lang = "RDFXML";  //ontology syntax e.g. "RDFXML"
 	OntologyModel tBox = null; //merged ontology 
 //	Model tBoxGraph = null;
-	Model aBox = ModelFactory.createDefaultModel(); //Jena RDF model used to store individuals loaded from KB 
+	Model aBox = null; //Jena RDF model used to store individuals loaded from KB 
 	Model localABox = ModelFactory.createDefaultModel(); //Another local RDF model used for storing instances created from the query
 
 	/**
@@ -77,12 +79,26 @@ public class Belief {
 		aBox = 
 		Uni.of(ModelFactory.createDefaultModel())
 		   .set(model->model.read(abox.trim(), "RDFXML"))
-		   .onFailure(e->log.error("Failed to load a-box from " + abox + " due to" + e.getMessage()))
+		   .onFailure(e->{
+			   log.error("Failed to load a-box from " + abox + " due to" + e.getMessage());
+			   addEmptyABox(abox);
+		   })
 		   .get();
 //		Uni.of(abox)
 //		.filter(s->!s.isEmpty())
 //		.map(t->collectGraphs(t))
 //		.map(f->f.apply(aBox));
+	}
+	
+	/**
+	 * Create an empty ABox with the supplied URL 
+	 * as base IRI
+	 * @param aboxIRI
+	 */
+	public void addEmptyABox(String aboxIRI){
+		aBox = Uni.of(ModelFactory.createDefaultModel())
+				  .set(m->m.setNsPrefix("", aboxIRI))
+				  .get();
 	}
 	
 	/**
@@ -166,20 +182,9 @@ public class Belief {
 		return localABox;
 	}
 
-	
-	
-	
-	
-	
-	/**
-	 * get list of asserted and inferred type for the given individual
-	 * 
-	 * @param uRI
-	 * @return
-	 */
-	public List<OWLClass> getIndividualType(String URI) {
-		
-		return null;
+	public Map<String, String> getPrefixMap(){
+		return tBox.getFormat()
+				   .asPrefixOWLDocumentFormat()
+				   .getPrefixName2PrefixMap();					
 	}
-
 }

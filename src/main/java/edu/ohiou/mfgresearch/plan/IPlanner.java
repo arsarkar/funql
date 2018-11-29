@@ -163,15 +163,13 @@ public interface IPlanner {
 		return tab->{		
 				BasicPattern pat = new BasicPattern();
 				tab.rows().forEachRemaining(b->{
-					Uni.of(Substitute.substitute(constructPat, b))
-					   .fMap(p->Omni.of(p.getList()))
-					   .set(t->pat.add(t));
+					Substitute.substitute(constructPat, b)
+							  .getList()
+							  .forEach(t->pat.add(t));
 			});
 			return pat;
 		};
 	}
-
-
 
 	/**
 	 * Returns a Function which receives a Table (only known variable) and returns a 

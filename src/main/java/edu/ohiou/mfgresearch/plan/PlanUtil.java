@@ -4,26 +4,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.jena.arq.querybuilder.SelectBuilder;
-import org.apache.jena.arq.querybuilder.UpdateBuilder;
-import org.apache.jena.atlas.logging.Log;
-import org.apache.jena.graph.Graph;
-import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
-import org.apache.jena.ontology.ObjectProperty;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.sparql.algebra.Algebra;
-import org.apache.jena.sparql.algebra.OpAsQuery;
 import org.apache.jena.sparql.algebra.OpVisitorBase;
 import org.apache.jena.sparql.algebra.Table;
 import org.apache.jena.sparql.algebra.TableFactory;
@@ -31,7 +21,6 @@ import org.apache.jena.sparql.algebra.op.OpBGP;
 import org.apache.jena.sparql.algebra.walker.Walker;
 import org.apache.jena.sparql.core.BasicPattern;
 import org.apache.jena.sparql.core.Var;
-import org.apache.jena.sparql.engine.Plan;
 import org.apache.jena.sparql.engine.binding.BindingUtils;
 import org.apache.jena.sparql.syntax.Template;
 import org.semanticweb.owlapi.model.IRI;
@@ -42,14 +31,8 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.ohiou.mfgresearch.belief.Belief;
 import edu.ohiou.mfgresearch.lambda.Omni;
-import edu.ohiou.mfgresearch.lambda.Success;
 import edu.ohiou.mfgresearch.lambda.Uni;
-import edu.ohiou.mfgresearch.lambda.functions.Pred;
-import edu.ohiou.mfgresearch.lambda.functions.Suppl;
-import edu.ohiou.mfgresearch.service.base.Service;
-import edu.ohiou.mfgresearch.simplanner.IMPM;
 import ru.avicomp.ontapi.OntologyModel;
 
 public final class PlanUtil {
@@ -100,8 +83,9 @@ public final class PlanUtil {
 //							!t.getPredicate().getName().equals("rdf:type"), t->b.addWhere(t));
 						}))
 			.get();
-		//add order by
-		if(q.hasOrderBy()) q.getOrderBy().forEach(sc->builder.addOrderBy(sc));
+		//add group by
+		if(q.hasGroupBy()) 
+			q.getGroupBy().forEachExpr((v, e)->builder.addGroupBy(v, e));
 		return builder.build();
 	}	
 
@@ -195,16 +179,6 @@ public final class PlanUtil {
 	 */
 	public static OntClass getInputType(OntModel m, String URI){
 		return m.getIndividual(URI).getOntClass();
-	}
-	
-	/**
-	 * Get the type of input Individual 
-	 * @param m OntoModel
-	 * @param URI URI of the individual
-	 * @return
-	 */
-	public static List<OWLClass> getInputTypes(Belief b, String URI){
-		return b.getIndividualType(URI);
 	}
 
 

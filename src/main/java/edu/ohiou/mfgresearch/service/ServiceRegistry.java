@@ -31,8 +31,8 @@ import edu.ohiou.mfgresearch.service.invocation.ServiceInvoker;
 public class ServiceRegistry {	
 
 	static Logger log = LoggerFactory.getLogger(ServiceRegistry.class);
-	private static final Object JAVA_METHOD = "java-method";
 	private Map<String, Service> registry = new HashMap<String, Service>();
+	public static final Object JAVA_METHOD = "java-method";
 	private Map<String, ServiceInvoker> javaFunctions = new HashMap<String, ServiceInvoker>();
 		
 	private Pred<Service> isJavaFunction = s->{
@@ -41,6 +41,7 @@ public class ServiceRegistry {
 	
 	/**
 	 * add service to registry by name if not already added
+	 * also instantiate the proxy for the source (e.g. java-method)
 	 * @param s
 	 */
 	public void addService(Service s){
@@ -51,7 +52,7 @@ public class ServiceRegistry {
 			
 	}
 	
-	private void addJavaFunctionAsService(Service s) {
+	public void addJavaFunctionAsService(Service s) {
 		Uni.of(s.getServiceProfile().getActor())
 		   .map(a->ServiceUtil.instantiateJavaService(a.getSource(), a.getEndPoint()))
 		   .set(m->javaFunctions.put(s.getServiceProfile().getServiceName(), new JavaServiceInvoker(m)))

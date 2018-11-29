@@ -84,10 +84,13 @@ public class ServiceUtil {
 			   .onFailure(e->log.info("Failed to instantiate method for source "+ source + " and endpoint "+ endPoint + "\n" + e.getMessage()))
 			   .get();
 	}
-
+	
+	
 	public static RDFNode createDummyLiteral(String dataType) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	
 }
