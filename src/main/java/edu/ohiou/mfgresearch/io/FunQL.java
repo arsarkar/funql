@@ -576,8 +576,12 @@ public class FunQL {
 		fq.execute();
 		
 	}
+	
+	public Belief getBelief(){
+		return belief;
+	}
 
-	public void execute() {
+	public FunQL execute() {
 
 		
 		Cons<IPlan> executeA1Plan = p->{
@@ -651,6 +655,9 @@ public class FunQL {
 			.select(p->p.type==IPlan.PlanType.A2, executeA2Plan)
 			.select(p->p.type==IPlan.PlanType.B2, executeB2Plan)
 			.select(p->p.type==IPlan.PlanType.B2A, executeB2APlan);
+		
+		
+		return this;
 	}
 
 }

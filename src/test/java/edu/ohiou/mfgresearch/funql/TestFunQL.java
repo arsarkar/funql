@@ -1,7 +1,12 @@
 package edu.ohiou.mfgresearch.funql;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.rdf.model.Model;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -108,16 +113,17 @@ public class TestFunQL {
 	}
 	
 	@Test
-	public void testMakeCube() {
-		try {
-			Uni.of(FunQL::new).get()
-			 .addTBox("http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl")
-			 .addABox("C:\\Users\\sarkara1\\git\\SIMPOM\\geometry\\geom-ind1.owl")
-			 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-cube-cone.q")
-			 .execute();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void testMakeCube() {		
+			Uni.of("C:\\Users\\sarkara1\\git\\SIMPOM\\geometry\\geom-ind1.owl")
+				.map(File::new)
+				.map(FileOutputStream::new)
+			    .map(os->Uni.of(FunQL::new).get()
+						 .addTBox("http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl")
+						 .addABox("C:\\Users\\sarkara1\\git\\SIMPOM\\geometry\\geom-ind1.owl")
+						 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-cube-cone.q")
+						 .execute()
+						 .getBelief()
+						 .getaBox().write(os))
+			    .onFailure(e->e.printStackTrace());
 	}
 }

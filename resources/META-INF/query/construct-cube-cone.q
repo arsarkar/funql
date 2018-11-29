@@ -7,7 +7,7 @@ PREFIX conic:<edu.ohiou.mfgresearch.functions.ConicSection>
 CONSTRUCT{
 	?cu ivao:hasValue ?side.
 	?cu rdf:type geom:cube.
-	?c geom:hasInnerCube ?cu
+	?c geom:embeds ?cu
 }
 WHERE{
 	?c astro:hasDiameter ?d.
@@ -19,5 +19,5 @@ WHERE{
 	?h rdf:type geom:height
 }
 FUNCTION{
-	?side <- conic:calculateInnerCubeSide(?dia, ?ht)
+	?side <- conic:calculateInnerCubeSide(?dia, ?ht)	
 }
