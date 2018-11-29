@@ -1,16 +1,11 @@
 package edu.ohiou.mfgresearch.io;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,10 +15,10 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.jena.datatypes.RDFDatatype;
+import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.Syntax;
@@ -49,6 +44,7 @@ import edu.ohiou.mfgresearch.service.ServiceRegistry;
 import edu.ohiou.mfgresearch.service.ServiceUtil;
 import edu.ohiou.mfgresearch.service.base.Actor;
 import edu.ohiou.mfgresearch.service.base.Grounding;
+import edu.ohiou.mfgresearch.service.base.Grounding_;
 import edu.ohiou.mfgresearch.service.base.Input;
 import edu.ohiou.mfgresearch.service.base.InputGrounding;
 import edu.ohiou.mfgresearch.service.base.Output;
@@ -109,6 +105,7 @@ public class FunQL {
 	//alternative to main(), create an instance of FunQL with setters
 	public FunQL addTBox(String url){
 		belief.addTBox(url);
+		log.info("T-Box added : " + belief.gettBox().toString());
 		return this;
 	}
 	
@@ -121,6 +118,7 @@ public class FunQL {
 	 */
 	public FunQL addABox(String url){
 		belief.addABox(url);
+		log.info("A-Box added : " + belief.getaBox().getNsPrefixURI(""));
 		return this;
 	}
 
@@ -210,38 +208,38 @@ public class FunQL {
 		
 		//parse the query as URL or raw string
 		Func<String, String> parseQuery = 
-				q->{
-					//parse url into content
-					String contentURL = 
-					Uni.of(q)
-						.map(q1->parseQueryFromURL(q1))
-						.onFailure(e->{
-							log.warn("The query source is not a web address and may be a file path");
-						})												
-						.get();
-					if(contentURL!=null) return contentURL;
-					//parse filepath into content
-					String contentFile = 
-					Uni.of(q)
-						.map(q1->parseQueryFromFile(q1))
-						.onFailure(e->{
-							log.warn("Couldn't read the given query from the URL due to \n"+e.getMessage()+"\n will treat the string as raw query!");
-						})												
-						.get();
-					//if content is null then it is a raw string 
-			        return contentFile!=null?contentFile:q;
-				};	
+			q->{
+				//parse url into content
+				String contentURL = 
+				Uni.of(q)
+					.map(q1->parseQueryFromURL(q1))
+					.onFailure(e->{
+						log.warn("The query source is not a web address and may be a file path");
+					})												
+					.get();
+				if(contentURL!=null) return contentURL;
+				//parse file path into content
+				String contentFile = 
+				Uni.of(q)
+					.map(q1->parseQueryFromFile(q1))
+					.onFailure(e->{
+						log.warn("Couldn't read the given query from the URL due to \n"+e.getMessage()+"\n will treat the string as raw query!");
+					})												
+					.get();
+				//if content is null then it is a raw string 
+		        return contentFile!=null?contentFile:q;
+			};	
 				
-		//extract the var from the complete Funtion string 
+		//extract the var from the complete Function string 
 	    Func<String, String> extractBindingVar = fs->{
 	    	return
 	    	Uni.of(fs)
-		   	  .map(matchAny.apply("(\\?[a-zA-Z0-9_]+)(?=\\s<-)"))
+		   	  .map(matchAny.apply("(\\?[a-zA-Z0-9]+)(?=\\s<-)"))
 		   	  .onFailure(e->log.error("The binding variable could not be identified from the function! (should be in format <varname> <- <function>)"))
 		   	  .get();
 	    };
 	    
-	  //extract the function from the complete Funtion string 
+	  //extract the function from the complete Function string 
 	    Func<String, String> extractFunction = fs->{
 	    	return
 	    	Uni.of(fs)
@@ -249,6 +247,7 @@ public class FunQL {
 		   	  .onFailure(e->log.error("The binding variable could not be identified from the function! (should be in format <varname> <- <function>)"))
 		   	  .map(fs1->fs1.replaceAll("<-", ""))
 		   	  .map(fs1->fs1.replaceAll("\\s+", ""))
+		   	  .map(fs1->fs1.replaceAll("}", ""))
 		   	  .get();
 	    };
 		
@@ -273,9 +272,8 @@ public class FunQL {
 			   	  .get();
 			   
 			   //extract var and function string
-			   return addPlan(q, varName, func);
+			   return addPlan(q.replaceAll("(FUNCTION|Function|function)\\{(.|\n|\r|\t)*\\}", ""), varName, func);
 		   })
-		   .set(p->p.deconstructQuery(belief.gettBox()))
 		   .set(p->plans.add(p))
 		   .onFailure(e->{
 				//no function symbol. can safely pass to IPlan as raw query string
@@ -286,6 +284,7 @@ public class FunQL {
 				   .get(); 
 				
 			})
+		   .set(p->log.info("Plan added \n"+p.toString()))
 		   .get();
 		return this;
 	}
@@ -303,13 +302,16 @@ public class FunQL {
 		if(plan==null){
 			throw new Exception("No Plan is found! Please add a plan first");
 		}
+		else{
+			plan.deconstructQuery(belief.gettBox());
+		}
 		if(plan.getKnownVar().contains(Var.alloc(var))){
 			throw new Exception("the variable " + var + " is not an unknown variable!");
 		}
 		//clean the function string for whitespace
 		function.replaceAll("\\s+", "");
 		//validate the function string
-		Pattern p = Pattern.compile("\\w+\\.\\w+\\(.+\\)");
+		Pattern p = Pattern.compile("[a-zA-Z0-9_]+:[a-zA-Z0-9_]+\\((\\?[a-zA-Z0-9]+,)+\\?[a-zA-Z0-9]+\\)");
 		Matcher m = p.matcher(function);
 		if(!m.matches()){
 			throw new Exception("the function " + function + " is not in right format!");
@@ -324,13 +326,29 @@ public class FunQL {
 		String[] actors = null;
 		String[] args = new String[matches.size()-1];
 		for(int i=0; i<matches.size(); i++){
+			//get the source and endpoint 
 			if(i==0){
-				actors = matches.get(0).split(".");
-				if(actors.length!=2){
-					throw new Exception("the function " + function + " should be in format <classname>.<methodname>(<arg1>,..)!");
+				//check if prefix is used
+				if(matches.get(0).contains(":")){
+					//for now consider the prefix is mapped to a java namespace
+					actors = matches.get(0).split(":");
+					if(actors.length!=2){
+						throw new Exception("the function " + function + " should be in format <classname>.<methodname>(<arg1>,..)!");
+					}	
+					//extract the source 
+					actors[0] = plan.getQuery().getPrefix(actors[0]);
+					actors[0] = actors[0].substring(actors[0].lastIndexOf("/")+1, actors[0].length());
+				}
+				//otherwise treat the complete string 
+				else{
+					actors=new String[2];
+					int ix = matches.get(0).lastIndexOf(".");
+					actors[0] = matches.get(0).substring(0, ix-1);
+					actors[1] = matches.get(0).substring(ix+1, matches.get(0).length());
 				}
 			}
 			else{
+				//get all the input arguments 
 				args[i-1] = matches.get(i);
 			}
 		}
@@ -340,7 +358,7 @@ public class FunQL {
 	}
 	
 	/**
-	 * Currrently only accepts Java functions
+	 * Currently only accepts Java functions
 	 * @param plan
 	 * @param source
 	 * @param endPoint
@@ -352,15 +370,14 @@ public class FunQL {
 	private Service registerService(IPlan plan, String source, String endPoint, String var, String[] args) throws Exception{
 		
 		List<ArgBinding> groundings = new LinkedList<>();
-		List<ArgBinding> bindings = new LinkedList<>();
 		Map<String, String> dataProeprties = new HashMap<>();
 		
 		//get all triples with dtype property and the arg is as var in object and then get the 
-		//get the type of indi variable of type
+		//get the type of individual variable of type
 		BiFunction<BasicPattern, String, String> getParamType = (p, arg) -> {
-			Triple t = plan.getDTypeTriples(p, Var.alloc(arg), false).get(0);
-			dataProeprties.put(arg, t.getPredicate().getURI()); // save the dataProperty for later against the var
-			return plan.getVarTypes(Var.alloc(t.getSubject())).get(0);
+			List<Triple> t = plan.getDTypeTriples(p, Var.alloc(arg.replace("?", "")), false);
+			dataProeprties.put(arg, t.get(0).getPredicate().getURI()); // save the dataProperty for later against the var
+			return plan.getVarTypes(Var.alloc(t.get(0).getSubject())).get(0);
 		};
  		
 		//instantiate the function
@@ -394,13 +411,14 @@ public class FunQL {
 													.get()));		
 		
 		//collect the input ArgBinding
-		IntStream.range(1, args.length)
+		IntStream.range(0, args.length)
 				.forEach(i->Uni.of(ArgBinding::new)
 						.set(b->b.setArgPos(1))
 						.set(b->b.setParamType(ResourceFactory.createResource(getParamType.apply(plan.getWhereBasicPattern(), args[i]))))
-						.set(b->b.setVar(Var.alloc(args[i])))
+						.set(b->b.setVar(Var.alloc(args[i].replace("?", ""))))
 						.set(b->b.setVarType(argTypes.get(i)))
 						.set(b->groundings.add(b))
+						.onFailure(e->e.printStackTrace())
 				);
 		
 		//create output ArgBinding
@@ -408,13 +426,20 @@ public class FunQL {
 		Uni.of(ArgBinding::new)
 			.set(b->b.setArgPos(0))
 			.set(b->b.setParamType(ResourceFactory.createResource(getParamType.apply(plan.getConstructBasicPattern(), var))))
-			.set(b->b.setVar(Var.alloc(var)))
+			.set(b->b.setVar(Var.alloc(var.replace("?", ""))))
 			.set(b->b.setVarType(oArgType))
 			.get();
 		
 		//first create the input binding list i.e. a input param list
-		Omni.of(groundings)
-			.select(g->bindings.stream().anyMatch(b->b.getParamType().equals(g.getParamType())), g->bindings.add(g));
+		List<ArgBinding> bindings = 
+				groundings.stream()
+						.collect(Collectors.toMap(ArgBinding::getParamType, p->p, (p,q)->p))
+						.values()
+						.stream()
+						.collect(Collectors.toList());
+//		Omni.of(groundings)
+//			.select(g->bindings.stream().anyMatch(b->b.getParamType().equals(g.getParamType())), g->bindings.add(g));
+		
 		
 		//Create list of inputs and input groundings
 		List<Input> inputs = new LinkedList<>();
@@ -431,7 +456,7 @@ public class FunQL {
 																 .filter(g->g.getParamType().equals(b.getParamType()))
 																 .map(g-> Uni.of(Grounding::new)
 																		 	 .set(igr->igr.setArg(g.getArgPos()))
-																		 	 .set(igr->igr.setDataProperty(dataProeprties.get(g.getVar())))//
+																		 	 .set(igr->igr.setDataProperty(dataProeprties.get("?"+g.getVar().getVarName())))//
 																		 	 .set(igr->igr.setDataType(g.getVarType().getURI()))
 																		 	 .get())
 																 .toList()))
@@ -447,15 +472,18 @@ public class FunQL {
 			   .set(o->o.setParameterType(oGrounding.getParamType().asNode().getURI()))
 			   .get();
 		
+		Grounding_ outGrounding =
 		Uni.of(oGrounding)
-			.map(og->Uni.of(Grounding::new)
+			.map(og->Uni.of(Grounding_::new)
 						.set(g->g.setArg(0))
-						.set(g->g.setDataProperty(dataProeprties.get(oGrounding.getVar())))
-						.set(g->g.setDataType(oArgType.getURI())));
+						.set(g->g.setDataProperty(dataProeprties.get("?"+og.getVar().getVarName())))
+						.set(g->g.setDataType(oArgType.getURI()))).get().get()
+						;
 		
 		OutputGrounding outputGrounding = 
 				Uni.of(OutputGrounding::new)
 					.set(og->og.setParameter(output.getParameter()))
+					.set(og->og.setGrounding(Omni.of(outGrounding).toList()))
 					.get();
 		
 		
@@ -483,31 +511,22 @@ public class FunQL {
 										   .set(sp->sp.setInput(inputs))
 										   .get()))
 			.set(s->s.setServiceGrounding(serviceGrounding))
+			.set(s->log.info("Service regisered :"+s.toString()))
 		   .get();
 	}
 
 	private RDFDatatype getXSDType(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (name) {
+		case "double":
+			return XSDDatatype.XSDdouble;
+		case "integer":
+			return XSDDatatype.XSDinteger;
+		case "string":
+			return XSDDatatype.XSDstring;
+		default:
+			return null;
+		}
 	}
-	
-	
-//	Func<String, Func<String, Func<String, Func<String, FunQL>>>> q = tbox->{
-//		return abox->{
-//			return body->{
-//				return head->{
-//					FunQL ql = new FunQL();
-//					//add the tbox
-//					ql.parseOntologyToBelief.accept(tbox);
-//					//add the abox
-//					ql.parseKnowledgeToABox.accept(abox);
-//					//add the query
-//					
-//					return ql;
-//				};				
-//			};
-//		};
-//	};
 	
 	public static void main(String[] args) throws Exception {	
 		String currArg = "";
@@ -516,7 +535,7 @@ public class FunQL {
 		log.info("Starting to parse query.....");
 		
 		//create a new FunQL instance
-		FunQL q = new FunQL();
+		FunQL fq = new FunQL();
 		
 		for(int i=0;i<args.length;i++){			
 			//store currentArg
@@ -526,37 +545,40 @@ public class FunQL {
 			}			
 			final String value = args[i];
 			Uni.of(currArg)
-			   .select(q.isQueryArg, a->log.trace("Parsing query from " + a))	
-			   .select(q.isQueryArg, a->q.parseQueryToPlan.accept(value)) //if the current token is after -query
-			   .select(q.isServiceArg, a->log.trace("Parsing service from " + a))
-			   .select(q.isServiceArg, a->q.parseServiceToRegistry.accept(value)) // if the token value is after -service 
-			   .select(q.isBeliefArg, a->log.trace("Parsing ontology (belief) from " + a))
-			   .select(q.isBeliefArg, a->q.parseOntologyToBelief.accept(value)) //if the current token is after -belief	
-			   .select(q.isKnowledgeArg, a->log.trace("Parsing knowledge from " + a))
-			   .select(q.isKnowledgeArg, a->q.parseKnowledgeToABox .accept(value)); //if the current token is after -knowledge	
+			   .select(fq.isQueryArg, a->log.trace("Parsing query from " + a))	
+			   .select(fq.isQueryArg, a->fq.parseQueryToPlan.accept(value)) //if the current token is after -query
+			   .select(fq.isServiceArg, a->log.trace("Parsing service from " + a))
+			   .select(fq.isServiceArg, a->fq.parseServiceToRegistry.accept(value)) // if the token value is after -service 
+			   .select(fq.isBeliefArg, a->log.trace("Parsing ontology (belief) from " + a))
+			   .select(fq.isBeliefArg, a->fq.parseOntologyToBelief.accept(value)) //if the current token is after -belief	
+			   .select(fq.isKnowledgeArg, a->log.trace("Parsing knowledge from " + a))
+			   .select(fq.isKnowledgeArg, a->fq.parseKnowledgeToABox .accept(value)); //if the current token is after -knowledge	
 			
 		}
 		log.info("Parsing completed....");
 		
 		//print parsed query, service, knowledge and belief
-		Omni.of(q.plans)
+		Omni.of(fq.plans)
 			.map(p->p.getQuery().toString(Syntax.defaultQuerySyntax))
 			.set(qs->log.info("Query parsed :: \n"+qs));
 		
-		Omni.of(q.registry.getServices())
+		Omni.of(fq.registry.getServices())
 			.set(p->log.info("Service regisered :"+p));
 		
-		log.info("Belief found : " + q.belief.gettBox().toString());
-		log.info("Knowledge found : " + q.belief.getaBox().getNsPrefixURI(""));			
-		q.execute();
+		log.info("Belief found : " + fq.belief.gettBox().toString());
+		log.info("Knowledge found : " + fq.belief.getaBox().getNsPrefixURI(""));		
+		
+		//analyze query and classify
+		Omni.of(fq.plans)
+			.set(p->p.deconstructQuery(fq.belief.gettBox()))
+			.set(p->log.info("Type of plan is "+p.type.toString()));		
+		
+		fq.execute();
 		
 	}
 
 	public void execute() {
-		//analyze query and classify
-		Omni.of(plans)
-			.set(p->p.deconstructQuery(belief.gettBox()))
-			.set(p->log.info("Type of plan is "+p.type.toString()));		
+
 		
 		Cons<IPlan> executeA1Plan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());

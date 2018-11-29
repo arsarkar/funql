@@ -99,7 +99,21 @@ public class TestFunQL {
 			Uni.of(FunQL::new).get()
 			 .addTBox("http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl")
 			 .addABox("C:\\Users\\sarkara1\\git\\SIMPOM\\geometry\\geom-ind1.owl")
-			 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-volume-cone2.q")
+			 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-volume-cone3.q")
+			 .execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testMakeCube() {
+		try {
+			Uni.of(FunQL::new).get()
+			 .addTBox("http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl")
+			 .addABox("C:\\Users\\sarkara1\\git\\SIMPOM\\geometry\\geom-ind1.owl")
+			 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-cube-cone.q")
 			 .execute();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -493,8 +493,9 @@ public class IPlan {
 	}
 	
 	/**
-	 * returns the triples which has the variable in the subject 
-	 * and the object is a data variable if isSubject is true. 
+	 * returns the triples with data property as predicate and 
+	 * which has the variable in the subject if isSubject is true 
+	 * or in the the object if isSubject is false. 
 	 * @param v
 	 * @return
 	 */
@@ -525,21 +526,12 @@ public class IPlan {
 		}
 		
 	}
-	
-	public List<Triple> getDTypeVarTriples(BasicPattern p, Var v, boolean isSubject){
-		Pred<Triple> isVarInObject = t->{
-			return t.getObject().isVariable() && Var.alloc(t.getObject()).equals(v);
-		};
-		
-		Pred<Triple> isObjectDVar = t->{
-			return t.getObject().isVariable() && isDataVar.get(vars.indexOf(Var.alloc(t.getObject())));
-		};
-		
-		return
-		Omni.of(p.getList())
-			.filter(isVarInObject)
-			.filter(isObjectDVar)
-			.toList();
+
+	@Override
+	public String toString() {
+		return q.toString();
 	}
+	
+	
 	
 }

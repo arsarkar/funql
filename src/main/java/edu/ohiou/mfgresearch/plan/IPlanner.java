@@ -171,8 +171,6 @@ public interface IPlanner {
 		};
 	}
 
-
-
 	/**
 	 * Returns a Function which receives a Table (only known variable) and returns a 
 	 * table which contains result of the service mapped to a new unknown variable
