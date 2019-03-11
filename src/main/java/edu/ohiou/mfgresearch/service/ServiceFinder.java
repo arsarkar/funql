@@ -1,52 +1,29 @@
 package edu.ohiou.mfgresearch.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.dboe.migrate.L;
-import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Triple;
-import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.sparql.core.Var;
-import org.apache.jena.sparql.engine.Plan;
-import org.apache.jena.sparql.engine.binding.Binding;
-import org.apache.jena.vocabulary.XSD;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.ohiou.mfgresearch.belief.Belief;
-import edu.ohiou.mfgresearch.io.FunQL;
 import edu.ohiou.mfgresearch.lambda.Omni;
 import edu.ohiou.mfgresearch.lambda.Uni;
-import edu.ohiou.mfgresearch.lambda.functions.Cons;
-import edu.ohiou.mfgresearch.lambda.functions.Func;
-import edu.ohiou.mfgresearch.lambda.functions.Suppl;
 import edu.ohiou.mfgresearch.plan.IPlan;
 import edu.ohiou.mfgresearch.plan.PlanUtil;
 import edu.ohiou.mfgresearch.plan.IPlan.PlanType;
-import edu.ohiou.mfgresearch.service.base.Grounding;
-import edu.ohiou.mfgresearch.service.base.Grounding_;
 import edu.ohiou.mfgresearch.service.base.Input;
-import edu.ohiou.mfgresearch.service.base.InputGrounding;
 import edu.ohiou.mfgresearch.service.base.Output;
 import edu.ohiou.mfgresearch.service.base.OutputGrounding;
 import edu.ohiou.mfgresearch.service.base.Service;
@@ -60,15 +37,7 @@ public class ServiceFinder {
 	
 	//constant for namespace
 	public static String SERVICECLASS = "http://www.daml.org/services/owl-s/1.2/Service.owl#Service";
-	public static String HASINPUT = "http://www.daml.org/services/owl-s/1.2/Profile.owl#hasInput";
-	public static String HASOUTPUT = "http://www.daml.org/services/owl-s/1.2/Profile.owl#hasOutput";
 	public static String xsdPrefix = "xsd:";
-	public static String PLANSERVICE = "PlanService";
-	
-	//constants to replace any data types as part of normalization of graph
-	public static Double normDouble = 9.9;
-	public static String normString = "BALONEY";
-	public static Integer normInt = 9;		
 	
 	IPlan p;
 	Belief b;
@@ -112,30 +81,38 @@ public class ServiceFinder {
 	
 	/**
 	 * Find a service which matches the output type of the service
-	 * @param outputVar
+	 * @param outArgBinding
 	 * @param bind
 	 * @return
 	 */
 	public void findServiceMatchngOutput(){
 		Map<String, Var> outParamBinding = new HashMap<String, Var>();
-		Var outputVar = Omni.of(p.getUnknownVars())
-							.find(v->p.getIndiVars().contains(v)) // only one output var is permitted (this means one instance of ServiceInvoker is tied to this output indi variable)
-							.get();
+//		Var outputVar = Omni.of(p.getUnknownVars())
+//							.find(v->p.getIndiVars().contains(v)) // only one output var is permitted (this means one instance of ServiceInvoker is tied to this output indi variable)
+//							.get();
+		List<Var> oVars = Omni.of(p.getUnknownVars())
+							  .filter(v->p.getIndiVars().contains(v))
+							  .toList();
 		List<Service> serviceList = Omni.of(reg.getServices()).map(sn->reg.getService(sn)).toList();
-		List<String> oTypes = p.getVarTypes(outputVar);
+		
 //		List<Service> servMatchOType = new LinkedList<Service>();
-		for(String c:oTypes){
-			for(Service s: serviceList){
-				Output out = s.getServiceProfile().getOutput();
-				IRI servOType = out.getParameterType().contains("http")?IRI.create(out.getParameterType()):ServiceUtil.mapIRI(s, out.getParameterType());
-				if(servOType.equals(IRI.create(c))){
-					if(!matchedServices.contains(s)){
-						matchedServices.add(s);
-						outParamBinding.put(out.getParameter(), outputVar);
-					}
+		for(Var ov:oVars){
+			List<String> oTypes = p.getVarTypes(ov);
+			for(String c:oTypes){
+				for(Service s: serviceList){
+					Output out = s.getServiceProfile().getOutput();
+					IRI servOType = out.getParameterType().contains("http")?
+							IRI.create(out.getParameterType()):
+								ServiceUtil.mapIRI(s, out.getParameterType());
+							if(servOType.equals(IRI.create(c))){
+								if(!matchedServices.contains(s)){
+									matchedServices.add(s);
+									outParamBinding.put(out.getParameter(), ov);
+								}
+							}
 				}
-			}
-		}			
+			}			
+		}
 		outParamBindings.add(outParamBinding);
 	}
 	
@@ -366,7 +343,7 @@ public class ServiceFinder {
 		ServiceInvoker invoker = reg.getServiceInvoker(service); 
 		 
 		//for B2A types plans
-		if(p.type==PlanType.B2A){
+		if(p.type==PlanType.B2C){
 			//set input groundings 
 			inParamGroundings.get(matchedServices.indexOf(service))
 							 .forEach(ab->{
@@ -390,6 +367,8 @@ public class ServiceFinder {
 		
 		return invokers;
 	}
+	
+	
 	
 //	public List<Service> filterServiceonInputTypes(List<Service> services, List<Var> vars){
 //		

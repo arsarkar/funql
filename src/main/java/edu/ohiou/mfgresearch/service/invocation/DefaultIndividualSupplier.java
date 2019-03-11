@@ -35,7 +35,7 @@ public class DefaultIndividualSupplier extends AbstractServiceInvoker {
 	
 	public DefaultIndividualSupplier(ArgBinding outputBinding, String ns) {
 		setOutputArgument(outputBinding);
-		this.typeIRI = outputVar.paramType.asNode().getURI();
+		this.typeIRI = outArgBinding.paramType.asNode().getURI();
 		this.ns = ns;
 //		this.aBox = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, aBox);
 	}
@@ -47,7 +47,7 @@ public class DefaultIndividualSupplier extends AbstractServiceInvoker {
 			Uni.of(ModelFactory.createOntologyModel())
 			   .map(m->m.createIndividual(createIndividualIRI(), m.createClass(typeIRI)))
 			   .set(i->log.info("Individual created --> " + i.toString()))
-			   .set(i->res.addBinding(BindingFactory.binding(outputVar.var, i.asNode())))
+			   .set(i->res.addBinding(BindingFactory.binding(outArgBinding.var, i.asNode())))
 			   .onFailure(e->log.error("Failed to create individual for the type " + typeIRI))
 			   .get();
 			return res;

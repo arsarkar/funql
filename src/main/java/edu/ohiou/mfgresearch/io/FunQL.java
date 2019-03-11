@@ -118,7 +118,7 @@ public class FunQL {
 	 */
 	public FunQL addABox(String url){
 		belief.addABox(url);
-		log.info("A-Box added : " + belief.getaBox().getNsPrefixURI(""));
+		log.info("A-Box added : " + belief.getaBox().toString());
 		return this;
 	}
 
@@ -255,7 +255,7 @@ public class FunQL {
 		Uni.of(query)
 		   .map(parseQuery)
 		 //check if the content of the query has a function string
-		   .filter(q->matchAny.apply("(FUNCTION|Function|function)").apply(q).length()>0)
+		   .filter(q->matchAny.apply("(FUNCTION|Function|function)\\{(.|\n|\r|\t)*\\}").apply(q).length()>0)
 		   .map(q->{
 			   String funcString =
 					   Uni.of(q)
@@ -299,19 +299,14 @@ public class FunQL {
 	 */
 	public IPlan addPlan(String query, String var, String function) throws Exception{
 		IPlan plan = new IPlan(query);
-		if(plan==null){
-			throw new Exception("No Plan is found! Please add a plan first");
-		}
-		else{
-			plan.deconstructQuery(belief.gettBox());
-		}
+		plan.deconstructQuery(belief.gettBox());
 		if(plan.getKnownVar().contains(Var.alloc(var))){
 			throw new Exception("the variable " + var + " is not an unknown variable!");
 		}
 		//clean the function string for whitespace
 		function.replaceAll("\\s+", "");
 		//validate the function string
-		Pattern p = Pattern.compile("[a-zA-Z0-9_]+:[a-zA-Z0-9_]+\\((\\?[a-zA-Z0-9]+,)+\\?[a-zA-Z0-9]+\\)");
+		Pattern p = Pattern.compile("[a-zA-Z0-9_]+:[a-zA-Z0-9_]+\\((\\?[a-zA-Z0-9]+)(,\\?[a-zA-Z0-9]+)*\\)");
 		Matcher m = p.matcher(function);
 		if(!m.matches()){
 			throw new Exception("the function " + function + " is not in right format!");
@@ -521,7 +516,9 @@ public class FunQL {
 			return XSDDatatype.XSDdouble;
 		case "integer":
 			return XSDDatatype.XSDinteger;
-		case "string":
+		case "java.lang.String":
+			return XSDDatatype.XSDstring;
+		case "[Ljava.lang.String;":
 			return XSDDatatype.XSDstring;
 		default:
 			return null;
@@ -566,7 +563,7 @@ public class FunQL {
 			.set(p->log.info("Service regisered :"+p));
 		
 		log.info("Belief found : " + fq.belief.gettBox().toString());
-		log.info("Knowledge found : " + fq.belief.getaBox().getNsPrefixURI(""));		
+		log.info("Knowledge found : " + fq.belief.getaBox().toString());		
 		
 		//analyze query and classify
 		Omni.of(fq.plans)
@@ -577,12 +574,15 @@ public class FunQL {
 		
 	}
 	
+	/**
+	 * get the belief
+	 * @return
+	 */
 	public Belief getBelief(){
 		return belief;
 	}
 
 	public FunQL execute() {
-
 		
 		Cons<IPlan> executeA1Plan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
@@ -634,8 +634,40 @@ public class FunQL {
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
 			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
 			
+			Function<Table, Table> mapUnknownVar;
+			//for now it is considered that B2A plans need no function as there is no unkown data variable in the construct
+//			if(registry.getServices().size()==0){
+				RDFNode oType = ResourceFactory.createResource(p.getUnknownVarType());
+				ArgBinding oBind = new ArgBinding();
+				oBind.setArgPos(0);
+				oBind.setParamType(oType);
+				oBind.setVar(p.getUnknownVar());
+				ServiceInvoker invoker = new DefaultIndividualSupplier(oBind, belief.getaBox().getNsPrefixURI(""));
+				mapUnknownVar = IPlanner.createServiceResultMapper_deafault(invoker);
+//			}
+//			else{
+//				ServiceFinder servieFinder = new ServiceFinder(p, belief, registry);
+//				List<Service> servicesFound = servieFinder.findService();
+//				
+//				List<ServiceInvoker> serviceInvoker = servieFinder.createServiceInvoker(servicesFound.get(0));
+//				mapUnknownVar = IPlanner.createServiceResultMapper(serviceInvoker);
+//			}			
+			
+			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
+			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
+			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
+			Uni.of(updatedPattern)
+				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
+				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));			
+		};
+		
+		Cons<IPlan> executeB2CPlan = p->{
+			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
+			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
+			
 			ServiceFinder servieFinder = new ServiceFinder(p, belief, registry);
 			List<Service> servicesFound = servieFinder.findService();
+			
 			List<ServiceInvoker> serviceInvoker = servieFinder.createServiceInvoker(servicesFound.get(0));
 			Function<Table, Table> mapUnknownVar = IPlanner.createServiceResultMapper(serviceInvoker);
 			
@@ -647,15 +679,17 @@ public class FunQL {
 				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));			
 		};
 		
-		
-		Omni.of(plans)
-		//if there is no need to match service then just execute the query and return result
-			.select(p->p.type==IPlan.PlanType.A1, executeA1Plan)
-			.select(p->p.type==IPlan.PlanType.B1, executeB1Plan)	
-			.select(p->p.type==IPlan.PlanType.A2, executeA2Plan)
-			.select(p->p.type==IPlan.PlanType.B2, executeB2Plan)
-			.select(p->p.type==IPlan.PlanType.B2A, executeB2APlan);
-		
+		for(IPlan plan:plans){
+			Uni.of(plan)
+			//if there is no need to match service then just execute the query and return result
+				.select(p->p.type==IPlan.PlanType.A1, executeA1Plan)
+				.select(p->p.type==IPlan.PlanType.B1, executeB1Plan)	
+				.select(p->p.type==IPlan.PlanType.A2, executeA2Plan)
+				.select(p->p.type==IPlan.PlanType.B2, executeB2Plan)
+				.select(p->p.type==IPlan.PlanType.B2A, executeB2APlan)
+				.select(p->p.type==IPlan.PlanType.B2C, executeB2CPlan)
+				.onFailure(e->e.printStackTrace());;
+		}		
 		
 		return this;
 	}

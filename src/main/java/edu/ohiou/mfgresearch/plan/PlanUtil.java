@@ -115,7 +115,7 @@ public final class PlanUtil {
 	 * @return
 	 */
 	public static List<Var> getConstructVars(Query q){
-		List<Var> uV = new ArrayList<Var>();
+		Set<Var> uV = new HashSet<Var>();
 		BasicPattern cPat =
 				Uni.of(q)
 				.map(PlanUtil::getConstructBasicPattern)
@@ -123,9 +123,9 @@ public final class PlanUtil {
 				.get();
 		cPat.forEach(t->{
 			if(t.getSubject().isVariable()) uV.add(Var.alloc(t.getSubject()));
-			if(t.getPredicate().isVariable()) uV.add(Var.alloc(t.getPredicate())); 
+			if(t.getObject().isVariable()) uV.add(Var.alloc(t.getObject())); 
 		});
-		return uV;
+		return new LinkedList<Var>(uV);
 	}
 
 	/**

@@ -26,7 +26,7 @@ import edu.ohiou.mfgresearch.lambda.functions.Suppl;
 public class AbstractServiceInvoker implements ServiceInvoker {
 
 	List<ArgBinding> inputVars = new LinkedList<ArgBinding>(); 
-	ArgBinding outputVar;
+	ArgBinding outArgBinding;
 	
 	@Override
 	public void setInputArgument(ArgBinding binding) {
@@ -35,7 +35,7 @@ public class AbstractServiceInvoker implements ServiceInvoker {
 	
 	@Override
 	public void setOutputArgument(ArgBinding binding){
-		outputVar = binding;
+		outArgBinding = binding;
 	}
 
 	@Override

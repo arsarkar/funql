@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
@@ -19,6 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import edu.ohiou.mfgresearch.lambda.Omni;
 import edu.ohiou.mfgresearch.lambda.Uni;
+import edu.ohiou.mfgresearch.lambda.functions.Cons;
+import edu.ohiou.mfgresearch.lambda.functions.Func;
 import edu.ohiou.mfgresearch.lambda.functions.Pred;
 import ru.avicomp.ontapi.OntologyModel;
 
@@ -44,7 +47,7 @@ public class IPlan {
 		 A2A, //select type, unknown variable, no data variable in where clause
 		 A2B, //select type, unknown variable, has data variable in where clause
 		 A2C, //select type, unknown variable, has data variable in both where and select clause
-		 B2A, //construct type, unknown variable, no data variable in where clause but in construct clause  
+		 B2A, //construct type, unknown variable, has data variable in where clause but not in construct clause  
 		 B2B, //construct type, unknown variable, has no data variable in where clause but in construct clause
 		 B2C  //construct type, unknown variable, has data variable in both construct and where clause
 	}
@@ -94,29 +97,19 @@ public class IPlan {
 				   .onFailure(e1->log.error(e1.getMessage()))
 				   .get();
 	}
-//	
-//	public IPlan(URI q){
-//		this.q = 
-//		Uni.of(q)
-//		   .map(u->u.toString())
-//		   .map(u->QueryFactory.read(u)) //first treat the string as a url
-//		   .onFailure(e->log.error(e.getMessage()))
-//		   .get();
-//	}
-//	
-//	public IPlan(File q){
-//		this.q = 
-//		Uni.of(q)
-//		   .map(q1->q1.getPath())
-//		   .map(u->QueryFactory.read(u)) //first treat the string as a path 
-//		   .onFailure(e->log.error(e.getMessage()))
-//		   .get();
-//	}
 	
+	/**
+	 * Create a Plan with a query
+	 * @param q
+	 */
 	public IPlan(Query q){
 		this.q = q;
 	}
 
+	/**
+	 * Get the query
+	 * @return
+	 */
 	public Query getQuery(){
 		return q;
 	}	
@@ -129,6 +122,46 @@ public class IPlan {
 		
 	}
 	
+	Function<Query, PlanType> detectQueryType = q->{
+		//quickly determine A1/B1
+		Uni.of(q).select(q0 -> q0.isSelectType(), q0 -> type = PlanType.A1)
+				 .select(q0 -> isPresentUnknownVar(q0), q0 -> type = PlanType.A2)
+				 .select(q0 -> q0.isConstructType(), q0 -> type = PlanType.B1)
+				 .select(q0 -> isPresentUnknownVar(q0), q0 -> type = PlanType.B2)
+				 .onFailure(e->log.error("Failed to detect the query type due to "+e.getMessage()));
+		return type;
+	};
+	
+	Function<OntologyModel, Cons<Query>> detectPlanType = 
+			onto->{
+				return q->{
+					//We still may not need to find a service if the query has no data variable in the post condition
+					//but to detect data variables we need to tear apart the query anyway
+					Uni.of(q)
+						.set(q0->deconstructWhereClause(q0, onto))
+						.select(q0->q0.isConstructType(), q0->deconstructConstructClause(q0, onto))
+						.select(q0->q0.isSelectType(), q0->deconstructSelectClause(q0, onto))
+						.onFailure(e->log.error("Failed to deconstruct query due to "+e.getMessage()));
+
+					
+					//there is at least one data variable
+					Uni.of(q)
+					   .filter(q1->isDataVar.contains(true))
+					   .select(q1->q.isSelectType() && isDataVarInWhere() && !isDataVarInSelect(), 
+							   q1->type = PlanType.A2A)
+					   .select(q1->q.isSelectType() && !isDataVarInWhere() && isDataVarInSelect(), 
+							   q1->type = PlanType.A2C)
+					   .select(q1->q.isConstructType() && isDataVarInWhere() && !isDataVarInConstruct(), 
+							   q1->type = PlanType.B2A)
+					   .select(q1->q.isConstructType() && !isDataVarInWhere() && isDataVarInConstruct(), 
+							   q1->type = PlanType.B2B)
+					   .select(q1->q.isConstructType() && isDataVarInWhere() && isDataVarInConstruct(), 
+							   q1->type = PlanType.B2C)
+					   .onFailure(e->log.error("Plan type couldn't be determined due to "+ e.getMessage()))
+					   .onSuccess(q1->log.info("Plan type is "+type.toString()));
+				};
+			};
+	
 	/**
 	 * Deconstruct query to perform the following tasks
 	 * - identify variable
@@ -136,51 +169,18 @@ public class IPlan {
 	 * 
 	 * @param onto
 	 */
-	public void deconstructQuery(OntologyModel onto){
-
-		//quickly determine A1/B1
-		Uni.of(q)
-			.select(q0->q0.isSelectType(), q0->type=PlanType.A1)
-			.select(q0->isPresentUnknownVar(q0), q0->type=PlanType.A2)
-			.select(q0->q0.isConstructType(), q0->type=PlanType.B1)
-			.select(q0->isPresentUnknownVar(q0), q0->type=PlanType.B2);
-
+	public void deconstructQuery(OntologyModel onto){	
+		
 		//we can execute A1 and B1 without type determination
-		if(type==PlanType.A1 || type==PlanType.B1){
-			return;
-		}
-
-		//We still may not need to find a service if the query has no data variable in the post condition
-		//but to detect data variables we need to tear apart the query anyway
+		//if they are either of them return 
+		//but we may need to analyze further if A2 and B2 
 		Uni.of(q)
-			.set(q->deconstructWhereClause(q, onto))
-			.select(q0->q0.isConstructType(), q0->deconstructConstructClause(q0, onto))
-			.select(q0->q0.isSelectType(), q0->deconstructSelectClause(q0, onto));
-
-
-		//there is at least one data variable
-		if(isDataVar.contains(true)){
-			if(q.isSelectType() && isDataVarInWhere() && !isDataVarInSelect()){
-				type = PlanType.A2A; 
-			}
-			else if(q.isSelectType() && !isDataVarInWhere() && isDataVarInSelect()){
-				type = PlanType.A2B; //that data var is bet to be unknown because it is not there in where clause
-			}
-			else if(q.isSelectType() && isDataVarInWhere() && !isDataVarInSelect()){
-				type = PlanType.A2C; //but there is no guarantee that the data var is unknown 
-			}
-			else if(q.isConstructType() && isDataVarInWhere() && !isDataVarInConstruct()){
-				type = PlanType.B2A; 
-			}
-			else if(q.isConstructType() && !isDataVarInWhere() && isDataVarInConstruct()){
-				type = PlanType.B2B; //that data var is bet to be unknown because it is not there in where clause
-			}
-			else if(q.isConstructType() && isDataVarInWhere() && !isDataVarInConstruct()){
-				type = PlanType.B2C; //but there is no guarantee that the data var is unknown 
-			}
-		}
-
-		//print the variable types detected
+		   .select(q1->Omni.of(PlanType.A2, PlanType.B2).contains(detectQueryType.apply(q1)), 
+				   detectPlanType.apply(onto)) //Analyze the query and detect plan type
+		   .onSuccess(q1->log.info("Query is deconstructed successfully"));
+		   ;
+		
+		//print the variable types detected //may comment
 		for(int i=0; i< vars.size(); i++){
 			log.info("type of variable : "+vars.get(i).getName() + " is Known? " + isKnownVar.get(i) + " is Data Type? " + isDataVar.get(i));
 			if(!isDataVar.get(i)){

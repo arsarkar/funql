@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.ohio.edu/ontologies/tpat1#"
+     xml:base="http://www.ohio.edu/ontologies/tpat1"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.ohio.edu/ontologies/tpat1"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#property1 -->
+
+    <owl:ObjectProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#property1">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#property2 -->
+
+    <owl:ObjectProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#property2">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#property3 -->
+
+    <owl:ObjectProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#property3">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#property4 -->
+
+    <owl:ObjectProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#property4">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#property5 -->
+
+    <owl:ObjectProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#property5">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#property6 -->
+
+    <owl:ObjectProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#property6"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#dprop1 -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#dprop1">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#dprop2 -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#dprop2">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#dprop3 -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#dprop3">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#dprop4 -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#dprop4">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#dprop5 -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#dprop5">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#class1 -->
+
+    <owl:Class rdf:about="http://www.ohio.edu/ontologies/tpat1#class1"/>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#class2 -->
+
+    <owl:Class rdf:about="http://www.ohio.edu/ontologies/tpat1#class2"/>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#class3 -->
+
+    <owl:Class rdf:about="http://www.ohio.edu/ontologies/tpat1#class3"/>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#class4 -->
+
+    <owl:Class rdf:about="http://www.ohio.edu/ontologies/tpat1#class4"/>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#class5 -->
+
+    <owl:Class rdf:about="http://www.ohio.edu/ontologies/tpat1#class5"/>
+    
+
+
+    <!-- http://www.ohio.edu/ontologies/tpat1#class6 -->
+
+    <owl:Class rdf:about="http://www.ohio.edu/ontologies/tpat1#class6"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.ohio.edu/ontologies/tpat1#class1"/>
+            <rdf:Description rdf:about="http://www.ohio.edu/ontologies/tpat1#class2"/>
+            <rdf:Description rdf:about="http://www.ohio.edu/ontologies/tpat1#class3"/>
+            <rdf:Description rdf:about="http://www.ohio.edu/ontologies/tpat1#class4"/>
+            <rdf:Description rdf:about="http://www.ohio.edu/ontologies/tpat1#class5"/>
+            <rdf:Description rdf:about="http://www.ohio.edu/ontologies/tpat1#class6"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
+

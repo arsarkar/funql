@@ -1,10 +1,13 @@
 package edu.ohiou.mfgresearch.service.invocation;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
@@ -38,27 +41,51 @@ public class JavaServiceInvoker extends AbstractServiceInvoker {
 	}
 	
 	private Table invokeJavaMethod(Binding input){
-		Table tab = TableFactory.create();
+		return
 		Uni.of(input)
 		   .map(in->createInputArguments(in))
 		   .map(inp->{
 			   return method.invoke(null, inp);
 		   })
 		   .map(out->createOutputBinding(out))
-		   .set(ob->tab.addBinding(ob))
-		   .onFailure(e->log.error("Failed to invoke query!!" + e.getMessage()));
-
-		return tab;
+		   .onFailure(e->log.error("Failed to invoke query!!" + e.getMessage()))
+		   .get();	
 	}
 
-	private Binding createOutputBinding(Object out) {
-		return
-		Uni.of(outputVar)
-		   .map(ov->{
-			   Node oVal = NodeFactory.createLiteralByValue(out, ov.getVarType());
-			   return BindingFactory.binding(ov.var, oVal);
-		   })
-		   .get();
+	/**
+	 * Create binding(s) from output of the method 
+	 * should handle both single or collection output
+	 * @param out
+	 * @return
+	 */
+	private Table createOutputBinding(Object out) {
+		
+		Table tab = TableFactory.create();
+		//check if the output is a collection
+		if(out.getClass().isArray()){
+			Uni.of(outArgBinding)
+			.set(ov->{
+//				Omni.of(Arrays.asList(out))
+//					.map(o->NodeFactory.createLiteralByValue(o, ov.getVarType()))
+//					.map(n->BindingFactory.binding(ov.var, n))
+//					.set(b->tab.addBinding(b));
+				IntStream.range(0, Array.getLength(out))
+						 .forEach(i->{
+							 Node oVal = NodeFactory.createLiteralByValue(Array.get(out, i), ov.getVarType());
+							 tab.addBinding(BindingFactory.binding(ov.var, oVal));
+						 });
+				
+			});
+		}
+		else{
+			Uni.of(outArgBinding)
+				.map(ov->{
+					Node oVal = NodeFactory.createLiteralByValue(out, ov.getVarType());
+					return BindingFactory.binding(ov.var, oVal);
+				})
+				.set(b->tab.addBinding(b));
+		}
+		return tab;
 	}
 
 	private Object[] createInputArguments(Binding input) {

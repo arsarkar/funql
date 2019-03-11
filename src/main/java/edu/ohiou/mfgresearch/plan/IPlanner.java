@@ -162,6 +162,7 @@ public interface IPlanner {
 		// TODO Auto-generated method stub
 		return tab->{		
 				BasicPattern pat = new BasicPattern();
+				
 				tab.rows().forEachRemaining(b->{
 					Substitute.substitute(constructPat, b)
 							  .getList()
@@ -207,40 +208,56 @@ public interface IPlanner {
 	public static Function<Table, Table> createServiceResultMapper(List<ServiceInvoker> invokers) {
 		return tab->{
 			Table res = TableFactory.create();
-			List<Binding> bindings = new LinkedList<Binding>();
 			tab.rows().forEachRemaining(b->{
+				List<Binding> bindings = new LinkedList<Binding>();
 				Uni.of(invokers.get(0))
 				   .map(inv->inv.invokeService(inv.createInputBinding(b))) 
 				   .map(ts->ts.get()) //execute the service!
 				   .set(t->{
-					   t.toResultSet().forEachRemaining(r->log.info(r.toString()));
+//					   t.toResultSet().forEachRemaining(r->log.info(r.toString()));
 					   t.rows().forEachRemaining(b1->{
 						   Var v1 = b1.vars().next(); //only one return binding is expected.
 						   bindings.add(BindingFactory.binding(v1, b1.get(v1))); //add the binding to parent binding
 //						   log.info(bind.get().toString());
-						   //for every row of result add a new individual for the indi variable
-						   Uni.of(invokers.get(1))
-							   .map(inv->inv.invokeService(null)) //no input needed for a supplier type method invocation
-							   .map(ts->ts.get())
-							   .set(t1->{
-								   t1.toResultSet().forEachRemaining(r->log.info(r.toString()));
-								   t1.rows().forEachRemaining(b2->{
-									   Var v2 = b2.vars().next();
-//									   log.info(bind.get().toString());
-									   bindings.add(BindingFactory.binding(v2, b2.get(v2)));
-//									   log.info(bind.get().toString());
-									   Binding bind = BindingFactory.binding();
-									   for(Binding bnd:bindings){
-										   bind = Algebra.merge(bind, bnd);
-									   }
-									   bind = Algebra.merge(b, bind);
-									   res.addBinding(bind);
-								   });
-							   });
 					   });
 				   })
 				   .onSuccess(t->log.info(""));
-			});
+				
+					//print all the bindings  
+					Omni.of(bindings).set(b1->log.info(b.toString()));
+					
+					List<Binding> bindings1 = new LinkedList<Binding>();
+					
+					//this portion should create all individuals for unknown variable
+					Omni.of(bindings)
+						.set(b1->{
+							 //for every row of result add a new individual for the indi variable
+							   Uni.of(invokers.get(1))
+								   .map(inv->inv.invokeService(null)) //no input needed for a supplier type method invocation
+								   .map(ts->ts.get())
+								   .set(t1->{
+									   t1.toResultSet().forEachRemaining(r->log.info(r.toString()));
+									   t1.rows().forEachRemaining(b2->{
+										   Var v2 = b2.vars().next();
+	//									   log.info(bind.get().toString());
+										   Binding bind = BindingFactory.binding(v2, b2.get(v2));								   
+	//									   log.info(bind.get().toString());	
+										   bind = Algebra.merge(b1, bind);
+										   bindings1.add(bind);
+									   });
+								   });
+						});
+					
+					//merge with input bindings
+					Omni.of(bindings1)
+						.set(b1->{
+							Binding bind = Algebra.merge(b, b1);
+							res.addBinding(bind);
+						});
+			}); 
+					   
+			
+			
 			
 			return res;
 		};
