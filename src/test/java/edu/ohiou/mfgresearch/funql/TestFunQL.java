@@ -4,15 +4,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import org.apache.jena.arq.querybuilder.ConstructBuilder;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Before;
 import org.junit.Test;
 
-
+import edu.ohiou.mfgresearch.functions.DummyFunction;
 import edu.ohiou.mfgresearch.io.FunQL;
 import edu.ohiou.mfgresearch.lambda.Uni;
+import edu.ohiou.mfgresearch.simplanner.IMPM;
 
 public class TestFunQL {
 	String folder = "C:/Users/sormaz/Documents/GitHub/";
@@ -187,6 +189,37 @@ public class TestFunQL {
 	}
 	
 	@Test
+	public void testSamplePatternAlt() {
+			DummyFunction func = new DummyFunction("Hello");
+			Uni.of("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat2.owl")
+				.map(File::new)
+				.map(FileOutputStream::new)
+			    .map(os->Uni.of(FunQL::new).get()
+						 .addTBox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\tpat1.owl")
+						 .addABox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat1.owl")
+						 .addPlan(Uni.of(ConstructBuilder::new)
+								   .set(b->b.addPrefix("rdf", IMPM.rdf))
+								   .set(b->b.addPrefix("tpat", "http://www.ohio.edu/ontologies/tpat1#"))
+								   .set(b->b.addPrefix("dummy", "edu.ohiou.mfgresearch.functions.DummyFunction"))
+								   .set(b->b.addWhere("?c1", "rdf:type", "tpat:class1"))
+								   .set(b->b.addWhere("?c2", "rdf:type", "tpat:class2"))
+								   .set(b->b.addWhere("?c1", "tpat:property1", "?c2"))
+								   .set(b->b.addWhere("?c2", "tpat:dprop1", "?in"))
+								   .set(b->b.addConstruct("?c4", "rdf:type", "tpat:class4"))
+								   .set(b->b.addConstruct("?c2", "tpat:property3", "?c4"))
+								   .set(b->b.addConstruct("?c4", "tpat:dprop2", "?out"))
+								   .map(b->b.build())
+								   .get().serialize(),
+								   "?out",
+								   "dummy:calDummyIn(?in)",
+								   func)
+						 .execute()
+						 .getBelief()
+						 .getaBox().write(os))
+			    .onFailure(e->e.printStackTrace());
+	}
+	
+	@Test
 	public void testSamplePattern2() {		
 			Uni.of("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/apat2.owl")
 				.map(File::new)
@@ -227,6 +260,36 @@ public class TestFunQL {
 						 .addPlan(folder + "funql/resources/META-INF/query/sample-pattern2.q")
 						 .addPlan(folder + "funql/resources/META-INF/query/sample-pattern3.q")
 						 .addPlan(folder + "funql/resources/META-INF/query/sample-pattern4.q")
+						 .execute()
+						 .getBelief()
+						 .getaBox().write(os))
+			    .onFailure(e->e.printStackTrace());
+	}
+	
+	@Test
+	public void testSamplePattern5() {		
+			Uni.of("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat5.owl")
+				.map(File::new)
+				.map(FileOutputStream::new)
+			    .map(os->Uni.of(FunQL::new).get()
+						 .addTBox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\tpat1.owl")
+						 .addABox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat1.owl")
+						 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\sample-pattern5.q")
+						 .execute()
+						 .getBelief()
+						 .getaBox().write(os))
+			    .onFailure(e->e.printStackTrace());
+	}
+	
+	@Test
+	public void testSamplePattern6() {		
+			Uni.of("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat7.owl")
+				.map(File::new)
+				.map(FileOutputStream::new)
+			    .map(os->Uni.of(FunQL::new).get()
+						 .addTBox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\tpat1.owl")
+						 .addABox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat6.owl")
+						 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\sample-pattern5.q")
 						 .execute()
 						 .getBelief()
 						 .getaBox().write(os))

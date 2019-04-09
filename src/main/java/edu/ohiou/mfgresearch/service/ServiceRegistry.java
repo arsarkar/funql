@@ -44,18 +44,18 @@ public class ServiceRegistry {
 	 * also instantiate the proxy for the source (e.g. java-method)
 	 * @param s
 	 */
-	public void addService(Service s){
+	public void addService(Service s, Object instance){
 		Uni.of(s)
 		   .filter(service->!registry.containsKey(service.getServiceProfile().getServiceName()))
 		   .set(service->registry.put(service.getServiceProfile().getServiceName(), service))
-		   .select(isJavaFunction, service->addJavaFunctionAsService(s));
+		   .select(isJavaFunction, service->addJavaFunctionAsService(s, instance));
 			
 	}
 	
-	public void addJavaFunctionAsService(Service s) {
+	public void addJavaFunctionAsService(Service s, Object instance) {
 		Uni.of(s.getServiceProfile().getActor())
 		   .map(a->ServiceUtil.instantiateJavaService(a.getSource(), a.getEndPoint()))
-		   .set(m->javaFunctions.put(s.getServiceProfile().getServiceName(), new JavaServiceInvoker(m)))
+		   .set(m->javaFunctions.put(s.getServiceProfile().getServiceName(), new JavaServiceInvoker(m, instance)))
 		   .onSuccess(m->log.info("Java method "+m+" is instantiated successsully for service "+ s.toString()));
 	}
 
@@ -69,7 +69,7 @@ public class ServiceRegistry {
 		Uni.of(jsonService)
 		   .map(s->mapper.readValue(s, Service.class))
 		   .onFailure(e->e.printStackTrace())
-		   .onSuccess(s1->addService(s1));
+		   .onSuccess(s1->addService(s1, null));
 	}
 	
 	public String toString(){

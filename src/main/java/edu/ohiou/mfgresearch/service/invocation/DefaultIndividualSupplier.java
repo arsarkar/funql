@@ -57,7 +57,7 @@ public class DefaultIndividualSupplier extends AbstractServiceInvoker {
 	private String createIndividualIRI() {
 		int islash = typeIRI.lastIndexOf("/");
 		int ihash = typeIRI.lastIndexOf("#");
-		String typeName = typeIRI.substring(islash>ihash?islash:ihash+1, typeIRI.length());
+		String typeName = typeIRI.substring(islash>ihash?islash+1:ihash+1, typeIRI.length());
 		if(ns.endsWith("#"))
 			return ns + typeName + "_I" + IMPM.newHash(4);
 		else if(ns.endsWith("/"))
