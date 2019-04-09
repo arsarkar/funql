@@ -96,11 +96,11 @@ public class JavaServiceInvoker extends AbstractServiceInvoker {
 
 	private Object[] createInputArguments(Binding input) {
 		Collections.sort(inputVars); // sort the arguments as per arg
-		return
+		List<Object> args =
 		Omni.of(inputVars)
 			.map(ab->createInputObject(ab, input))
-			.toList()
-			.toArray();
+			.toList();
+		return args.toArray(new Object[0]);
 	}
 
 	private Object createInputObject(ArgBinding ab, Binding input) {

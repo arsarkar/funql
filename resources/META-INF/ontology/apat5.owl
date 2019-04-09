@@ -12,11 +12,11 @@
     <tpat1:property1>
       <tpat1:class2 rdf:about="http://www.ohio.edu/ontologies/apat1#i21">
         <tpat1:property2>
-          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I4193">
+          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I2197">
             <tpat1:property3>
-              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I2055">
+              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I8830">
                 <tpat1:property3>
-                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I2168">
+                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I6316">
                     <tpat1:dprop2>input1 &amp; output3</tpat1:dprop2>
                   </tpat1:class5>
                 </tpat1:property3>
@@ -25,11 +25,11 @@
           </tpat1:class3>
         </tpat1:property2>
         <tpat1:property2>
-          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I9563">
+          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I5517">
             <tpat1:property3>
-              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I3570">
+              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I7875">
                 <tpat1:property3>
-                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I5224">
+                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I3972">
                     <tpat1:dprop2>input1 &amp; output2</tpat1:dprop2>
                   </tpat1:class5>
                 </tpat1:property3>
@@ -38,11 +38,11 @@
           </tpat1:class3>
         </tpat1:property2>
         <tpat1:property2>
-          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I7519">
+          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I2178">
             <tpat1:property3>
-              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I6991">
+              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I6752">
                 <tpat1:property3>
-                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I9982">
+                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I4875">
                     <tpat1:dprop2>input1 &amp; output1</tpat1:dprop2>
                   </tpat1:class5>
                 </tpat1:property3>

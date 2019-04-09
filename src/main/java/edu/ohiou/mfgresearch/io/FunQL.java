@@ -420,7 +420,8 @@ public class FunQL {
 		RDFDatatype oArgType = 
 				Uni.of(func.getReturnType())
 					.map(c->getXSDType(c.getName()))
-					.get();		
+					.onFailure(e->e.printStackTrace(System.out))
+					.get();	
 		
 		//collect prefix map from ontology
 		//first from supplied ontology
@@ -434,7 +435,7 @@ public class FunQL {
 		//collect the input ArgBinding
 		IntStream.range(0, args.length)
 				.forEach(i->Uni.of(ArgBinding::new)
-						.set(b->b.setArgPos(1))
+						.set(b->b.setArgPos(i))
 						.set(b->b.setParamType(ResourceFactory.createResource(getParamType.apply(plan.getWhereBasicPattern(), args[i]))))
 						.set(b->b.setVar(Var.alloc(args[i].replace("?", ""))))
 						.set(b->b.setVarType(argTypes.get(i)))
@@ -540,7 +541,11 @@ public class FunQL {
 		switch (name) {
 		case "double":
 			return XSDDatatype.XSDdouble;
+		case "java.lang.Double":
+			return XSDDatatype.XSDdouble;
 		case "integer":
+			return XSDDatatype.XSDinteger;
+		case "java.lang.Integer":
 			return XSDDatatype.XSDinteger;
 		case "java.lang.String":
 			return XSDDatatype.XSDstring;
