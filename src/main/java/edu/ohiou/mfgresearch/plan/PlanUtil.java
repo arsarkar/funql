@@ -74,11 +74,12 @@ public final class PlanUtil {
 	public static Query convert2SelectQuery(Query q){
 		SelectBuilder builder = 
 		Uni.of(SelectBuilder::new)
-			.set(b->b.addPrefixes(q.getPrefixMapping().removeNsPrefix("rdf").getNsPrefixMap()))
+//			.set(b->b.addPrefixes(q.getPrefixMapping().removeNsPrefix("rdf").getNsPrefixMap()))
+			.set(b->b.addPrefixes(q.getPrefixMapping().getNsPrefixMap()))
 			.set(b->q.getProjectVars().forEach(v->b.addVar(v.toString()))) //same as adding project to algebra
 			.set(b->Omni.of(getWhereBasicPattern(q).getList())
 						.set(t->{
-							if(!t.getPredicate().getLocalName().equals("type"))
+//							if(!t.getPredicate().getLocalName().equals("type"))
 								b.addWhere(t);
 //							!t.getPredicate().getName().equals("rdf:type"), t->b.addWhere(t));
 						}))

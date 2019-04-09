@@ -22,15 +22,22 @@ import org.slf4j.LoggerFactory;
 
 import edu.ohiou.mfgresearch.lambda.Omni;
 import edu.ohiou.mfgresearch.lambda.Uni;
+import edu.ohiou.mfgresearch.lambda.functions.Func;
 import edu.ohiou.mfgresearch.lambda.functions.Suppl;
 
 public class JavaServiceInvoker extends AbstractServiceInvoker {
 
 	static Logger log = LoggerFactory.getLogger(JavaServiceInvoker.class);
 	Method method;
+	Object instance;
 		
 	public JavaServiceInvoker(Method m) {
 		this.method = m;
+	}
+	
+	public JavaServiceInvoker(Method m, Object instance){
+		this(m);
+		this.instance = instance;
 	}
 
 	@Override
@@ -41,12 +48,11 @@ public class JavaServiceInvoker extends AbstractServiceInvoker {
 	}
 	
 	private Table invokeJavaMethod(Binding input){
+		
 		return
 		Uni.of(input)
 		   .map(in->createInputArguments(in))
-		   .map(inp->{
-			   return method.invoke(null, inp);
-		   })
+		   .map(inp->method.invoke(instance, inp))
 		   .map(out->createOutputBinding(out))
 		   .onFailure(e->log.error("Failed to invoke query!!" + e.getMessage()))
 		   .get();	

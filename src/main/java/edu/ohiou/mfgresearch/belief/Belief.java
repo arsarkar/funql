@@ -90,6 +90,10 @@ public class Belief {
 //		.map(f->f.apply(aBox));
 	}
 	
+	public void addABox(Model m){
+		aBox = m;
+	}
+	
 	/**
 	 * Create an empty ABox with the supplied URL 
 	 * as base IRI

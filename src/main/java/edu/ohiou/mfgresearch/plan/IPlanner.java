@@ -221,31 +221,36 @@ public interface IPlanner {
 //						   log.info(bind.get().toString());
 					   });
 				   })
-				   .onSuccess(t->log.info(""));
+				   .onSuccess(t->log.info("Service " + invokers.get(0).toString() + " is successfully executed!"));
 				
 					//print all the bindings  
 					Omni.of(bindings).set(b1->log.info(b.toString()));
 					
 					List<Binding> bindings1 = new LinkedList<Binding>();
-					
+//					invokers.remove(0);
 					//this portion should create all individuals for unknown variable
 					Omni.of(bindings)
 						.set(b1->{
-							 //for every row of result add a new individual for the indi variable
-							   Uni.of(invokers.get(1))
+							   List<Binding> bindings2 = new LinkedList<Binding>();	 
+							   //for every row of result add a new individual for the indi variable
+							   Omni.of(invokers.subList(1, invokers.size()))
 								   .map(inv->inv.invokeService(null)) //no input needed for a supplier type method invocation
 								   .map(ts->ts.get())
 								   .set(t1->{
 									   t1.toResultSet().forEachRemaining(r->log.info(r.toString()));
 									   t1.rows().forEachRemaining(b2->{
-										   Var v2 = b2.vars().next();
+//										   Var v2 = b2.vars().next();
 	//									   log.info(bind.get().toString());
-										   Binding bind = BindingFactory.binding(v2, b2.get(v2));								   
+//										   bind = BindingFactory.binding(v2, b2.get(v2));								   
 	//									   log.info(bind.get().toString());	
-										   bind = Algebra.merge(b1, bind);
-										   bindings1.add(bind);
+										   bindings2.add(b2);										   
 									   });
 								   });
+							   Binding nBind = b1;
+							   for(Binding b2:bindings2){
+								   nBind = Algebra.merge(nBind, b2); 
+							   }
+							   bindings1.add(nBind);
 						});
 					
 					//merge with input bindings
@@ -254,10 +259,9 @@ public interface IPlanner {
 							Binding bind = Algebra.merge(b, b1);
 							res.addBinding(bind);
 						});
-			}); 
-					   
-			
-			
+					log.info("Resolution derived-->");
+					res.rows().forEachRemaining(r->log.info(r.toString()));
+			}); 		
 			
 			return res;
 		};

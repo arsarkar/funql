@@ -22,6 +22,7 @@ import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.Syntax;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.sparql.algebra.Table;
@@ -121,6 +122,29 @@ public class FunQL {
 		log.info("A-Box added : " + belief.getaBox().toString());
 		return this;
 	}
+	
+	/**
+	 * Either reads the ABox from the given URL
+	 * or just create an empty A-Box with the URL
+	 * as base IRI
+	 * @param url
+	 * @return
+	 */
+	public FunQL addABox(Model model){
+		belief.addABox(model);
+		log.info("A-Box added : " + belief.getaBox().toString());
+		return this;
+	}
+	
+	/**
+	 * Directly add the belief
+	 * @param b
+	 * @return
+	 */
+	public FunQL addBelief(Belief b){
+		this.belief = b;
+		return this;
+	}
 
 	/**
 	 * add an axiom with object property or type assertion
@@ -191,6 +215,11 @@ public class FunQL {
             contents += inputLine; 
         reader.close();
         return contents;
+	}
+	
+	public FunQL addPlan(Query query){
+		plans.add(new IPlan(query));
+		return this;
 	}
 	
 	/**
@@ -272,20 +301,18 @@ public class FunQL {
 			   	  .get();
 			   
 			   //extract var and function string
-			   return addPlan(q.replaceAll("(FUNCTION|Function|function)\\{(.|\n|\r|\t)*\\}", ""), varName, func);
+			   return addPlan(q.replaceAll("(FUNCTION|Function|function)\\{(.|\n|\r|\t)*\\}", ""), varName, func, null);
 		   })
-		   .set(p->plans.add(p))
+//		   .set(p->plans.add(p))
 		   .onFailure(e->{
 				//no function symbol. can safely pass to IPlan as raw query string
 				Uni.of(parseQuery.apply(query))	
 				   .map(IPlan::new)
 				   .set(p->p.deconstructQuery(belief.gettBox()))
-				   .set(p->plans.add(p))
-				   .get(); 
+				   .set(p->plans.add(p));
 				
 			})
-		   .set(p->log.info("Plan added \n"+p.toString()))
-		   .get();
+		   .set(p->log.info("Plan added \n"+p.toString()));
 		return this;
 	}
 	
@@ -297,7 +324,7 @@ public class FunQL {
 	 * @return
 	 * @throws Exception
 	 */
-	public IPlan addPlan(String query, String var, String function) throws Exception{
+	public FunQL addPlan(String query, String var, String function, Object instance) throws Exception{
 		IPlan plan = new IPlan(query);
 		plan.deconstructQuery(belief.gettBox());
 		if(plan.getKnownVar().contains(Var.alloc(var))){
@@ -306,7 +333,7 @@ public class FunQL {
 		//clean the function string for whitespace
 		function.replaceAll("\\s+", "");
 		//validate the function string
-		Pattern p = Pattern.compile("[a-zA-Z0-9_]+:[a-zA-Z0-9_]+\\((\\?[a-zA-Z0-9]+)(,\\?[a-zA-Z0-9]+)*\\)");
+		Pattern p = Pattern.compile("[a-zA-Z0-9_]+:[a-zA-Z0-9_]+\\((\\?[a-zA-Z0-9]+)*(,\\?[a-zA-Z0-9]+)*\\)");
 		Matcher m = p.matcher(function);
 		if(!m.matches()){
 			throw new Exception("the function " + function + " is not in right format!");
@@ -348,15 +375,16 @@ public class FunQL {
 			}
 		}
 		//incomplete! need to add input and output, as well as grounding
-		registry.addService(registerService(plan, actors[0], actors[1], var, args));
-		return plan;
+		registry.addService(registerService(plan, actors[0], actors[1], var, args), instance);
+		plans.add(plan);
+		return this;
 	}
 	
 	/**
 	 * Currently only accepts Java functions
 	 * @param plan
-	 * @param source
-	 * @param endPoint
+	 * @param source when source is supplied the end point is a static method, when not it is a lambda function 
+	 * @param endPoint either a implicitly supplied method or an automatically generated service name
 	 * @param var
 	 * @param args
 	 * @return
@@ -377,9 +405,7 @@ public class FunQL {
  		
 		//instantiate the function
 		Method func = ServiceUtil.instantiateJavaService(source, endPoint);
-		if(func==null){
-			throw new Exception("The function is not invocable!");
-		}
+		if(func==null) throw new Exception("The function is not invocable!");	
 		
 		//collect all the input argument XSD types
 		List<RDFDatatype> argTypes = 
@@ -426,12 +452,12 @@ public class FunQL {
 			.get();
 		
 		//first create the input binding list i.e. a input param list
-		List<ArgBinding> bindings = 
-				groundings.stream()
-						.collect(Collectors.toMap(ArgBinding::getParamType, p->p, (p,q)->p))
-						.values()
-						.stream()
-						.collect(Collectors.toList());
+		List<ArgBinding> bindings = groundings;
+//				groundings.stream()
+//						.collect(Collectors.toMap(ArgBinding::getParamType, p->p, (p,q)->p))
+//						.values()
+//						.stream()
+//						.collect(Collectors.toList());
 //		Omni.of(groundings)
 //			.select(g->bindings.stream().anyMatch(b->b.getParamType().equals(g.getParamType())), g->bindings.add(g));
 		

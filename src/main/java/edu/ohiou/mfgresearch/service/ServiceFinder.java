@@ -355,17 +355,21 @@ public class ServiceFinder {
 			//add the matched service invoker 
 			invokers.add(invoker);
 			
-			//add default individual supplier for the unknown variable
-			RDFNode oType = ResourceFactory.createResource(p.getVarTypes(obind.get(oGround.getParameter())).get(0));
-			ArgBinding osbind = new ArgBinding();
-			osbind.setArgPos(0);
-			osbind.setParamName(oGround.getParameter());
-			osbind.setParamType(oType);
-			osbind.setVar(outV);
-			ServiceInvoker defaultSuppl = new DefaultIndividualSupplier(osbind, b.getaBox().getNsPrefixURI(""));
-			invokers.add(defaultSuppl);
-		}				
-		
+			//add default individual supplier for the unknown variables
+			List<Var> unknownVars = p.getUnknownVars();
+			for(Var uv:unknownVars){
+				if(!uv.equals(ovv)){
+					RDFNode oType = ResourceFactory.createResource(p.getVarTypes(uv).get(0));
+					ArgBinding osbind = new ArgBinding();
+					osbind.setArgPos(0);
+					//osbind.setParamName(oGround.getParameter()); //class5
+					osbind.setParamType(oType); //class5 url
+					osbind.setVar(uv); //?c5
+					ServiceInvoker defaultSuppl = new DefaultIndividualSupplier(osbind, b.getaBox().getNsPrefixURI(""));
+					invokers.add(defaultSuppl);
+				}
+			}			
+		}			
 		return invokers;
 	}
 	
