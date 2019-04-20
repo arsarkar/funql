@@ -18,7 +18,7 @@ public class Square {
 		vertCords[2] = new double[]{origin[0], origin[1]+ls};
 		vertCords[3] = new double[]{origin[0]+ls, origin[1]+ls};
 		for(int i=0; i<4; i++){
-			vertices[i] = String.valueOf(vertCords[i][0]) + "," + String.valueOf(vertCords[i][0]);
+			vertices[i] = String.valueOf(vertCords[i][0]) + "," + String.valueOf(vertCords[i][1]);
 		}
 		return vertices;
 	}

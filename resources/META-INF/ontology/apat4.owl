@@ -11,6 +11,7 @@
   <tpat1:class1 rdf:about="http://www.ohio.edu/ontologies/apat1#i11">
     <tpat1:property1>
       <tpat1:class2 rdf:about="http://www.ohio.edu/ontologies/apat1#i21">
+
         <tpat1:dprop1>input1</tpat1:dprop1>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
       </tpat1:class2>
