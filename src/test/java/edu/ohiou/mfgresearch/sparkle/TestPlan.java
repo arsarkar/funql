@@ -121,6 +121,16 @@ public class TestPlan {
 	}
 	
 	@Test
+	public void testConstructNoWhere(){
+		
+		System.out.println("query 1-->");
+		Uni.of(()->getQuery(5))
+				.map(q->PlanUtil.getConstructBasicPattern(q))
+				.onSuccess(System.out::println);
+		
+	}
+	
+	@Test
 	public void testConstructParseConstructVars(){
 		
 		System.out.println("query 1-->");
@@ -263,6 +273,19 @@ public class TestPlan {
 					.set(b->b.addWhere("?i1", "ns:P1", "?i2"))
 					.set(b->b.addWhere("?i1", "ns:D1", "?d1"))
 					.set(b->b.addWhere("?i2", "ns:D2", "?d2"))
+					.map(b->b.build())
+					.get()
+					;
+		case 5:
+			return
+					Uni.of(ConstructBuilder::new)
+					 //create a new select query
+					.set(b->b.addPrefix("rdf", IMPM.rdf))
+					.set(b->b.addPrefix("owl", IMPM.owl))
+					.set(b->b.addPrefix("ns", ns))
+					.set(b->b.addConstruct("?i1", "ns:P2", "?m"))
+					.set(b->b.addConstruct("?i2", "ns:P2", "?m"))
+					.set(b->b.addConstruct("?m", "rdf:type", "ns:C3"))
 					.map(b->b.build())
 					.get()
 					;

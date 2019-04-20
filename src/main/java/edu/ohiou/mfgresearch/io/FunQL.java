@@ -195,7 +195,7 @@ public class FunQL {
 		        new InputStreamReader(new URL(urlString).openStream()));
 		String inputLine;
         while ((inputLine = reader.readLine()) != null)
-            contents += inputLine; 
+            contents += inputLine + "\n"; 
         reader.close();
         return contents;
 	}
@@ -212,7 +212,7 @@ public class FunQL {
 		        new InputStreamReader(new File(path).toURI().toURL().openStream()));
 		String inputLine;
         while ((inputLine = reader.readLine()) != null)
-            contents += inputLine; 
+            contents += inputLine + "\n"; 
         reader.close();
         return contents;
 	}
@@ -220,6 +220,18 @@ public class FunQL {
 	public FunQL addPlan(Query query){
 		plans.add(new IPlan(query));
 		return this;
+	}	
+	
+	/**
+	 * Add a query string (URL, file path or raw string)
+	 * without any instance for the function,
+	 * function is considered to be static or non-instance web service
+	 * @param query
+	 * @return
+	 * @throws Exception
+	 */
+	public FunQL addPlan(String query) throws Exception {
+		return addPlan(query, null);
 	}
 	
 	/**
@@ -230,7 +242,7 @@ public class FunQL {
 	 * @return
 	 * @throws Exception
 	 */
-	public FunQL addPlan(String query) throws Exception {
+	public FunQL addPlan(String query, Object instance) throws Exception {
 		if(belief.gettBox()==null){
 			throw new Exception("No Ontology (T-Box) is provided! Please add a T-box first.");
 		}
@@ -301,7 +313,7 @@ public class FunQL {
 			   	  .get();
 			   
 			   //extract var and function string
-			   return addPlan(q.replaceAll("(FUNCTION|Function|function)\\{(.|\n|\r|\t)*\\}", ""), varName, func, null);
+			   return addPlan(q.replaceAll("(FUNCTION|Function|function)\\{(.|\n|\r|\t)*\\}", ""), varName, func, instance);
 		   })
 //		   .set(p->plans.add(p))
 		   .onFailure(e->{
@@ -326,6 +338,7 @@ public class FunQL {
 	 */
 	public FunQL addPlan(String query, String var, String function, Object instance) throws Exception{
 		IPlan plan = new IPlan(query);
+		log.info("Given query-->\n"+query);
 		plan.deconstructQuery(belief.gettBox());
 		if(plan.getKnownVar().contains(Var.alloc(var))){
 			throw new Exception("the variable " + var + " is not an unknown variable!");
