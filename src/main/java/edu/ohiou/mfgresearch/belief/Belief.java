@@ -76,9 +76,10 @@ public class Belief {
 	 */
 	public void addABox(String abox) {
 		if(abox.length()==0) log.error("Given abox url is empty");
-		aBox = 
+		if(aBox == null) aBox =  ModelFactory.createDefaultModel();
 		Uni.of(ModelFactory.createDefaultModel())
-		   .set(model->model.read(abox.trim(), "RDFXML"))
+		   .map(model->model.read(abox.trim(), "RDFXML"))
+		   .set(m->aBox.add(m))
 		   .onFailure(e->{
 			   log.error("Failed to load a-box from " + abox + " due to" + e.getMessage());
 			   addEmptyABox(abox);
@@ -91,7 +92,8 @@ public class Belief {
 	}
 	
 	public void addABox(Model m){
-		aBox = m;
+		if(aBox == null) aBox =  ModelFactory.createDefaultModel();
+		aBox.add(m);
 	}
 	
 	/**

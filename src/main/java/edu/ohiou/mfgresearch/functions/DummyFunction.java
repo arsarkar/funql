@@ -24,4 +24,7 @@ public class DummyFunction {
 		return output;
 	}
 
+	public static String getType(String input){
+		return "http://www.ohio.edu/ontologies/tpat1#class4";
+	}
 }

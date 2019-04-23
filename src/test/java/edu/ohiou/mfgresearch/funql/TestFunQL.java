@@ -295,4 +295,19 @@ public class TestFunQL {
 						 .getaBox().write(os))
 			    .onFailure(e->e.printStackTrace());
 	}
+	
+	@Test
+	public void testSamplePattern7() {		
+			Uni.of("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat7.owl")
+				.map(File::new)
+				.map(FileOutputStream::new)
+			    .map(os->Uni.of(FunQL::new).get()
+						 .addTBox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\tpat1.owl")
+						 .addABox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat1.owl")
+						 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\sample-pattern6.q")
+						 .execute()
+						 .getBelief()
+						 .getaBox().write(os))
+			    .onFailure(e->e.printStackTrace());
+	}
 }

@@ -74,6 +74,8 @@ public class FunQL {
 	public Cons<String> parseOntologyToBelief = bs->belief.addTBox(bs.trim()); //is assumed to be from url but can also be from file, may be handled internally by JENA API
 	public Cons<String> parseKnowledgeToABox = kb->belief.addABox(kb.trim());	
 	
+	public boolean setLocal = false;
+	
 	//utility functions 
 	Func<String, Func<String, List<String>>> matchAll = pattern->{
 		return
@@ -320,7 +322,7 @@ public class FunQL {
 				//no function symbol. can safely pass to IPlan as raw query string
 				Uni.of(parseQuery.apply(query))	
 				   .map(IPlan::new)
-				   .set(p->p.deconstructQuery(belief.gettBox()))
+				   .set(p->p.deconstructQuery(belief.gettBox())) 
 				   .set(p->plans.add(p));
 				
 			})
@@ -625,26 +627,46 @@ public class FunQL {
 	public Belief getBelief(){
 		return belief;
 	}
+	
+	/**
+	 * Return plans
+	 * @return
+	 */
+	public List<IPlan> getPlans(){
+		return plans;
+	}
+	
+	/**
+	 * Return plan by index (in sequence the plan is added)
+	 * @return
+	 */
+	public IPlan getPlan(int index){
+		return plans.get(0);
+	}
 
 	public FunQL execute() {
 		
 		Cons<IPlan> executeA1Plan = p->{
-			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());
+//			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
+			Function<Query, Table> queryRes = p.getBinding()==null?
+												IPlanner.createQueryExecutor(belief.getaBox()):
+												IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());	
 			//display the result, should come from visualization package
 			Function<Table, String> display = tab->{
 				log.info(tab.toString());
 				return "";
 			};
-			queryRes.andThen(display).apply(selectQuery);
+			queryRes.andThen(display).apply(p.getQuery());
 		};	
 		
 		Cons<IPlan> executeB1Plan = p->{
-			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
-			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
-			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
-			BasicPattern updatedPattern = queryRes.andThen(expander).andThen(updater).apply(selectQuery);
+//			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
+			Function<Query, BasicPattern> queryRes = p.getBinding()==null?
+												IPlanner.createConstructExecutor(belief.getaBox()):
+												IPlanner.createConstructExecutorWithBind(belief.getaBox(), p.getBinding());	
+//			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
+			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
+			BasicPattern updatedPattern = queryRes.andThen(updater).apply(p.getQuery());
 			Uni.of(updatedPattern)
 				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
 				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));
@@ -656,7 +678,9 @@ public class FunQL {
 		
 		Cons<IPlan> executeB2Plan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
+			Function<Query, Table> queryRes = p.getBinding()==null?
+												IPlanner.createQueryExecutor(belief.getaBox()):
+												IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());	
 			RDFNode oType = ResourceFactory.createResource(p.getUnknownVarType());
 			ArgBinding oBind = new ArgBinding();
 			oBind.setArgPos(0);
@@ -666,7 +690,7 @@ public class FunQL {
 			Function<Table, Table> mapUnknownVar = IPlanner.createServiceResultMapper_deafault(invoker);
 			
 			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
-			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
+			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
 				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
@@ -676,7 +700,9 @@ public class FunQL {
 		
 		Cons<IPlan> executeB2APlan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
+			Function<Query, Table> queryRes = p.getBinding()==null?
+												IPlanner.createQueryExecutor(belief.getaBox()):
+												IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());	
 			
 			Function<Table, Table> mapUnknownVar;
 			//for now it is considered that B2A plans need no function as there is no unkown data variable in the construct
@@ -707,7 +733,9 @@ public class FunQL {
 		
 		Cons<IPlan> executeB2CPlan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
-			Function<Query, Table> queryRes = IPlanner.createQueryExecutor(belief.getaBox());	
+			Function<Query, Table> queryRes = p.getBinding()==null?
+													IPlanner.createQueryExecutor(belief.getaBox()):
+													IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());	;	
 			
 			ServiceFinder servieFinder = new ServiceFinder(p, belief, registry);
 			List<Service> servicesFound = servieFinder.findService();
@@ -716,7 +744,7 @@ public class FunQL {
 			Function<Table, Table> mapUnknownVar = IPlanner.createServiceResultMapper(serviceInvoker);
 			
 			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
-			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
+			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
 				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))

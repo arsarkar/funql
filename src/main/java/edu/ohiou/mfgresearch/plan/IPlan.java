@@ -10,6 +10,8 @@ import java.util.function.Function;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolutionMap;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.core.BasicPattern;
 import org.apache.jena.sparql.core.Var;
 import org.semanticweb.owlapi.model.IRI;
@@ -57,6 +59,8 @@ public class IPlan {
 	public PlanType type;
 	private BasicPattern constructBP = null;
 	private BasicPattern whereBP = null;
+
+	QuerySolutionMap binds =null;
 	
 	
 	public BasicPattern getConstructBasicPattern() {
@@ -117,6 +121,15 @@ public class IPlan {
 	 */
 	public void createQuery(){
 		
+	}
+	
+	public void addVarBinding(String var, RDFNode node){
+		if(binds==null) binds = new QuerySolutionMap();
+		binds.add(var, node);
+	}
+	
+	public QuerySolutionMap getBinding(){
+		return binds;
 	}
 	
 	Function<Query, PlanType> detectQueryType = q->{

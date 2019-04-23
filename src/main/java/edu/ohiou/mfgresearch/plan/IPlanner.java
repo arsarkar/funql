@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import org.apache.jena.arq.querybuilder.UpdateBuilder;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.sparql.algebra.Algebra;
@@ -100,6 +101,50 @@ public interface IPlanner {
 					.map(qe->qe.execSelect())
 					.map(PlanUtil::toBindings)
 					.get();
+		};
+	}
+	
+	public static Function<Query, Table> createQueryExecutorWithBind(Model m, QuerySolution b){
+		return q->{
+			log.info("Query being performed -->"+q.toString());
+			return
+			Uni.of(q)
+					.map(q0->QueryExecutionFactory.create(q, m, b))
+					.map(qe->qe.execSelect())
+					.map(PlanUtil::toBindings)
+					.get();
+		};
+	}
+	
+	/**
+	 * Given a query, create a function which can be executed in 
+	 * the future to receive the result of the query performed against the given A-box 
+	 * of the Belief
+	 * @param m
+	 * @param p
+	 * @return Table
+	 */
+	public static Function<Query, BasicPattern> createConstructExecutor(Model m){
+		return q->{
+			log.info("Query being performed -->"+q.toString());
+			BasicPattern pattern = new BasicPattern();			
+			Uni.of(q)
+					.map(q0->QueryExecutionFactory.create(q, m))
+					.map(qe->qe.execConstructTriples())
+					.set(ti->ti.forEachRemaining(t->pattern.add(t)));
+			return pattern;
+		};
+	}
+	
+	public static Function<Query, BasicPattern> createConstructExecutorWithBind(Model m, QuerySolution b){
+		return q->{
+			log.info("Query being performed -->"+q.toString());
+			BasicPattern pattern = new BasicPattern();			
+			Uni.of(q)
+					.map(q0->QueryExecutionFactory.create(q, m, b))
+					.map(qe->qe.execConstructTriples())
+					.set(ti->ti.forEachRemaining(t->pattern.add(t)));
+			return pattern;
 		};
 	}
 
