@@ -9,6 +9,12 @@ import org.apache.jena.atlas.logging.Log;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.riot.system.PrefixMap;
+import org.apache.jena.riot.system.PrefixMapFactory;
+import org.apache.jena.shared.PrefixMapping;
+import org.apache.jena.sparql.core.BasicPattern;
+import org.apache.jena.sparql.engine.binding.Binding;
+import org.apache.jena.sparql.pfunction.library.version;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -193,4 +199,44 @@ public class Belief {
 				   .asPrefixOWLDocumentFormat()
 				   .getPrefixName2PrefixMap();					
 	}
+	 
+	 /**
+	  * Write basic pattern
+	  * @param pat
+	  * @return
+	  */
+	 public String writePattern(BasicPattern pat) {
+		 StringBuilder s = new StringBuilder();
+		 PrefixMapping pm = PrefixMapping.Factory.create();
+		 //getall prefix 
+		 Map<String, String> nsMap = tBox.asGraphModel().getNsPrefixMap();
+		 nsMap.putAll(aBox.size()>0?aBox.getNsPrefixMap():new HashMap<String, String>());
+		 nsMap.putAll(localABox.size()>0?localABox.getNsPrefixMap():new HashMap<String, String>());
+		 pm.setNsPrefixes(nsMap);
+		 pat.forEach(t->{
+			 s.append(t.getSubject().toString(pm)).append(" ");
+			 s.append(t.getPredicate().toString(pm)).append(" ");
+			 s.append(t.getObject().toString(pm)).append("\n");
+		 });		 
+		 return s.toString();
+	 }
+	 
+	 /**
+	  * Write basic pattern
+	  * @param pat
+	  * @return
+	  */
+	 public String writeBinding(Binding bind) {
+		 StringBuilder s = new StringBuilder();
+		 PrefixMapping pm = PrefixMapping.Factory.create();
+		 //getall prefix 
+		 Map<String, String> nsMap = tBox.asGraphModel().getNsPrefixMap();
+		 nsMap.putAll(aBox.size()>0?aBox.getNsPrefixMap():new HashMap<String, String>());
+		 nsMap.putAll(localABox.size()>0?localABox.getNsPrefixMap():new HashMap<String, String>());
+		 pm.setNsPrefixes(nsMap);
+		 bind.vars().forEachRemaining(v->{
+			 s.append(v.toString()).append("->").append(bind.get(v).toString(pm)).append(", ");
+		 });
+		 return s.toString().substring(0, s.length()-2);
+	 }
 }

@@ -393,9 +393,7 @@ public final class PlanUtil {
 			  varComb.add(comb);
 		  }
 		  return varComb;
-	 }
-	 
-	 
+	 }	 
 
 	/**
 	 * an OpVisitor

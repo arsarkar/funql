@@ -668,7 +668,7 @@ public class FunQL {
 			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(updater).apply(p.getQuery());
 			Uni.of(updatedPattern)
-				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
+				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+belief.writePattern(pat)))
 				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));
 		}; 
 		
@@ -693,7 +693,7 @@ public class FunQL {
 			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
-				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
+				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+belief.writePattern(pat)))
 				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));
 			
 		};
@@ -727,7 +727,7 @@ public class FunQL {
 			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
-				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
+				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+belief.writePattern(pat)))
 				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));			
 		};
 		
@@ -747,7 +747,7 @@ public class FunQL {
 			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
-				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+pat.toString()))
+				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+belief.writePattern(pat)))
 				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));			
 		};
 		
