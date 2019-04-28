@@ -12,6 +12,7 @@ import org.apache.jena.graph.Triple;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.sparql.algebra.Algebra;
 import org.apache.jena.sparql.algebra.OpVisitorBase;
@@ -72,22 +73,12 @@ public final class PlanUtil {
 	 * @return
 	 */
 	public static Query convert2SelectQuery(Query q){
-		SelectBuilder builder = 
-		Uni.of(SelectBuilder::new)
-//			.set(b->b.addPrefixes(q.getPrefixMapping().removeNsPrefix("rdf").getNsPrefixMap()))
-			.set(b->b.addPrefixes(q.getPrefixMapping().getNsPrefixMap()))
-			.set(b->q.getProjectVars().forEach(v->b.addVar(v.toString()))) //same as adding project to algebra
-			.set(b->Omni.of(getWhereBasicPattern(q).getList())
-						.set(t->{
-//							if(!t.getPredicate().getLocalName().equals("type"))
-								b.addWhere(t);
-//							!t.getPredicate().getName().equals("rdf:type"), t->b.addWhere(t));
-						}))
-			.get();
-		//add group by
-		if(q.hasGroupBy()) 
-			q.getGroupBy().forEachExpr((v, e)->builder.addGroupBy(v, e));
-		return builder.build();
+		Query query = QueryFactory.create();
+		query.setQuerySelectType();
+		query.setPrefixMapping(q.getPrefixMapping());
+		q.getProjectVars().forEach(v->query.addResultVar(v));
+		query.setQueryPattern(q.getQueryPattern());
+		return query;
 	}	
 
 	/**

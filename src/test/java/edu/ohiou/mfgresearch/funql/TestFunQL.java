@@ -17,7 +17,7 @@ import edu.ohiou.mfgresearch.lambda.Uni;
 import edu.ohiou.mfgresearch.simplanner.IMPM;
 
 public class TestFunQL {
-	String folder = "C:/Users/sormaz/Documents/GitHub/";
+	String folder = "C:/Users/sarkara1/git/";
 
 	@Before
 	public void setUp() throws Exception {
@@ -310,4 +310,20 @@ public class TestFunQL {
 						 .getaBox().write(os))
 			    .onFailure(e->e.printStackTrace());
 	}
+	
+	@Test
+	public void testSamplePattern8() {		
+			Uni.of("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat9.owl")
+				.map(File::new)
+				.map(FileOutputStream::new)
+			    .map(os->Uni.of(FunQL::new).get()
+						 .addTBox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\tpat1.owl")
+						 .addABox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat8.owl")
+						 .addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\sample-pattern7.q")
+						 .execute()
+						 .getBelief()
+						 .getaBox().write(os))
+			    .onFailure(e->e.printStackTrace());
+	}
+	
 }

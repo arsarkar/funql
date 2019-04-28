@@ -23,7 +23,10 @@ import edu.ohiou.mfgresearch.lambda.Uni;
 import edu.ohiou.mfgresearch.plan.IPlan;
 import edu.ohiou.mfgresearch.plan.PlanUtil;
 import edu.ohiou.mfgresearch.plan.IPlan.PlanType;
+import edu.ohiou.mfgresearch.service.base.Grounding;
+import edu.ohiou.mfgresearch.service.base.Grounding_;
 import edu.ohiou.mfgresearch.service.base.Input;
+import edu.ohiou.mfgresearch.service.base.InputGrounding;
 import edu.ohiou.mfgresearch.service.base.Output;
 import edu.ohiou.mfgresearch.service.base.OutputGrounding;
 import edu.ohiou.mfgresearch.service.base.Service;
@@ -99,20 +102,24 @@ public class ServiceFinder {
 		for(Var ov:oVars){
 			List<String> oTypes = p.getVarTypes(ov);
 			for(String c:oTypes){
-				for(Service s: serviceList){
+				for (Service s : serviceList) {
 					Output out = s.getServiceProfile().getOutput();
-					IRI servOType = out.getParameterType().contains("http")?
-							IRI.create(out.getParameterType()):
-								ServiceUtil.mapIRI(s, out.getParameterType());
-							if(servOType.equals(IRI.create(c))){
-								if(!matchedServices.contains(s)){
-									matchedServices.add(s);
-									outParamBinding.put(out.getParameter(), ov);
-								}
-							}
+					IRI servOType = out.getParameterType().contains("http") ? IRI.create(out.getParameterType())
+							: ServiceUtil.mapIRI(s, out.getParameterType());
+					if (servOType.equals(IRI.create(c))) {
+						if (!matchedServices.contains(s)) {
+							matchedServices.add(s);
+							outParamBinding.put(out.getParameter(), ov);
+						}
+					}
 				}
 			}			
 		}
+		
+		for(Service s:serviceList){
+//			s.getServiceProfile().getInput().
+		}
+		
 		outParamBindings.add(outParamBinding);
 	}
 	
@@ -141,7 +148,54 @@ public class ServiceFinder {
 		List<List<String>> knownVarTypes = new LinkedList<List<String>>(); //get it before hand from IPlan analysis
 		knownVar.forEach(v->{
 			knownVarTypes.add(p.getVarTypes(v));
-		});		
+		});	
+		
+		
+//		List<String> knownVarTypeSingle = new LinkedList<>();
+//		for(List<String> types:knownVarTypes){
+//			if(types.size() > 0 ) {
+//				knownVarTypeSingle.add(types.get(0).trim());
+//			}
+//			else {
+//				knownVar.remove(knownVarTypeSingle.size()-1);
+//			}
+//		}
+//		//directly get the parameter type from service
+//		Map<String, Var> inParBind = new HashMap<String, Var>();
+//		for(int servi=0; servi<serviceList.size(); servi++){
+//			List<InputGrounding> inputGroundings = serviceList.get(servi).getServiceGrounding().getInputGrounding();
+//			List<Input> inputs = serviceList.get(servi).getServiceProfile().getInput();
+//			for(InputGrounding in: inputGroundings){
+//				for(Input i:inputs){
+//					if(i.getParameter().equals(in.getParameter())){
+//						IRI ipType = i.getParameterType().contains("http")?IRI.create(i.getParameterType()):
+//																		  ServiceUtil.mapIRI(serviceList.get(servi), 
+//																		  i.getParameterType());
+//						Var v = knownVar.get(knownVarTypeSingle.indexOf(ipType.toString()));
+//						inParBind.put(in.getParameter(), v);
+//					}
+//				}
+//			}
+//		}
+//		
+//		if(!matchedServices.contains(serviceList.get(0))){
+//			matchedServices.add(serviceList.get(0));
+//			inParamBindings.add(inParBind);
+//		}
+//		else{
+//			if(inParamBindings.size()-1>=matchedServices.indexOf(serviceList.get(0)))
+//				inParamBindings.set(matchedServices.indexOf(serviceList.get(0)), inParBind);
+//			else
+//				inParamBindings.add(inParBind);
+//		}
+		
+		
+		//if known var type is not found, ignore the parameter
+		for(int i=0; i<knownVarTypes.size(); i++){
+			if(knownVarTypes.get(i)!=null){
+				if(knownVarTypes.get(i).size()==0) knownVar.remove(i);
+			}else knownVar.remove(i);
+		}
 		
 		//make all combination  
 		List<List<Var>> varComb = PlanUtil.combinations(knownVar);
@@ -154,6 +208,7 @@ public class ServiceFinder {
 			for(int servi=0; servi<serviceList.size(); servi++){
 				
 				List<Input> inParams = serviceList.get(servi).getServiceProfile().getInput();
+				
 				Map<String, Var> inParamBinding = new HashMap<String, Var>(); //pair of param name and var comb
 					
 				//for each variable try to find if any service parameter matches any of the possible types of known variable
@@ -166,7 +221,7 @@ public class ServiceFinder {
 					for(String varType: varTypes){ //need to first check the asserted type and then the inferred type
 						for(Input param:inParams){
 							IRI ipType = param.getParameterType().contains("http")?IRI.create(param.getParameterType()):ServiceUtil.mapIRI(serviceList.get(servi), param.getParameterType());
-							if(IRI.create(varType).equals(ipType)){ //may need to add prefix
+							if(IRI.create(varType).equals(ipType) && v.equals(Var.alloc(param.getParameter().replace("?", "")))){ //may need to add prefix
 								//if matched store the binding
 								inParamBinding.put(param.getParameter(), v);
 								doBreak = true;
@@ -256,8 +311,7 @@ public class ServiceFinder {
 						Omni.of(ig.getGrounding())        //get all the groundings 
 							//for each grounding find the triple having the same datatype with the grounding
 							//if not present then create new but for both case add the grounding as new argument grounding
-							.set(g->{
-						 		  	
+							.set(g->{						 		  	
 									//find the triples in the where clause which has the datatype in the grounding as predicate
 									String uri = g.getDataProperty().contains("http")?g.getDataProperty():ServiceUtil.mapIRI(service, g.getDataProperty()).getIRIString();
 									Triple dTypeT = Omni.of(planInPGnds)
@@ -373,7 +427,78 @@ public class ServiceFinder {
 		return invokers;
 	}
 	
+	public void createServiceInvokers() throws Exception {
+		
+		List<Service> serviceList = Omni.of(reg.getServices()).map(sn->reg.getService(sn)).toList();
+		List<Var> uVs = p.getUnknownVars();
+		
+		//get unknown variables which are data variables
+		List<Var> uDvs = Omni.of(uVs).filter(v->p.isDataVar(v)).toList();			
+		
+		//get skolem services for unknown data variables 
+		Map<Var, String> uDServs = new HashMap<Var, String>();
+		for(Var v:uDvs){
+			for(Service s:serviceList){
+				ServiceInvoker invoker = reg.getServiceInvoker(s); 
+				String op = s.getServiceProfile().getOutput().getParameter();
+				if(s.getServiceGrounding().getOutputGrounding().getParameter().equals(op)){
+					if(s.getServiceGrounding().getOutputGrounding().getGrounding().stream().anyMatch(og->og.getArg().equals(v.toString()))){
+						uDServs.put(v, s.getServiceProfile().getServiceName());
+						invoker.setOutputArgument(createOutputGrounding(v, s.getServiceGrounding().getOutputGrounding()));
+						break;
+					}
+					else throw new Exception("No output grounding is found for the unknown variable " + v.toString());
+				}
+				else throw new Exception("No output grounding is found for the output parameter.");
+			}
+		}
+		
+		//try to match the input of the services found
+		for(Var ov: uDServs.keySet()){
+			String servName = uDServs.get(ov);
+			Service serv = reg.getService(servName);
+			ServiceInvoker invoker = reg.getServiceInvoker(serv); 
+			List<Var> kVs = p.getKnownVar();
+			List<Input> inputs = serv.getServiceProfile().getInput();
+			for(InputGrounding ig: serv.getServiceGrounding().getInputGrounding()){
+				for(Grounding g:ig.getGrounding()){
+//					invoker.setInputArgument(createInputGrounding(g, "?"));
+				}
+			};
+		}
+		
+	}
 	
+	public ArgBinding createOutputGrounding(Var ov, OutputGrounding oGround) throws Exception{
+		 //add output grounding
+		 String ogDType = oGround.getGrounding().get(0).getDataType();
+		 RDFDatatype dType = ogDType.contains("http")
+				 					?new XSDDatatype(ogDType.substring(ogDType.indexOf("#")+1, ogDType.length()))
+				 					:new XSDDatatype(oGround.getGrounding().get(0).getDataType().replaceAll("xsd:", ""));
+		 ArgBinding oArgBind = Uni.of(ArgBinding::new)
+							  .set(ab->ab.setArgPos(oGround.getGrounding().get(0).getArg())) //set argument position
+							  .set(ab->ab.setParamName(oGround.getParameter())) //set the parameter
+							  .set(ab->ab.setVar(ov)) //set the variable
+							  .set(ab->ab.setVarType(dType)) //set the variable type
+							  .get();
+		 if(oArgBind==null) throw new Exception("Output binding could not be created!");
+		 return oArgBind;
+	}
+	
+	public ArgBinding createInputGrounding(Var iv, Grounding iGround){
+//		Var dVar = Var.alloc(dTypeT.getObject());
+		RDFDatatype dType = iGround.getDataType().contains("http")
+												 ?new XSDDatatype(iGround.getDataType().substring(iGround.getDataType().indexOf("#")+1, iGround.getDataType().length()))
+												 :new XSDDatatype(iGround.getDataType().replaceAll("xsd:", ""));
+		ArgBinding iBind = Uni.of(ArgBinding::new)
+							  .set(ab->ab.setArgPos(iGround.getArg())) //set argument position
+//							  .set(ab->ab.setParamName(iGround.getParameter())) //set the parameter
+							  .set(ab->ab.setVar(iv)) //set the variable
+							  .set(ab->ab.setVarType(dType)) //set the variable type
+							  .onFailure(e->log.error("Error in creating the input param grounding due to "+ e.getMessage()))
+							  .get();
+		return iBind;
+	}
 	
 //	public List<Service> filterServiceonInputTypes(List<Service> services, List<Var> vars){
 //		
@@ -385,7 +510,7 @@ public class ServiceFinder {
 //		
 //		
 //		
-//		return new HashMap<String, String>();
+//		return new HashMap<String,String>();
 //	}
 	
 ////	/**

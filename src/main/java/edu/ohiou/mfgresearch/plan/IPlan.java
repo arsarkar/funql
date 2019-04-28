@@ -438,6 +438,10 @@ public class IPlan {
 		}
 		return vs;
 	}
+	
+	public boolean isDataVar(Var v){
+		return isDataVar(v);
+	}
 
 	/**
 	 * 

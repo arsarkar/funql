@@ -23,6 +23,10 @@ public class DummyFunction {
 		output[2] = label + " truth!";
 		return output;
 	}
+	
+	public static String calDummyConcat(String in1, String in2, String in3){
+		return in1 + "," + in2 + "," + in3;
+	}
 
 	public static String getType(String input){
 		return "http://www.ohio.edu/ontologies/tpat1#class4";

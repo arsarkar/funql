@@ -8,15 +8,16 @@
   <owl:Ontology rdf:about="http://www.ohio.edu/ontologies/apat1">
     <owl:imports rdf:resource="http://www.ohio.edu/ontologies/tpat1"/>
   </owl:Ontology>
-  <tpat1:class1 rdf:about="http://www.ohio.edu/ontologies/apat1#i11">
+  <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat1#i11">
+    <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class1"/>
     <tpat1:property1>
-      <tpat1:class2 rdf:about="http://www.ohio.edu/ontologies/apat1#i21">
+      <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat1#i21">
         <tpat1:property2>
-          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I2270">
+          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I7072">
             <tpat1:property3>
-              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I9856">
+              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I7899">
                 <tpat1:property3>
-                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I3236">
+                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I2890">
                     <tpat1:dprop2>input1 &amp; output3</tpat1:dprop2>
                   </tpat1:class5>
                 </tpat1:property3>
@@ -25,11 +26,11 @@
           </tpat1:class3>
         </tpat1:property2>
         <tpat1:property2>
-          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I1090">
+          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I1874">
             <tpat1:property3>
-              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I3924">
+              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I6998">
                 <tpat1:property3>
-                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I3808">
+                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I1191">
                     <tpat1:dprop2>input1 &amp; output2</tpat1:dprop2>
                   </tpat1:class5>
                 </tpat1:property3>
@@ -38,11 +39,11 @@
           </tpat1:class3>
         </tpat1:property2>
         <tpat1:property2>
-          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I5235">
+          <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I7255">
             <tpat1:property3>
-              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I1788">
+              <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I1801">
                 <tpat1:property3>
-                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I9647">
+                  <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I6217">
                     <tpat1:dprop2>input1 &amp; output1</tpat1:dprop2>
                   </tpat1:class5>
                 </tpat1:property3>
@@ -50,10 +51,9 @@
             </tpat1:property3>
           </tpat1:class3>
         </tpat1:property2>
+        <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class2"/>
         <tpat1:dprop1>input1</tpat1:dprop1>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-      </tpat1:class2>
+      </owl:NamedIndividual>
     </tpat1:property1>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  </tpat1:class1>
+  </owl:NamedIndividual>
 </rdf:RDF>

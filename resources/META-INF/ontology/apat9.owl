@@ -1,0 +1,41 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.ohio.edu/ontologies/apat1#"
+    xmlns:tpat1="http://www.ohio.edu/ontologies/tpat1#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://www.ohio.edu/ontologies/apat6">
+    <owl:imports rdf:resource="http://www.ohio.edu/ontologies/tpat1"/>
+  </owl:Ontology>
+  <owl:Class rdf:about="http://www.ohio.edu/ontologies/tpat1#class2"/>
+  <owl:Class rdf:about="http://www.ohio.edu/ontologies/tpat1#class1"/>
+  <owl:ObjectProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#property1"/>
+  <owl:DatatypeProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#dprop1"/>
+  <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat6#i11">
+    <tpat1:property5>
+      <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I3336">
+        <tpat1:dprop5>input1,input3,input4</tpat1:dprop5>
+      </tpat1:class5>
+    </tpat1:property5>
+    <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class1"/>
+    <tpat1:property2>
+      <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat1#i21">
+        <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class2"/>
+        <tpat1:dprop1>input1</tpat1:dprop1>
+      </owl:NamedIndividual>
+    </tpat1:property2>
+    <tpat1:property3>
+      <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat6#i31">
+        <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class3"/>
+        <tpat1:dprop3>input3</tpat1:dprop3>
+      </owl:NamedIndividual>
+    </tpat1:property3>
+    <tpat1:property4>
+      <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat6#i41">
+        <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class4"/>
+        <tpat1:dprop4>input4</tpat1:dprop4>
+      </owl:NamedIndividual>
+    </tpat1:property4>
+  </owl:NamedIndividual>
+</rdf:RDF>

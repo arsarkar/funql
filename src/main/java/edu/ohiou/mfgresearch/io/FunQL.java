@@ -451,7 +451,14 @@ public class FunQL {
 		IntStream.range(0, args.length)
 				.forEach(i->Uni.of(ArgBinding::new)
 						.set(b->b.setArgPos(i))
-						.set(b->b.setParamType(ResourceFactory.createResource(getParamType.apply(plan.getWhereBasicPattern(), args[i]))))
+						.set(b->{
+							//get all triples with dtype property and the arg is as var in object and then get the 
+							//get the type of individual variable of type
+							List<Triple> t = plan.getDTypeTriples(plan.getWhereBasicPattern(), Var.alloc(args[i].replace("?", "")), false);
+							dataProeprties.put(args[i], t.get(0).getPredicate().getURI()); // save the dataProperty for later against the var
+							b.setParamName(t.get(0).getSubject().toString());
+							b.setParamType(ResourceFactory.createResource(plan.getVarTypes(Var.alloc(t.get(0).getSubject())).get(0)));
+						})
 						.set(b->b.setVar(Var.alloc(args[i].replace("?", ""))))
 						.set(b->b.setVarType(argTypes.get(i)))
 						.set(b->groundings.add(b))
@@ -462,7 +469,14 @@ public class FunQL {
 		ArgBinding oGrounding = 
 		Uni.of(ArgBinding::new)
 			.set(b->b.setArgPos(0))
-			.set(b->b.setParamType(ResourceFactory.createResource(getParamType.apply(plan.getConstructBasicPattern(), var))))
+			.set(b->{
+				//get all triples with dtype property and the arg is as var in object and then get the 
+				//get the type of individual variable of type
+				List<Triple> t = plan.getDTypeTriples(plan.getConstructBasicPattern(), Var.alloc(var.replace("?", "")), false);
+				dataProeprties.put(var, t.get(0).getPredicate().getURI()); // save the dataProperty for later against the var
+				b.setParamName(t.get(0).getSubject().toString());
+				b.setParamType(ResourceFactory.createResource(plan.getVarTypes(Var.alloc(t.get(0).getSubject())).get(0)));
+			})
 			.set(b->b.setVar(Var.alloc(var.replace("?", ""))))
 			.set(b->b.setVarType(oArgType))
 			.get();
@@ -484,7 +498,7 @@ public class FunQL {
 		//for each input parameter
 		Omni.of(bindings)
 			.set(b->Uni.of(Input::new)//create new Input Parameter
-						.set(in->in.setParameter(b.getParamType().asNode().getLocalName()))
+						.set(in->in.setParameter(b.getParamName()))
 						.set(in->in.setParameterType(b.getParamType().asNode().getURI()))
 						.set(in->inputs.add(in))
 						.set(in->Uni.of(InputGrounding::new)//create InputGrounding
@@ -724,7 +738,7 @@ public class FunQL {
 //			}			
 			
 			Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
-			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(belief.getaBox());
+			Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
 			BasicPattern updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);
 			Uni.of(updatedPattern)
 				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+belief.writePattern(pat)))
@@ -760,7 +774,7 @@ public class FunQL {
 				.select(p->p.type==IPlan.PlanType.B2, executeB2Plan)
 				.select(p->p.type==IPlan.PlanType.B2A, executeB2APlan)
 				.select(p->p.type==IPlan.PlanType.B2C, executeB2CPlan)
-				.onFailure(e->e.printStackTrace());;
+				.onFailure(e->e.printStackTrace());
 		}		
 		
 		return this;
