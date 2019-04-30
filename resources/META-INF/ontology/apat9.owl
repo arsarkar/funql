@@ -14,7 +14,7 @@
   <owl:DatatypeProperty rdf:about="http://www.ohio.edu/ontologies/tpat1#dprop1"/>
   <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat6#i11">
     <tpat1:property5>
-      <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I3336">
+      <tpat1:class5 rdf:about="http://www.ohio.edu/ontologies/apat1#class5_I9201">
         <tpat1:dprop5>input1,input3,input4</tpat1:dprop5>
       </tpat1:class5>
     </tpat1:property5>
