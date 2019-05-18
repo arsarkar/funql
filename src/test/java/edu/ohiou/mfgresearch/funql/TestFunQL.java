@@ -326,4 +326,41 @@ public class TestFunQL {
 			    .onFailure(e->e.printStackTrace());
 	}
 	
+	@Test
+	public void testSelectPattern8() {		
+		Uni.of(FunQL::new)
+		   .set(q->q.addTBox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\tpat1.owl"))
+		   .set(q->q.addABox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat8.owl"))
+		   .set(q->q.addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\select-pattern-7.q"))
+		   .set(q->q.setSelectPostProcess(tab->{
+			   System.out.println("The result of the query is-->");
+			   System.out.println(tab.toString());
+			   return tab;
+		   }))
+		   .map(q->q.execute())
+		   .onFailure(e->e.printStackTrace(System.out))
+		   ;	
+	}
+	
+	@Test
+	public void testConstructIndiFunc1() {		
+		Uni.of(FunQL::new)
+		   .set(q->q.addTBox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\tpat1.owl"))
+		   .set(q->q.addABox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat1.owl"))
+		   .set(q->q.addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\construct-pattern1.q"))
+		   .map(q->q.execute())
+		   .onFailure(e->e.printStackTrace(System.out))
+		   ;	
+	}
+	
+	@Test
+	public void testConstructInsert1() {		
+		Uni.of(FunQL::new)
+		   .set(q->q.addTBox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\tpat1.owl"))
+		   .set(q->q.addABox("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\ontology\\apat8.owl"))
+		   .set(q->q.addPlan("C:\\Users\\sarkara1\\git\\funql\\resources\\META-INF\\query\\insert-pattern3.q"))
+		   .map(q->q.execute())
+		   .onFailure(e->e.printStackTrace(System.out))
+		   ;	
+	}
 }

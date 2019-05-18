@@ -6,9 +6,12 @@ import java.util.List;
 import org.apache.jena.arq.querybuilder.ConstructBuilder;
 import org.apache.jena.arq.querybuilder.SelectBuilder;
 import org.apache.jena.arq.querybuilder.UpdateBuilder;
+import org.apache.jena.atlas.lib.Sink;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.graph.impl.CollectionGraph;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -21,8 +24,27 @@ import org.apache.jena.sparql.algebra.OpVisitorBase;
 import org.apache.jena.sparql.algebra.op.OpBGP;
 import org.apache.jena.sparql.algebra.walker.Walker;
 import org.apache.jena.sparql.core.BasicPattern;
+import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.graph.GraphFactory;
+import org.apache.jena.sparql.modify.UsingList;
+import org.apache.jena.sparql.modify.request.UpdateAdd;
+import org.apache.jena.sparql.modify.request.UpdateClear;
+import org.apache.jena.sparql.modify.request.UpdateCopy;
+import org.apache.jena.sparql.modify.request.UpdateCreate;
+import org.apache.jena.sparql.modify.request.UpdateDataDelete;
+import org.apache.jena.sparql.modify.request.UpdateDataInsert;
+import org.apache.jena.sparql.modify.request.UpdateDeleteWhere;
+import org.apache.jena.sparql.modify.request.UpdateDrop;
+import org.apache.jena.sparql.modify.request.UpdateLoad;
+import org.apache.jena.sparql.modify.request.UpdateModify;
+import org.apache.jena.sparql.modify.request.UpdateMove;
+import org.apache.jena.sparql.modify.request.UpdateVisitor;
+import org.apache.jena.sparql.sse.SSE;
+import org.apache.jena.update.Update;
 import org.apache.jena.update.UpdateAction;
+import org.apache.jena.update.UpdateExecutionFactory;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateRequest;
 import org.apache.jena.vocabulary.DC_11;
 import org.junit.Before;
 import org.junit.Test;
@@ -172,6 +194,115 @@ public class SparkleUpdate {
 				.onFailure(e->e.printStackTrace())
 				//.onSuccess(o->SSE.write(o));
 				;
+		
+	}
+	
+	@Test
+	public void executeInsert1(){
+		UpdateRequest request = UpdateFactory.create();
+//		request.add("CREATE GRAPH <http://example/apat1>");
+//		request.add("LOAD <file:resources/META-INF/ontology/apat8.owl> INTO <http://example/apat1>");
+//		Model m1 = ModelFactory.createDefaultModel();
+//		UpdateAction.execute(request, m);
+//		m1.write(System.out, "NTRIPLE");
+		Model m = ModelFactory.createDefaultModel().read("resources/META-INF/ontology/apat8.owl");
+		Dataset ds = DatasetFactory.create(m); 
+		UpdateAction.readExecute("resources/META-INF/query/insert-pattern2.q", ds);
+//		m.write(System.out, "NTRIPLE");
+		SSE.write(ds);
+		
+	}
+	
+	@Test
+	public void readInsert1(){
+		UpdateRequest request = UpdateFactory.create();
+		Model m = ModelFactory.createDefaultModel().read("resources/META-INF/ontology/apat8.owl");
+		//UpdateAction.readExecute("resources/META-INF/query/insert-pattern2.q", m);
+		request = UpdateFactory.read("resources/META-INF/query/insert-pattern2.q");
+		Update update = request.getOperations().get(0);
+		System.out.println(update.toString());
+		UpdateAction.execute(update, m);
+		m.write(System.out, "NTRIPLE");
+		
+		update.visit(new UpdateVisitor() {
+			
+			@Override
+			public void visit(UpdateDataDelete update) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void visit(UpdateDataInsert update) {
+				// TODO Auto-generated method stub
+				System.out.println(update.toString());
+			}
+			
+			@Override
+			public void visit(UpdateMove update) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void visit(UpdateCopy update) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void visit(UpdateAdd update) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void visit(UpdateLoad update) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void visit(UpdateCreate update) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void visit(UpdateClear update) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void visit(UpdateDrop update) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public Sink<Quad> createInsertDataSink() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public Sink<Quad> createDeleteDataSink() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void visit(UpdateDeleteWhere update) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void visit(UpdateModify update) {
+				System.out.println(update.toString());
+			}
+		});
 		
 	}
 	

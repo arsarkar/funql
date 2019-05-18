@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.jena.datatypes.RDFDatatype;
@@ -65,6 +66,15 @@ public class AbstractServiceInvoker implements ServiceInvoker {
 			}
 		}
 		return nb;
+	}
+
+	@Override
+	public String toString() {
+		return 	"JavaMethod_"+
+				"("+ 
+				inputVars.toString() +
+				")->"+
+				outArgBinding.toString();
 	}
 	
 	

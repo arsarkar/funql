@@ -21,7 +21,9 @@ import org.slf4j.LoggerFactory;
 import edu.ohiou.mfgresearch.lambda.Omni;
 import edu.ohiou.mfgresearch.lambda.Uni;
 import edu.ohiou.mfgresearch.lambda.functions.Cons;
+import edu.ohiou.mfgresearch.lambda.functions.Func;
 import edu.ohiou.mfgresearch.lambda.functions.Pred;
+import edu.ohiou.mfgresearch.service.invocation.ServiceInvoker;
 import ru.avicomp.ontapi.OntologyModel;
 
 public class IPlan {
@@ -59,6 +61,7 @@ public class IPlan {
 	public PlanType type;
 	private BasicPattern constructBP = null;
 	private BasicPattern whereBP = null;
+	private List<ServiceInvoker> invokers = new LinkedList<ServiceInvoker>(); //lean - strict association with plan to invoker
 
 	QuerySolutionMap binds =null;
 	
@@ -132,7 +135,7 @@ public class IPlan {
 		return binds;
 	}
 	
-	Function<Query, PlanType> detectQueryType = q->{
+	Func<Query, PlanType> detectQueryType = q->{
 		//quickly determine A1/B1
 		Uni.of(q).select(q0 -> q0.isSelectType(), q0 -> type = PlanType.A1)
 				 .select(q0 -> isPresentUnknownVar(q0), q0 -> type = PlanType.A2)
@@ -142,7 +145,7 @@ public class IPlan {
 		return type;
 	};
 	
-	Function<OntologyModel, Cons<Query>> detectPlanType = 
+	Func<OntologyModel, Cons<Query>> detectPlanType = 
 			onto->{
 				return q->{
 					//We still may not need to find a service if the query has no data variable in the post condition
@@ -156,7 +159,7 @@ public class IPlan {
 					
 					//there is at least one data variable
 					Uni.of(q)
-					   .filter(q1->isDataVar.contains(true))
+//					   .filter(q1->isDataVar.contains(true))
 					   .select(q1->q.isSelectType() && isDataVarInWhere() && !isDataVarInSelect(), 
 							   q1->type = PlanType.A2A)
 					   .select(q1->q.isSelectType() && !isDataVarInWhere() && isDataVarInSelect(), 
@@ -184,20 +187,27 @@ public class IPlan {
 		//we can execute A1 and B1 without type determination
 		//if they are either of them return 
 		//but we may need to analyze further if A2 and B2 
+//		//commented for sake of lean
+//		Uni.of(q)
+//		   .select(q1->Omni.of(PlanType.A2, PlanType.B2).contains(detectQueryType.apply(q1)), 
+//				   detectPlanType.apply(onto)) //Analyze the query and detect plan type
+//		   .onSuccess(q1->log.info("Query is deconstructed successfully"));
+//		   ;
+//		
+//		//print the variable types detected //may comment
+//		for(int i=0; i< vars.size(); i++){
+//			log.info("type of variable : "+vars.get(i).getName() + " is Known? " + isKnownVar.get(i) + " is Data Type? " + isDataVar.get(i));
+//			if(!isDataVar.get(i)){
+//				Omni.of(getVarTypes(vars.get(i)))
+//					.set(ty->log.info(ty));				
+//			}
+//		}
 		Uni.of(q)
-		   .select(q1->Omni.of(PlanType.A2, PlanType.B2).contains(detectQueryType.apply(q1)), 
-				   detectPlanType.apply(onto)) //Analyze the query and detect plan type
-		   .onSuccess(q1->log.info("Query is deconstructed successfully"));
-		   ;
+		   .map(detectQueryType)
+		   .set(t->log.info("Query type is "+t.toString()));
 		
-		//print the variable types detected //may comment
-		for(int i=0; i< vars.size(); i++){
-			log.info("type of variable : "+vars.get(i).getName() + " is Known? " + isKnownVar.get(i) + " is Data Type? " + isDataVar.get(i));
-			if(!isDataVar.get(i)){
-				Omni.of(getVarTypes(vars.get(i)))
-					.set(ty->log.info(ty));				
-			}
-		}
+		Uni.of(q)
+		   .set(Uni.of(onto).map(detectPlanType).get());
 		
 	}
 	
@@ -259,7 +269,8 @@ public class IPlan {
 			.set(v->vars.add(v))
 			.set(v->isKnownVar.add(false))
 			//it is irrelavant to know whether it is data var or may not be known till matched with service, but doesn't matter, we won't need it
-			.set(v->isDataVar.add(false));  
+//			.set(v->isDataVar.add(false))
+			;  
 	}
 	
 	/**
@@ -270,16 +281,13 @@ public class IPlan {
 	
 	private void deconstructConstructClause(Query q, OntologyModel onto) {
 		BasicPattern pat = getConstructBasicPattern();
-//		Omni.of(PlanUtil.getVars(pat))
-//			.filter(v->vars.contains(v))
-//			.set(v->detectVarTypes(onto, pat, v));
 		
 		Omni.of(PlanUtil.getVars(pat))
 			.filter(v->!vars.contains(v))
 			.set(v->vars.add(v))
 			.set(v->isKnownVar.add(false))
-			.set(v->isDataVar.add(false)) 
-			.set(v->detectVarTypes(onto, pat, v))
+//			.set(v->isDataVar.add(false)) 
+//			.set(v->detectVarTypes(onto, pat, v))
 			.onFailure(e->e.printStackTrace());
 			
 	}
@@ -294,9 +302,28 @@ public class IPlan {
 		Omni.of(PlanUtil.getVars(pat))
 			.set(v->vars.add(v))
 			.set(v->isKnownVar.add(true))
-			.set(v->isDataVar.add(false))
-			.set(v->detectVarTypes(onto, pat, v))
+//			.set(v->isDataVar.add(false))
+//			.set(v->detectVarTypes(onto, pat, v))
 			.onFailure(e->e.printStackTrace());		
+	}
+	
+	public String detectUnknownVariableType(Var v){
+		List<Triple> trips = PlanUtil.getTriplesContainingVar(getConstructBasicPattern(), v);
+		List<String> types = new LinkedList<String>();
+		
+		//check if there is an explicit type declaration then the varable is definitely grounded by individual
+		Omni.of(trips)
+			.filter(t->t.getSubject().getName().equals(v.getName()) && 
+					   t.getPredicate().getURI().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"))
+			.set(t->types.add(t.getObject().getURI()))//store the types of the variable
+			.toList();
+		if(types.size()>0){
+			if(types.size()>1) {
+				log.warn("more than one type assertions are found in the triple for var " + v.getName() + " but only first one is assumed!");
+			}
+			return types.get(0);
+		}
+		return "";
 	}
 	
 	/**
@@ -539,6 +566,14 @@ public class IPlan {
 					.toList();			
 		}
 		
+	}	
+
+	public List<ServiceInvoker> getInvoker() {
+		return invokers;
+	}
+
+	public void setInvoker(ServiceInvoker invoker) {
+		invokers.add(invoker);
 	}
 
 	@Override

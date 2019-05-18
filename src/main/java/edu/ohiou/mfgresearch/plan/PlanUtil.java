@@ -19,6 +19,9 @@ import org.apache.jena.sparql.algebra.OpVisitorBase;
 import org.apache.jena.sparql.algebra.Table;
 import org.apache.jena.sparql.algebra.TableFactory;
 import org.apache.jena.sparql.algebra.op.OpBGP;
+import org.apache.jena.sparql.algebra.op.OpFilter;
+import org.apache.jena.sparql.algebra.op.OpPath;
+import org.apache.jena.sparql.algebra.op.OpTriple;
 import org.apache.jena.sparql.algebra.walker.Walker;
 import org.apache.jena.sparql.core.BasicPattern;
 import org.apache.jena.sparql.core.Var;
@@ -396,7 +399,7 @@ public final class PlanUtil {
 		public OPVbp(){			
 		}
 
-		BasicPattern pat = null;
+		BasicPattern pat = new BasicPattern();
 
 		public BasicPattern getPat(){
 			return pat;
@@ -404,9 +407,24 @@ public final class PlanUtil {
 
 		@Override
 		public void visit(OpBGP opBGP) {
-			// TODO Auto-generated method stub
-			pat =  opBGP.getPattern();
+			opBGP.getPattern().forEach(t->{
+				pat.add(t);
+			});
 		}
+
+		@Override
+		public void visit(OpPath opPath) {
+			opPath.getTriplePath().getPath();
+		}
+
+		@Override
+		public void visit(OpFilter opFilter) {
+			opFilter.getExprs();
+			opFilter.getName();
+			opFilter.getSubOp();
+		}
+		
+		
 
 	}
 

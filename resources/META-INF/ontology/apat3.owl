@@ -1,0 +1,41 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.ohio.edu/ontologies/apat1#"
+    xmlns:tpat1="http://www.ohio.edu/ontologies/tpat1#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://www.ohio.edu/ontologies/apat1">
+    <owl:imports rdf:resource="http://www.ohio.edu/ontologies/tpat1"/>
+  </owl:Ontology>
+  <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I7756">
+    <tpat1:property3>
+      <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I5783">
+        <tpat1:dprop2>input1 &amp; output1</tpat1:dprop2>
+      </tpat1:class4>
+    </tpat1:property3>
+  </tpat1:class3>
+  <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I3388">
+    <tpat1:property3>
+      <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I2938">
+        <tpat1:dprop2>input1 &amp; output3</tpat1:dprop2>
+      </tpat1:class4>
+    </tpat1:property3>
+  </tpat1:class3>
+  <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat1#i11">
+    <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class1"/>
+    <tpat1:property1>
+      <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat1#i21">
+        <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class2"/>
+        <tpat1:dprop1>input1</tpat1:dprop1>
+      </owl:NamedIndividual>
+    </tpat1:property1>
+  </owl:NamedIndividual>
+  <tpat1:class3 rdf:about="http://www.ohio.edu/ontologies/apat1#class3_I2824">
+    <tpat1:property3>
+      <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I8709">
+        <tpat1:dprop2>input1 &amp; output2</tpat1:dprop2>
+      </tpat1:class4>
+    </tpat1:property3>
+  </tpat1:class3>
+</rdf:RDF>

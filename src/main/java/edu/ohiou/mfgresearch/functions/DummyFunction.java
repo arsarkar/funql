@@ -1,5 +1,9 @@
 package edu.ohiou.mfgresearch.functions;
 
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.NodeFactory;
+import org.apache.jena.rdf.model.ResourceFactory;
+
 public class DummyFunction {
 	
 	String label = "";
@@ -28,6 +32,10 @@ public class DummyFunction {
 		return in1 + "," + in2 + "," + in3;
 	}
 
+	public static Node calDummyIndi(Node c1, Node c2){
+		return NodeFactory.createURI("http://www.ohio.edu/ontologies/apat1#Ic3420");
+	}
+	
 	public static String getType(String input){
 		return "http://www.ohio.edu/ontologies/tpat1#class4";
 	}

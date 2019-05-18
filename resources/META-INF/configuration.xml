@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-<comment>This is a configuraation file for OwlAPIConnection</comment>
-<entry key="IMPM_ONTOLOGY">/META-INF/ontology/v101/IMPM.owl</entry>
-<entry key="OAM_ONTOLOGY">/META-INF/ontology/v101/OAM.owl</entry>
-</properties>

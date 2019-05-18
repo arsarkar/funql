@@ -25,9 +25,11 @@ import org.apache.jena.query.Syntax;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.shared.PrefixMapping;
 import org.apache.jena.sparql.algebra.Table;
 import org.apache.jena.sparql.core.BasicPattern;
 import org.apache.jena.sparql.core.Var;
+import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +58,7 @@ import edu.ohiou.mfgresearch.service.base.ServiceGrounding;
 import edu.ohiou.mfgresearch.service.base.ServiceProfile;
 import edu.ohiou.mfgresearch.service.invocation.ArgBinding;
 import edu.ohiou.mfgresearch.service.invocation.DefaultIndividualSupplier;
+import edu.ohiou.mfgresearch.service.invocation.JavaServiceInvoker;
 import edu.ohiou.mfgresearch.service.invocation.ServiceInvoker;
 
 public class FunQL {
@@ -72,7 +75,11 @@ public class FunQL {
 	public Cons<String> parseQueryToPlan = qs->plans.add(new IPlan(parseQueryFromFile(qs.trim())));
 	public Cons<String> parseServiceToRegistry = ss->registry.addService(new FileInputStream(ss)); //service string is assumed to be a path, but can also be an url
 	public Cons<String> parseOntologyToBelief = bs->belief.addTBox(bs.trim()); //is assumed to be from url but can also be from file, may be handled internally by JENA API
-	public Cons<String> parseKnowledgeToABox = kb->belief.addABox(kb.trim());	
+	public Cons<String> parseKnowledgeToABox = kb->belief.addABox(kb.trim());
+	private Function<Table, Table> selectPostProcess = tab->{
+		log.info(tab.toString());
+		return tab;
+	};
 	
 	public boolean setLocal = false;
 	
@@ -309,6 +316,7 @@ public class FunQL {
 			   Uni.of(funcString)
 			   	  .map(extractBindingVar)
 			   	  .get();
+			   //extract function command string
 			   String func = 
 			   Uni.of(funcString)
 			   	  .map(extractFunction)
@@ -317,14 +325,13 @@ public class FunQL {
 			   //extract var and function string
 			   return addPlan(q.replaceAll("(FUNCTION|Function|function)\\{(.|\n|\r|\t)*\\}", ""), varName, func, instance);
 		   })
-//		   .set(p->plans.add(p))
 		   .onFailure(e->{
 				//no function symbol. can safely pass to IPlan as raw query string
 				Uni.of(parseQuery.apply(query))	
 				   .map(IPlan::new)
 				   .set(p->p.deconstructQuery(belief.gettBox())) 
-				   .set(p->plans.add(p));
-				
+				   .set(p->registerIndiMakerService(p, new LinkedList<Var>(){}))
+				   .set(p->plans.add(p));				
 			})
 		   .set(p->log.info("Plan added \n"+p.toString()));
 		return this;
@@ -342,9 +349,9 @@ public class FunQL {
 		IPlan plan = new IPlan(query);
 		log.info("Given query-->\n"+query);
 		plan.deconstructQuery(belief.gettBox());
-		if(plan.getKnownVar().contains(Var.alloc(var))){
-			throw new Exception("the variable " + var + " is not an unknown variable!");
-		}
+//		if(plan.getKnownVar().contains(Var.alloc(var))){
+//			throw new Exception("the variable " + var + " is not an unknown variable!");
+//		}
 		//clean the function string for whitespace
 		function.replaceAll("\\s+", "");
 		//validate the function string
@@ -390,9 +397,83 @@ public class FunQL {
 			}
 		}
 		//incomplete! need to add input and output, as well as grounding
-		registry.addService(registerService(plan, actors[0], actors[1], var, args), instance);
-		plans.add(plan);
+		//commented in favor of lean 
+		//registry.addService(registerService(plan, actors[0], actors[1], var, args), instance);
+		plans.add(registerLeanService(plan, actors[0], actors[1], var, args, instance));
 		return this;
+	}
+	
+	private IPlan registerLeanService(IPlan plan, String source, String endPoint, String var, String[] args, Object instance) throws Exception{
+		
+		List<Var> mappedVar = new LinkedList<Var>();
+		
+		//instantiate the function
+		Method func = ServiceUtil.instantiateJavaService(source, endPoint);
+		if(func==null) throw new Exception("The function is not invocable!");
+		
+		//collect all the input argument XSD types
+		List<RDFDatatype> argTypes = 
+				Omni.of(func.getParameterTypes())
+					.map(c->getXSDType(c.getName()))
+					.toList();
+		if(argTypes.size()!=args.length){
+			throw new Exception("The function does not have equal number of arguents as specified!");
+		}
+		
+		//collect all the output argument XSD types
+		RDFDatatype oArgType = 
+				Uni.of(func.getReturnType())
+					.map(c->getXSDType(c.getName()))
+					.get();	
+		if(oArgType==null){
+			throw new Exception("the output type could not be deciphered from the service");
+		}		
+		
+		List<ArgBinding> groundings = new LinkedList<>();
+		//collect the input ArgBinding
+		IntStream.range(0, args.length)
+				.forEach(i->Uni.of(ArgBinding::new)
+						.set(b->b.setArgPos(i))
+						.set(b->b.setVar(Var.alloc(args[i].replace("?", ""))))
+						.set(b->b.setVarType(argTypes.get(i)))
+						.set(b->groundings.add(b))
+						.onFailure(e->e.printStackTrace())
+				);
+		
+		//create output ArgBinding
+		ArgBinding oGrounding = 
+		Uni.of(ArgBinding::new)
+			.set(b->b.setArgPos(0))
+			.set(b->b.setVar(Var.alloc(var.replace("?", ""))))
+			.set(b->b.setVarType(oArgType))
+			.get();
+		mappedVar.add(Var.alloc(var.replace("?", "")));		
+		
+		ServiceInvoker invoker = new JavaServiceInvoker(func, instance);
+		Omni.of(groundings).set(g->invoker.setInputArgument(g));
+		invoker.setOutputArgument(oGrounding);
+		plan.setInvoker(invoker);
+		log.info("Service Invoker added for "+ var + " -> " + invoker.toString());
+		
+		plan = registerIndiMakerService(plan, mappedVar);
+		
+		return plan;
+	}
+	
+	private IPlan registerIndiMakerService(IPlan plan, List<Var> varMapped){
+		List<Var> unknownVars = plan.getUnknownVars();
+		for(Var uv:unknownVars){
+			if(!varMapped.contains(uv)){
+				ArgBinding osbind = new ArgBinding();
+				osbind.setArgPos(0);
+				//get variable type
+				osbind.setParamType(ResourceFactory.createResource(plan.detectUnknownVariableType(uv)));
+				osbind.setVar(uv); //?c5
+				ServiceInvoker defaultSuppl = new DefaultIndividualSupplier(osbind, belief.getaBox().getNsPrefixURI(""));
+				plan.setInvoker(defaultSuppl);
+			}
+		}
+		return plan;
 	}
 	
 	/**
@@ -580,6 +661,8 @@ public class FunQL {
 			return XSDDatatype.XSDstring;
 		case "[Ljava.lang.String;":
 			return XSDDatatype.XSDstring;
+		case "org.apache.jena.graph.Node":
+			return XSDDatatype.XSDanyURI;
 		default:
 			return null;
 		}
@@ -657,6 +740,20 @@ public class FunQL {
 	public IPlan getPlan(int index){
 		return plans.get(0);
 	}
+	
+	public PrefixMapping getAllPrefixMapping(){
+		 PrefixMapping pm = PrefixMapping.Factory.create();
+		 //getall prefix 
+		 Map<String, String> nsMap = belief.gettBox().asGraphModel().getNsPrefixMap();
+		 nsMap.putAll(belief.getaBox().size()>0?belief.getaBox().getNsPrefixMap():new HashMap<String, String>());
+		 nsMap.putAll(belief.getLocalABox().size()>0?belief.getLocalABox().getNsPrefixMap():new HashMap<String, String>());
+		 pm.setNsPrefixes(nsMap);
+		 return pm;
+	}
+	
+	public void setSelectPostProcess(Function<Table, Table> postProcess){
+		this.selectPostProcess = postProcess;
+	}
 
 	public FunQL execute() {
 		
@@ -665,12 +762,7 @@ public class FunQL {
 			Function<Query, Table> queryRes = p.getBinding()==null?
 												IPlanner.createQueryExecutor(belief.getaBox()):
 												IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());	
-			//display the result, should come from visualization package
-			Function<Table, String> display = tab->{
-				log.info(tab.toString());
-				return "";
-			};
-			queryRes.andThen(display).apply(p.getQuery());
+			queryRes.andThen(selectPostProcess).apply(p.getQuery());
 		};	
 		
 		Cons<IPlan> executeB1Plan = p->{
@@ -765,15 +857,44 @@ public class FunQL {
 				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));			
 		};
 		
+		Cons<IPlan> executeLeanPlan = p->{
+			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
+			Function<Query, Table> queryRes = p.getBinding()==null?
+													IPlanner.createQueryExecutor(belief.getaBox()):
+													IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());	;	
+			BasicPattern updatedPattern = null;			
+			List<ServiceInvoker> serviceInvoker = p.getInvoker();
+			if(serviceInvoker.size()>0){
+				Function<Table, Table> mapUnknownVar = IPlanner.createServiceResultMapper(serviceInvoker);			
+				Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
+				Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
+				updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);				
+			}
+			else{
+				//if construct query
+				if(p.type.toString().contains("B")){
+					Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());			
+					Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
+					updatedPattern = queryRes.andThen(expander).andThen(updater).apply(selectQuery);					
+				}else{ //for now there is no function for plain old select query
+					queryRes.andThen(selectPostProcess).apply(p.getQuery());					
+				}
+			}
+			Uni.of(updatedPattern)
+				.select(pat->!pat.isEmpty(), pat-> log.info("Successfully updated A-box with the following pattern: \n"+belief.writePattern(pat)))
+				.select(pat->pat.isEmpty(), pat-> log.info("Update could not be applied!"));			
+		};
+		
 		for(IPlan plan:plans){
 			Uni.of(plan)
 			//if there is no need to match service then just execute the query and return result
-				.select(p->p.type==IPlan.PlanType.A1, executeA1Plan)
-				.select(p->p.type==IPlan.PlanType.B1, executeB1Plan)	
-				.select(p->p.type==IPlan.PlanType.A2, executeA2Plan)
-				.select(p->p.type==IPlan.PlanType.B2, executeB2Plan)
-				.select(p->p.type==IPlan.PlanType.B2A, executeB2APlan)
-				.select(p->p.type==IPlan.PlanType.B2C, executeB2CPlan)
+//				.select(p->p.type==IPlan.PlanType.A1, executeA1Plan)
+//				.select(p->p.type==IPlan.PlanType.B1, executeB1Plan)	
+//				.select(p->p.type==IPlan.PlanType.A2, executeA2Plan)
+//				.select(p->p.type==IPlan.PlanType.B2, executeB2Plan)
+//				.select(p->p.type==IPlan.PlanType.B2A, executeB2APlan)
+//				.select(p->p.type==IPlan.PlanType.B2C, executeB2CPlan)
+				.set(executeLeanPlan)
 				.onFailure(e->e.printStackTrace());
 		}		
 		

@@ -8,22 +8,22 @@
   <owl:Ontology rdf:about="http://www.ohio.edu/ontologies/apat1">
     <owl:imports rdf:resource="http://www.ohio.edu/ontologies/tpat1"/>
   </owl:Ontology>
-  <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I6149">
+  <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I3194">
     <tpat1:dprop2>input1 &amp; output2</tpat1:dprop2>
   </tpat1:class4>
-  <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I5024">
+  <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I2082">
     <tpat1:dprop2>input1 &amp; output3</tpat1:dprop2>
   </tpat1:class4>
-  <tpat1:class1 rdf:about="http://www.ohio.edu/ontologies/apat1#i11">
-    <tpat1:property1>
-      <tpat1:class2 rdf:about="http://www.ohio.edu/ontologies/apat1#i21">
-        <tpat1:dprop1>input1</tpat1:dprop1>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-      </tpat1:class2>
-    </tpat1:property1>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  </tpat1:class1>
-  <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I8752">
+  <tpat1:class4 rdf:about="http://www.ohio.edu/ontologies/apat1#class4_I4879">
     <tpat1:dprop2>input1 &amp; output1</tpat1:dprop2>
   </tpat1:class4>
+  <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat1#i11">
+    <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class1"/>
+    <tpat1:property1>
+      <owl:NamedIndividual rdf:about="http://www.ohio.edu/ontologies/apat1#i21">
+        <rdf:type rdf:resource="http://www.ohio.edu/ontologies/tpat1#class2"/>
+        <tpat1:dprop1>input1</tpat1:dprop1>
+      </owl:NamedIndividual>
+    </tpat1:property1>
+  </owl:NamedIndividual>
 </rdf:RDF>
