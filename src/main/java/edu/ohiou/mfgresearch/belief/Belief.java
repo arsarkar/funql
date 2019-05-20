@@ -12,6 +12,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.system.PrefixMap;
 import org.apache.jena.riot.system.PrefixMapFactory;
 import org.apache.jena.shared.PrefixMapping;
+import org.apache.jena.sparql.algebra.Table;
 import org.apache.jena.sparql.core.BasicPattern;
 import org.apache.jena.sparql.engine.binding.Binding;
 import org.apache.jena.sparql.pfunction.library.version;
@@ -238,5 +239,22 @@ public class Belief {
 			 s.append(v.toString()).append("->").append(bind.get(v).toString(pm)).append(", ");
 		 });
 		 return s.toString().substring(0, s.length()-2);
+	 }
+	 
+	 /**
+	  * Write basic pattern
+	  * @param pat
+	  * @return
+	  */
+	 public String writeTable(Table tab) {
+		 StringBuilder s = new StringBuilder();
+		 PrefixMapping pm = PrefixMapping.Factory.create();
+		 //getall prefix 
+		 Map<String, String> nsMap = tBox.asGraphModel().getNsPrefixMap();
+		 nsMap.putAll(aBox.size()>0?aBox.getNsPrefixMap():new HashMap<String, String>());
+		 nsMap.putAll(localABox.size()>0?localABox.getNsPrefixMap():new HashMap<String, String>());
+		 pm.setNsPrefixes(nsMap);
+		 tab.rows().forEachRemaining(b->s.append(writeBinding(b)).append("\n"));
+		 return s.toString();
 	 }
 }

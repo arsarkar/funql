@@ -1,7 +1,9 @@
 package edu.ohiou.mfgresearch.plan;
 
+import java.io.FileInputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -58,7 +60,6 @@ public interface IPlanner {
 			Uni.of(PlanUtil.convert2SelectQuery(p.getQuery()))
 					.map(q->QueryExecutionFactory.create(q, m))
 					.map(qe->qe.execSelect())
-//					.set(res->res.forEachRemaining(qs->System.out.println(qs)))
 					.map(PlanUtil::toBindings)
 					.get();
 		};
@@ -78,7 +79,6 @@ public interface IPlanner {
 			Uni.of(PlanUtil.convert2SelectQuery(p.getQuery()))
 					.map(q->QueryExecutionFactory.create(q, b.getaBox()))
 					.map(qe->qe.execSelect())
-//					.set(res->res.forEachRemaining(qs->System.out.println(qs)))
 					.map(PlanUtil::toBindings)
 					.get();
 		};

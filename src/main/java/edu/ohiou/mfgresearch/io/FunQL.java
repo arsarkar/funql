@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -65,6 +66,12 @@ public class FunQL {
 	
 	static Logger log = LoggerFactory.getLogger(FunQL.class);
 	
+	static Properties prop =  Uni.of(Properties::new)
+			  .set(p->p.load(Uni.of("resources/META-INF/funql.properties")
+					   .map(FileInputStream::new)
+					   .get()))
+			  .get();
+	
 	List<IPlan> plans = new LinkedList<IPlan>();
 	ServiceRegistry registry = new ServiceRegistry();
 	Belief belief = new Belief("RDFXML"); //RDFXML is defaulted as the format but should have provision to set from outside
@@ -111,6 +118,11 @@ public class FunQL {
 		    return matches.get(0);
 		};
 	};
+
+	private boolean querySuccessful = false;
+	public boolean isQuerySuccess(){
+		return querySuccessful;
+	}
 	
 	//alternative to main(), create an instance of FunQL with setters
 	public FunQL addTBox(String url){
@@ -468,6 +480,7 @@ public class FunQL {
 				osbind.setArgPos(0);
 				//get variable type
 				osbind.setParamType(ResourceFactory.createResource(plan.detectUnknownVariableType(uv)));
+				
 				osbind.setVar(uv); //?c5
 				ServiceInvoker defaultSuppl = new DefaultIndividualSupplier(osbind, belief.getaBox().getNsPrefixURI(""));
 				plan.setInvoker(defaultSuppl);
@@ -859,25 +872,44 @@ public class FunQL {
 		
 		Cons<IPlan> executeLeanPlan = p->{
 			Query selectQuery = PlanUtil.convert2SelectQuery(p.getQuery());
+			//function to execute query
 			Function<Query, Table> queryRes = p.getBinding()==null?
 													IPlanner.createQueryExecutor(belief.getaBox()):
-													IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());	;	
+													IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());
+			//function to print select result										
+			Function<Table, Table> printSelectResult = 
+					tab->Uni.of(tab)
+							.select(res->res.rows().hasNext(),res->System.out.println("query returned result!"))
+							.select(res->res.rows().hasNext(),res->querySuccessful=true)
+							.select(res->!res.rows().hasNext(),res->System.out.println("query didn't returned any result!"))
+							.select(res->res.rows().hasNext()&&Boolean.parseBoolean(prop.getProperty("print_select_result")), res-> System.out.println(belief.writeTable(res)))
+							.get();
+														
 			BasicPattern updatedPattern = null;			
 			List<ServiceInvoker> serviceInvoker = p.getInvoker();
 			if(serviceInvoker.size()>0){
 				Function<Table, Table> mapUnknownVar = IPlanner.createServiceResultMapper(serviceInvoker);			
 				Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
 				Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
-				updatedPattern = queryRes.andThen(mapUnknownVar).andThen(expander).andThen(updater).apply(selectQuery);				
+				updatedPattern = queryRes.andThen(printSelectResult)
+										 .andThen(mapUnknownVar)
+										 .andThen(expander)
+										 .andThen(updater)
+										 .apply(selectQuery);				
 			}
 			else{
 				//if construct query
 				if(p.type.toString().contains("B")){
 					Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());			
 					Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
-					updatedPattern = queryRes.andThen(expander).andThen(updater).apply(selectQuery);					
+					updatedPattern = queryRes.andThen(printSelectResult)
+							 				 .andThen(expander)
+							 				 .andThen(updater)
+							 				 .apply(selectQuery);					
 				}else{ //for now there is no function for plain old select query
-					queryRes.andThen(selectPostProcess).apply(p.getQuery());					
+					queryRes.andThen(printSelectResult)
+					 		.andThen(selectPostProcess)
+					 		.apply(p.getQuery());					
 				}
 			}
 			Uni.of(updatedPattern)
@@ -886,18 +918,17 @@ public class FunQL {
 		};
 		
 		for(IPlan plan:plans){
-			Uni.of(plan)
-			//if there is no need to match service then just execute the query and return result
-//				.select(p->p.type==IPlan.PlanType.A1, executeA1Plan)
-//				.select(p->p.type==IPlan.PlanType.B1, executeB1Plan)	
-//				.select(p->p.type==IPlan.PlanType.A2, executeA2Plan)
-//				.select(p->p.type==IPlan.PlanType.B2, executeB2Plan)
-//				.select(p->p.type==IPlan.PlanType.B2A, executeB2APlan)
-//				.select(p->p.type==IPlan.PlanType.B2C, executeB2CPlan)
-				.set(executeLeanPlan)
-				.onFailure(e->e.printStackTrace());
-		}		
-		
+				Uni.of(plan)
+				//if there is no need to match service then just execute the query and return result
+	//				.select(p->p.type==IPlan.PlanType.A1, executeA1Plan)
+	//				.select(p->p.type==IPlan.PlanType.B1, executeB1Plan)	
+	//				.select(p->p.type==IPlan.PlanType.A2, executeA2Plan)
+	//				.select(p->p.type==IPlan.PlanType.B2, executeB2Plan)
+	//				.select(p->p.type==IPlan.PlanType.B2A, executeB2APlan)
+	//				.select(p->p.type==IPlan.PlanType.B2C, executeB2CPlan)
+					.set(executeLeanPlan)
+					.onFailure(e->e.printStackTrace());
+		}
 		return this;
 	}
 

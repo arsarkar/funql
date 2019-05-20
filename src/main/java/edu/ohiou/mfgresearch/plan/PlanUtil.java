@@ -99,6 +99,9 @@ public final class PlanUtil {
 	 * @return
 	 */
 	public static List<Var> getSelectVars(Query q){
+		q.getAggregators().forEach(a->{
+			a.getAggVar().asVar();
+		});
 		return  Omni.of(q.getResultVars())
 					.map(v->Var.alloc(v))
 					.toList();

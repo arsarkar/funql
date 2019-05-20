@@ -304,7 +304,13 @@ public class IPlan {
 			.set(v->isKnownVar.add(true))
 //			.set(v->isDataVar.add(false))
 //			.set(v->detectVarTypes(onto, pat, v))
-			.onFailure(e->e.printStackTrace());		
+			.onFailure(e->e.printStackTrace());	
+		q.getResultVars().forEach(v->{
+			if(!vars.contains(Var.alloc(v))){
+				vars.add(Var.alloc(v));
+				isKnownVar.add(true);
+			}
+		});
 	}
 	
 	public String detectUnknownVariableType(Var v){
@@ -315,7 +321,7 @@ public class IPlan {
 		Omni.of(trips)
 			.filter(t->t.getSubject().getName().equals(v.getName()) && 
 					   t.getPredicate().getURI().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"))
-			.set(t->types.add(t.getObject().getURI()))//store the types of the variable
+			.selectAlt(t->t.getObject().isVariable(), t-> types.add(t.getObject().getName()), t->types.add(t.getObject().getURI())) //store the types of the variable or just the variable name if not concrete
 			.toList();
 		if(types.size()>0){
 			if(types.size()>1) {
