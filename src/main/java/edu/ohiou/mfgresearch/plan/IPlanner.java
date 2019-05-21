@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.apache.jena.arq.querybuilder.UpdateBuilder;
+import org.apache.jena.graph.Node;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
@@ -30,6 +31,8 @@ import edu.ohiou.mfgresearch.lambda.Omni;
 import edu.ohiou.mfgresearch.lambda.Success;
 import edu.ohiou.mfgresearch.lambda.Uni;
 import edu.ohiou.mfgresearch.service.base.Service;
+import edu.ohiou.mfgresearch.service.invocation.ArgBinding;
+import edu.ohiou.mfgresearch.service.invocation.DefaultIndividualSupplier;
 import edu.ohiou.mfgresearch.service.invocation.JavaServiceInvoker;
 import edu.ohiou.mfgresearch.service.invocation.ServiceInvoker;
 public interface IPlanner {
@@ -269,7 +272,7 @@ public interface IPlanner {
 				   .onSuccess(t->log.info("Service " + invokers.get(0).toString() + " is successfully executed!"));
 				
 					//print all the bindings  
-					Omni.of(bindings).set(b1->log.info(b.toString()));
+					Omni.of(bindings).set(b1->log.info(b1.toString()));
 					
 					List<Binding> bindings1 = new LinkedList<Binding>();
 //					invokers.remove(0);
@@ -279,15 +282,23 @@ public interface IPlanner {
 							   List<Binding> bindings2 = new LinkedList<Binding>();	 
 							   //for every row of result add a new individual for the indi variable
 							   Omni.of(invokers.subList(1, invokers.size()))
+							   	   .set(inv->{
+							   		   DefaultIndividualSupplier indiMaker = (DefaultIndividualSupplier) inv;
+							   		   ArgBinding oArg = indiMaker.getOutArgBinding();
+							   		   if(oArg.getParamType().isVariable()){
+							   			   oArg.setParamType(b.get(Var.alloc(oArg.getParamType())));
+							   			   indiMaker.setOutputArgument(oArg);
+							   		   }
+							   	   })
 								   .map(inv->inv.invokeService(null)) //no input needed for a supplier type method invocation
 								   .map(ts->ts.get())
 								   .set(t1->{
 									   t1.toResultSet().forEachRemaining(r->log.info(r.toString()));
 									   t1.rows().forEachRemaining(b2->{
 //										   Var v2 = b2.vars().next();
-	//									   log.info(bind.get().toString());
+//										   log.info(bind.get().toString());
 //										   bind = BindingFactory.binding(v2, b2.get(v2));								   
-	//									   log.info(bind.get().toString());	
+//										   log.info(bind.get().toString());	
 										   bindings2.add(b2);										   
 									   });
 								   });
@@ -306,8 +317,7 @@ public interface IPlanner {
 						});
 					log.info("Resolution derived-->");
 					res.rows().forEachRemaining(r->log.info(r.toString()));
-			}); 		
-			
+			}); 
 			return res;
 		};
 	}

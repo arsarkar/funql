@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.Syntax;
@@ -479,7 +481,7 @@ public class FunQL {
 				ArgBinding osbind = new ArgBinding();
 				osbind.setArgPos(0);
 				//get variable type
-				osbind.setParamType(ResourceFactory.createResource(plan.detectUnknownVariableType(uv)));
+				osbind.setParamType(plan.detectUnknownVariableType(uv));
 				
 				osbind.setVar(uv); //?c5
 				ServiceInvoker defaultSuppl = new DefaultIndividualSupplier(osbind, belief.getaBox().getNsPrefixURI(""));
@@ -551,7 +553,7 @@ public class FunQL {
 							List<Triple> t = plan.getDTypeTriples(plan.getWhereBasicPattern(), Var.alloc(args[i].replace("?", "")), false);
 							dataProeprties.put(args[i], t.get(0).getPredicate().getURI()); // save the dataProperty for later against the var
 							b.setParamName(t.get(0).getSubject().toString());
-							b.setParamType(ResourceFactory.createResource(plan.getVarTypes(Var.alloc(t.get(0).getSubject())).get(0)));
+							b.setParamType(ResourceFactory.createResource(plan.getVarTypes(Var.alloc(t.get(0).getSubject())).get(0)).asNode());
 						})
 						.set(b->b.setVar(Var.alloc(args[i].replace("?", ""))))
 						.set(b->b.setVarType(argTypes.get(i)))
@@ -569,7 +571,7 @@ public class FunQL {
 				List<Triple> t = plan.getDTypeTriples(plan.getConstructBasicPattern(), Var.alloc(var.replace("?", "")), false);
 				dataProeprties.put(var, t.get(0).getPredicate().getURI()); // save the dataProperty for later against the var
 				b.setParamName(t.get(0).getSubject().toString());
-				b.setParamType(ResourceFactory.createResource(plan.getVarTypes(Var.alloc(t.get(0).getSubject())).get(0)));
+				b.setParamType(NodeFactory.createURI(plan.getVarTypes(Var.alloc(t.get(0).getSubject())).get(0)));
 			})
 			.set(b->b.setVar(Var.alloc(var.replace("?", ""))))
 			.set(b->b.setVarType(oArgType))
@@ -593,7 +595,7 @@ public class FunQL {
 		Omni.of(bindings)
 			.set(b->Uni.of(Input::new)//create new Input Parameter
 						.set(in->in.setParameter(b.getParamName()))
-						.set(in->in.setParameterType(b.getParamType().asNode().getURI()))
+						.set(in->in.setParameterType(b.getParamType().getURI()))
 						.set(in->inputs.add(in))
 						.set(in->Uni.of(InputGrounding::new)//create InputGrounding
 									.set(ig->ig.setParameter(in.getParameter()))
@@ -613,8 +615,8 @@ public class FunQL {
 		//collects output params
 		Output output =
 			Uni.of(Output::new)
-			   .set(o->o.setParameter(oGrounding.getParamType().asNode().getLocalName()))
-			   .set(o->o.setParameterType(oGrounding.getParamType().asNode().getURI()))
+			   .set(o->o.setParameter(oGrounding.getParamName()))
+			   .set(o->o.setParameterType(oGrounding.getParamType().getURI()))
 			   .get();
 		
 		Grounding_ outGrounding =
@@ -800,7 +802,7 @@ public class FunQL {
 			Function<Query, Table> queryRes = p.getBinding()==null?
 												IPlanner.createQueryExecutor(belief.getaBox()):
 												IPlanner.createQueryExecutorWithBind(belief.getaBox(), p.getBinding());	
-			RDFNode oType = ResourceFactory.createResource(p.getUnknownVarType());
+			Node oType = NodeFactory.createURI(p.getUnknownVarType());
 			ArgBinding oBind = new ArgBinding();
 			oBind.setArgPos(0);
 			oBind.setParamType(oType);
@@ -826,7 +828,7 @@ public class FunQL {
 			Function<Table, Table> mapUnknownVar;
 			//for now it is considered that B2A plans need no function as there is no unkown data variable in the construct
 //			if(registry.getServices().size()==0){
-				RDFNode oType = ResourceFactory.createResource(p.getUnknownVarType());
+				Node oType = NodeFactory.createURI(p.getUnknownVarType());
 				ArgBinding oBind = new ArgBinding();
 				oBind.setArgPos(0);
 				oBind.setParamType(oType);

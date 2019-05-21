@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Random;
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -413,7 +415,7 @@ public class ServiceFinder {
 			List<Var> unknownVars = p.getUnknownVars();
 			for(Var uv:unknownVars){
 				if(!uv.equals(ovv)){
-					RDFNode oType = ResourceFactory.createResource(p.getVarTypes(uv).get(0));
+					Node oType = NodeFactory.createURI(p.getVarTypes(uv).get(0));
 					ArgBinding osbind = new ArgBinding();
 					osbind.setArgPos(0);
 					//osbind.setParamName(oGround.getParameter()); //class5

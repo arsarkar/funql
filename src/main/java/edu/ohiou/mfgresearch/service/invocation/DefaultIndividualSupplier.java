@@ -1,16 +1,8 @@
 package edu.ohiou.mfgresearch.service.invocation;
 
-import java.lang.reflect.Array;
-
-import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.algebra.Table;
 import org.apache.jena.sparql.algebra.TableFactory;
-import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.binding.Binding;
 import org.apache.jena.sparql.engine.binding.BindingFactory;
 import org.slf4j.Logger;
@@ -35,10 +27,24 @@ public class DefaultIndividualSupplier extends AbstractServiceInvoker {
 	
 	public DefaultIndividualSupplier(ArgBinding outputBinding, String ns) {
 		setOutputArgument(outputBinding);
-		this.typeIRI = outArgBinding.paramType.asNode().getURI();
+		//store the type now if it is a concrete URI, otherwise wait for later.
+		if(!outArgBinding.paramType.isVariable()){
+			this.typeIRI = outArgBinding.paramType.getURI();			
+		}
 		this.ns = ns;
 //		this.aBox = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM, aBox);
 	}
+	
+	@Override
+	public void setOutputArgument(ArgBinding binding) {
+		// TODO Auto-generated method stub
+		super.setOutputArgument(binding);
+		if(!outArgBinding.paramType.isVariable()){
+			this.typeIRI = outArgBinding.paramType.getURI();			
+		}
+	}
+
+
 
 	@Override
 	public Suppl<Table> invokeService(Binding input) {

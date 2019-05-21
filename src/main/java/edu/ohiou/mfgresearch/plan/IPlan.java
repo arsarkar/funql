@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
@@ -313,15 +314,15 @@ public class IPlan {
 		});
 	}
 	
-	public String detectUnknownVariableType(Var v){
+	public Node detectUnknownVariableType(Var v){
 		List<Triple> trips = PlanUtil.getTriplesContainingVar(getConstructBasicPattern(), v);
-		List<String> types = new LinkedList<String>();
+		List<Node> types = new LinkedList<Node>();
 		
 		//check if there is an explicit type declaration then the varable is definitely grounded by individual
 		Omni.of(trips)
 			.filter(t->t.getSubject().getName().equals(v.getName()) && 
 					   t.getPredicate().getURI().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"))
-			.selectAlt(t->t.getObject().isVariable(), t-> types.add(t.getObject().getName()), t->types.add(t.getObject().getURI())) //store the types of the variable or just the variable name if not concrete
+			.selectAlt(t->t.getObject().isVariable(), t-> types.add(t.getObject()), t->types.add(t.getObject())) //store the types of the variable or just the variable name if not concrete
 			.toList();
 		if(types.size()>0){
 			if(types.size()>1) {
@@ -329,7 +330,7 @@ public class IPlan {
 			}
 			return types.get(0);
 		}
-		return "";
+		return null; //die horribly
 	}
 	
 	/**

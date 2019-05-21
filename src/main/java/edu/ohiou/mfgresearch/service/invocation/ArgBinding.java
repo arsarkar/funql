@@ -1,6 +1,7 @@
 package edu.ohiou.mfgresearch.service.invocation;
 
 import org.apache.jena.datatypes.RDFDatatype;
+import org.apache.jena.graph.Node;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.core.Var;
 
@@ -8,14 +9,14 @@ public final class ArgBinding implements Comparable<ArgBinding> {
 
 	int argPos = -1;
 	String paramName = "";
-	RDFNode paramType;
+	Node paramType;
 	Var var;
 	RDFDatatype varType;
 	
 	public ArgBinding() {
 	}
 	
-	public ArgBinding(String paramName, RDFNode paramType) {
+	public ArgBinding(String paramName, Node paramType) {
 		super();
 		this.paramName = paramName;
 		this.paramType = paramType;
@@ -52,11 +53,11 @@ public final class ArgBinding implements Comparable<ArgBinding> {
 		this.var = var;
 	}
 
-	public RDFNode getParamType() {
+	public Node getParamType() {
 		return paramType;
 	}
 
-	public void setParamType(RDFNode paramType) {
+	public void setParamType(Node paramType) {
 		this.paramType = paramType;
 	}
 
@@ -76,8 +77,11 @@ public final class ArgBinding implements Comparable<ArgBinding> {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		if(paramType != null && paramType != null){
-			return argPos + ":" + paramName + "(" + paramType.asResource().getLocalName() + ")" + "<->" + var.getName() + "(" + varType.toString() + ")";
+		if(paramType != null && varType != null){
+			if(paramType.isVariable())
+				return argPos + ":" + paramName + "(" + paramType.getName() + ")" + "<->" + var.getName() + "(" + varType.toString() + ")";
+			else
+				return argPos + ":" + paramName + "(" + paramType.getLocalName() + ")" + "<->" + var.getName() + "(" + varType.toString() + ")";
 		}
 		else if(varType != null){
 			return argPos + ":" + paramName + "<->" + var.getName() + "(" + varType.toString() + ")";

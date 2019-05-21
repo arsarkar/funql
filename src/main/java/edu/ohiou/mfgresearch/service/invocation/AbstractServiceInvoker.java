@@ -38,6 +38,14 @@ public class AbstractServiceInvoker implements ServiceInvoker {
 	public void setOutputArgument(ArgBinding binding){
 		outArgBinding = binding;
 	}
+	
+	public List<ArgBinding> getInputVars() {
+		return inputVars;
+	}
+
+	public ArgBinding getOutArgBinding() {
+		return outArgBinding;
+	}
 
 	@Override
 	public Suppl<Table> invokeService(Binding input) {
