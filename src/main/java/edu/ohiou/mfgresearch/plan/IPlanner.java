@@ -46,9 +46,6 @@ public interface IPlanner {
 	public Service selectService();
 	
 	public Table bindServiceResult();
-
-	
-	
 	
 	/**
 	 * Given a model and a plan, create a function which can be executed in 
@@ -282,15 +279,15 @@ public interface IPlanner {
 							   List<Binding> bindings2 = new LinkedList<Binding>();	 
 							   //for every row of result add a new individual for the indi variable
 							   Omni.of(invokers.subList(1, invokers.size()))
-							   	   .set(inv->{
-							   		   DefaultIndividualSupplier indiMaker = (DefaultIndividualSupplier) inv;
+							   	   .map(inv->{
+							   		   DefaultIndividualSupplier indiMaker = (DefaultIndividualSupplier) inv.clone();
 							   		   ArgBinding oArg = indiMaker.getOutArgBinding();
 							   		   if(oArg.getParamType().isVariable()){
 							   			   oArg.setParamType(b.get(Var.alloc(oArg.getParamType())));
 							   			   indiMaker.setOutputArgument(oArg);
 							   		   }
-							   	   })
-								   .map(inv->inv.invokeService(null)) //no input needed for a supplier type method invocation
+							   		   return indiMaker.invokeService(null);
+							   	   })		//no input needed for a supplier type method invocation
 								   .map(ts->ts.get())
 								   .set(t1->{
 									   t1.toResultSet().forEachRemaining(r->log.info(r.toString()));

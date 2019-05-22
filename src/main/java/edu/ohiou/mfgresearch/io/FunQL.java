@@ -894,6 +894,7 @@ public class FunQL {
 				Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
 				Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());
 				updatedPattern = queryRes.andThen(printSelectResult)
+						 				 .andThen(selectPostProcess)
 										 .andThen(mapUnknownVar)
 										 .andThen(expander)
 										 .andThen(updater)
@@ -905,6 +906,7 @@ public class FunQL {
 					Function<BasicPattern, BasicPattern> updater = IPlanner.createUpdateExecutor(setLocal?belief.getLocalABox():belief.getaBox());			
 					Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
 					updatedPattern = queryRes.andThen(printSelectResult)
+					 						 .andThen(selectPostProcess)
 							 				 .andThen(expander)
 							 				 .andThen(updater)
 							 				 .apply(selectQuery);					

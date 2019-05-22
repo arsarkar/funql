@@ -16,5 +16,7 @@ public interface ServiceInvoker {
 	void setOutputArgument(ArgBinding binding);
 	
 	Binding createInputBinding(Binding b);
+
+	ServiceInvoker clone() throws CloneNotSupportedException;
 	
 }

@@ -5,6 +5,8 @@ import org.apache.jena.graph.Node;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.core.Var;
 
+import edu.ohiou.mfgresearch.lambda.Uni;
+
 public final class ArgBinding implements Comparable<ArgBinding> {
 
 	int argPos = -1;
@@ -95,6 +97,17 @@ public final class ArgBinding implements Comparable<ArgBinding> {
 	public int compareTo(ArgBinding o) {
 		// TODO Auto-generated method stub
 		return o.argPos<this.argPos?1:-1;
-	}	
+	}
 
+	@Override
+	protected ArgBinding clone() throws CloneNotSupportedException {
+		return
+		Uni.of(ArgBinding::new)
+		   .set(a->a.argPos=this.argPos)
+		   .set(a->a.paramName=this.paramName)
+		   .set(a->a.paramType=this.paramType)
+		   .set(a->a.var=this.var)
+		   .set(a->a.varType=this.varType)
+		   .get();
+	}	
 }

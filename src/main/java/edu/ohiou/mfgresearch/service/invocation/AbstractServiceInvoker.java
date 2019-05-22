@@ -84,6 +84,12 @@ public class AbstractServiceInvoker implements ServiceInvoker {
 				")->"+
 				outArgBinding.toString();
 	}
+
+	@Override
+	public AbstractServiceInvoker clone() throws CloneNotSupportedException {
+		return null;
+	}
+	
 	
 	
 }

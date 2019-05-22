@@ -85,6 +85,9 @@ public class DefaultIndividualSupplier extends AbstractServiceInvoker {
 		return BindingFactory.create();
 	}
 	
-	
+	@Override
+	public DefaultIndividualSupplier clone() throws CloneNotSupportedException {
+		return new DefaultIndividualSupplier(this.outArgBinding.clone(), this.ns);
+	}
 
 }
