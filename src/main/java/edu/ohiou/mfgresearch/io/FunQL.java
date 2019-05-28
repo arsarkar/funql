@@ -89,7 +89,10 @@ public class FunQL {
 		log.info(tab.toString());
 		return tab;
 	};
-	
+	private Function<Table, Table> servicePostProcess = tab->{
+		log.info(tab.toString());
+		return tab;
+	};
 	public boolean setLocal = false;
 	
 	//utility functions 
@@ -766,10 +769,14 @@ public class FunQL {
 		 return pm;
 	}
 	
-	public void setSelectPostProcess(Function<Table, Table> postProcess){
-		this.selectPostProcess = postProcess;
+	public void setSelectPostProcess(Function<Table, Table> selectPostProcess){
+		this.selectPostProcess = selectPostProcess;
 	}
 
+	public void setServicePostProcess(Function<Table, Table> servicePostProcess){
+		this.servicePostProcess = servicePostProcess;
+	}
+	
 	public FunQL execute() {
 		
 		Cons<IPlan> executeA1Plan = p->{
@@ -896,6 +903,7 @@ public class FunQL {
 				updatedPattern = queryRes.andThen(printSelectResult)
 						 				 .andThen(selectPostProcess)
 										 .andThen(mapUnknownVar)
+										 .andThen(servicePostProcess)
 										 .andThen(expander)
 										 .andThen(updater)
 										 .apply(selectQuery);				
@@ -907,6 +915,7 @@ public class FunQL {
 					Function<Table, BasicPattern> expander = IPlanner.createPatternExpander(p.getConstructBasicPattern());
 					updatedPattern = queryRes.andThen(printSelectResult)
 					 						 .andThen(selectPostProcess)
+											 .andThen(servicePostProcess)
 							 				 .andThen(expander)
 							 				 .andThen(updater)
 							 				 .apply(selectQuery);					
