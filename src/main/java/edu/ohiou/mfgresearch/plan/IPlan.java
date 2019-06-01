@@ -93,14 +93,15 @@ public class IPlan {
 	 * @param q
 	 */
 	public IPlan(String q){
-		   this.q = 
+		this.q = 
 				Uni.of(q)
-				   .map(u->{
-					   Query query = QueryFactory.create(u);
-					   return query;
-				   }) //then treat the string as raw query string
-				   .onFailure(e1->log.error(e1.getMessage()))
-				   .get();
+				.map(u->{
+					Query query = QueryFactory.create(u);
+					return query;
+				}) //then treat the string as raw query string
+				.onFailure(e1->log.error(e1.getMessage()))
+				.get();
+		log.info("Plan added \n"+toString());
 	}
 	
 	/**
@@ -109,6 +110,7 @@ public class IPlan {
 	 */
 	public IPlan(Query q){
 		this.q = q;
+		log.info("Plan added \n"+toString());
 	}
 
 	/**
@@ -581,6 +583,7 @@ public class IPlan {
 
 	public void setInvoker(ServiceInvoker invoker) {
 		invokers.add(invoker);
+		log.info("Service Invoker added -> " + invoker.toString());
 	}
 
 	@Override

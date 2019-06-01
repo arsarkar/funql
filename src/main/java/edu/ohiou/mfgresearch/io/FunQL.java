@@ -16,7 +16,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
@@ -26,13 +25,11 @@ import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.Syntax;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.shared.PrefixMapping;
 import org.apache.jena.sparql.algebra.Table;
 import org.apache.jena.sparql.core.BasicPattern;
 import org.apache.jena.sparql.core.Var;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,11 +83,9 @@ public class FunQL {
 	public Cons<String> parseOntologyToBelief = bs->belief.addTBox(bs.trim()); //is assumed to be from url but can also be from file, may be handled internally by JENA API
 	public Cons<String> parseKnowledgeToABox = kb->belief.addABox(kb.trim());
 	private Function<Table, Table> selectPostProcess = tab->{
-		log.info(tab.toString());
 		return tab;
 	};
 	private Function<Table, Table> servicePostProcess = tab->{
-		log.info(tab.toString());
 		return tab;
 	};
 	public boolean setLocal = false;
@@ -132,7 +127,6 @@ public class FunQL {
 	//alternative to main(), create an instance of FunQL with setters
 	public FunQL addTBox(String url){
 		belief.addTBox(url);
-		log.info("T-Box added : " + belief.gettBox().toString());
 		return this;
 	}
 	
@@ -145,7 +139,6 @@ public class FunQL {
 	 */
 	public FunQL addABox(String url){
 		belief.addABox(url);
-		log.info("A-Box added : " + belief.getaBox().toString());
 		return this;
 	}
 	
@@ -158,7 +151,6 @@ public class FunQL {
 	 */
 	public FunQL addABox(Model model){
 		belief.addABox(model);
-		log.info("A-Box added : " + belief.getaBox().toString());
 		return this;
 	}
 	
@@ -270,7 +262,7 @@ public class FunQL {
 	 */
 	public FunQL addPlan(String query, Object instance) throws Exception {
 		if(belief.gettBox()==null){
-			throw new Exception("No Ontology (T-Box) is provided! Please add a T-box first.");
+			log.warn("No Ontology (T-Box) is provided! Please add a T-box first.");
 		}
 		
 		//parse the query as URL or raw string
@@ -349,8 +341,7 @@ public class FunQL {
 				   .set(p->p.deconstructQuery(belief.gettBox())) 
 				   .set(p->registerIndiMakerService(p, new LinkedList<Var>(){}))
 				   .set(p->plans.add(p));				
-			})
-		   .set(p->log.info("Plan added \n"+p.toString()));
+			});
 		return this;
 	}
 	
@@ -470,7 +461,6 @@ public class FunQL {
 		Omni.of(groundings).set(g->invoker.setInputArgument(g));
 		invoker.setOutputArgument(oGrounding);
 		plan.setInvoker(invoker);
-		log.info("Service Invoker added for "+ var + " -> " + invoker.toString());
 		
 		plan = registerIndiMakerService(plan, mappedVar);
 		
@@ -688,9 +678,6 @@ public class FunQL {
 	
 	public static void main(String[] args) throws Exception {	
 		String currArg = "";
-		log.debug("debug ..");
-		log.trace("trace...");
-		log.info("Starting to parse query.....");
 		
 		//create a new FunQL instance
 		FunQL fq = new FunQL();
@@ -888,10 +875,10 @@ public class FunQL {
 			//function to print select result										
 			Function<Table, Table> printSelectResult = 
 					tab->Uni.of(tab)
-							.select(res->res.rows().hasNext(),res->System.out.println("query returned result!"))
+							.select(res->res.rows().hasNext(),res->log.info("query returned result!"))
 							.select(res->res.rows().hasNext(),res->querySuccessful=true)
-							.select(res->!res.rows().hasNext(),res->System.out.println("query didn't returned any result!"))
-							.select(res->res.rows().hasNext()&&Boolean.parseBoolean(prop.getProperty("print_select_result")), res-> System.out.println(belief.writeTable(res)))
+							.select(res->!res.rows().hasNext(),res->log.info("query didn't returned any result!"))
+							.select(res->res.rows().hasNext(), res-> log.info(belief.writeTable(res)))
 							.get();
 														
 			BasicPattern updatedPattern = null;			

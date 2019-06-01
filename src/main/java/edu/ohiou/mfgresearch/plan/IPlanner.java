@@ -177,7 +177,7 @@ public interface IPlanner {
 			Uni<UpdateBuilder> builder =
 			Uni.of(createUpdateBuilder(m, pattern))
 				.set(b->UpdateAction.execute(b.build(), m))
-				.onFailure(e->log.error("Failed to update the A-Box with the given pattern \n"+e.getMessage()));
+				.onFailure(e->log.warn("Failed to update the A-Box with the given pattern \n"+e.getMessage()));
 			return builder instanceof Success?pattern:new BasicPattern();
 		};
 	}
