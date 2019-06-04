@@ -22,6 +22,7 @@ import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
+import org.apache.jena.ontology.OntModel;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.Syntax;
 import org.apache.jena.rdf.model.Model;
@@ -124,9 +125,18 @@ public class FunQL {
 		return querySuccessful;
 	}
 	
-	//alternative to main(), create an instance of FunQL with setters
+	/**
+	 * Add T-Box with URI
+	 * @param url
+	 * @return
+	 */
 	public FunQL addTBox(String url){
 		belief.addTBox(url);
+		return this;
+	}
+	
+	public FunQL addTBox(OntModel model){
+		belief.addTBox(model);
 		return this;
 	}
 	
@@ -931,5 +941,20 @@ public class FunQL {
 		}
 		return this;
 	}
+
+	public FunQL resetPlan() {
+		plans.clear();
+		return this;
+	}
+	
+	/**
+	 * Clone only supports shallow copying t-box
+	 */
+//	@Override
+//	public FunQL clone(){
+//		return Uni.of(FunQL::new)
+//				  .set(q->q.belief = this.getBelief().clone())
+//				  .get();
+//	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.jena.atlas.logging.Log;
+import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -76,6 +77,11 @@ public class Belief {
 		log.info("T-Box added : " + gettBox().toString());
 //		need to apply the logic for merging multiple ontology, right now only loads one ontology (overwrites existing tbox)
 //		if(tBoxGraph!=null) tBox = manager.addOntology(tBoxGraph.getGraph());
+	}
+	
+	public void addTBox(OntModel model){
+		if(model!=null) tBox = Uni.of(model).map(m->manager.addOntology(model.getGraph())).get();
+		log.info("T-Box added : " + gettBox().toString());
 	}
 	
 	/**
@@ -260,4 +266,14 @@ public class Belief {
 		 tab.rows().forEachRemaining(b->s.append(writeBinding(b)).append("\n"));
 		 return s.toString();
 	 }
+
+//	@Override
+//	public Belief clone() throws CloneNotSupportedException {
+//		return Uni.of(new Belief(this.lang))
+//				  .set(b->b.tBoxURLs=this.tBoxURLs)
+//				  .set(b->b.tBox=this.gettBox())
+//				   .get();
+//	}
+	 
+	 
 }
