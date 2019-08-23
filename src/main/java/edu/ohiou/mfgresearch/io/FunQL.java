@@ -671,15 +671,21 @@ public class FunQL {
 			return XSDDatatype.XSDdouble;
 		case "java.lang.Double":
 			return XSDDatatype.XSDdouble;
+		case "[Ljava.lang.Double;":
+			return XSDDatatype.XSDdouble;
 		case "integer":
 			return XSDDatatype.XSDinteger;
 		case "java.lang.Integer":
+			return XSDDatatype.XSDinteger;
+		case "[Ljava.lang.Integer;":
 			return XSDDatatype.XSDinteger;
 		case "java.lang.String":
 			return XSDDatatype.XSDstring;
 		case "[Ljava.lang.String;":
 			return XSDDatatype.XSDstring;
 		case "org.apache.jena.graph.Node":
+			return XSDDatatype.XSDanyURI;
+		case "[Lorg.apache.jena.graph.Node;":
 			return XSDDatatype.XSDanyURI;
 		default:
 			return null;
