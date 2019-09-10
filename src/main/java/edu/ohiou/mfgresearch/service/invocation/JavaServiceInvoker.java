@@ -78,8 +78,9 @@ public class JavaServiceInvoker extends AbstractServiceInvoker {
 				IntStream.range(0, Array.getLength(out))
 				.forEach(i->{
 					if(ov.varType.getURI().equals(XSDDatatype.XSDanyURI.getURI())){
-						tab.addBinding(BindingFactory.binding(ov.var, (Node)out));
-					}else{
+						tab.addBinding(BindingFactory.binding(ov.var, (Node) Array.get(out, i)));  //[Lorg.apache.jena.graph.Node
+					}
+					else{
 						Node oVal = NodeFactory.createLiteralByValue(Array.get(out, i), ov.getVarType());
 						tab.addBinding(BindingFactory.binding(ov.var, oVal));									
 					}
