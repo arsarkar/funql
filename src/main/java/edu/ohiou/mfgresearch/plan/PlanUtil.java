@@ -13,7 +13,9 @@ import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.sparql.algebra.Algebra;
 import org.apache.jena.sparql.algebra.OpVisitorBase;
 import org.apache.jena.sparql.algebra.Table;
@@ -160,12 +162,14 @@ public final class PlanUtil {
 	 */
 	public static Table toBindings(ResultSet res){
 		Table tab = TableFactory.create();
-		if(!res.hasNext()) log.warn("No result is retured by the query!"); 
-		else log.info("Query retured result!");
+//		if(!res.hasNext()) log.warn("No result is retured by the query!"); 
+//		else log.info("Query retured result!");
+		//ResultSetFormatter.out(System.out, res);
 		res.forEachRemaining(r->{
-			log.info(r.toString());
+			//log.info(r.toString());
 			tab.addBinding(BindingUtils.asBinding(r));			
 		});
+//		List<QuerySolution> results = ResultSetFormatter.toList(res);
 		return tab;
 	}
 	

@@ -65,11 +65,11 @@ public class DefaultIndividualSupplier extends AbstractServiceInvoker {
 		int ihash = typeIRI.lastIndexOf("#");
 		String typeName = typeIRI.substring(islash>ihash?islash+1:ihash+1, typeIRI.length());
 		if(ns.endsWith("#"))
-			return ns + typeName + "_I" + IMPM.newHash(4);
+			return ns + typeName + "_I" + IMPM.newHash(6);
 		else if(ns.endsWith("/"))
-			return ns + typeName + "_I" + IMPM.newHash(4);
+			return ns + typeName + "_I" + IMPM.newHash(6);
 		else
-			return ns + "#" + typeName + "_I" + IMPM.newHash(4);
+			return ns + "#" + typeName + "_I" + IMPM.newHash(6);
 	}
 	
 	@Override
