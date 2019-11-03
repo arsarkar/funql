@@ -74,14 +74,14 @@ public class Belief {
 		 	.map(model->manager.addOntology(model.getGraph()))
 			.onFailure(e->log.error("Failed to load T-box from " + tbox + "due to" + e.getMessage()))
 		 	.get();
-		log.info("T-Box added : " + gettBox().toString());
+		//log.info("T-Box added : " + gettBox().toString());
 //		need to apply the logic for merging multiple ontology, right now only loads one ontology (overwrites existing tbox)
 //		if(tBoxGraph!=null) tBox = manager.addOntology(tBoxGraph.getGraph());
 	}
 	
 	public void addTBox(OntModel model){
 		if(model!=null) tBox = Uni.of(model).map(m->manager.addOntology(model.getGraph())).get();
-		log.info("T-Box added : " + gettBox().toString());
+		//log.info("T-Box added : " + gettBox().toString());
 	}
 	
 	/**
@@ -99,7 +99,7 @@ public class Belief {
 			   addEmptyABox(abox);
 		   })
 		   .get();
-		log.info("A-Box added : " + aBox.toString());
+		//log.info("A-Box added : " + aBox.toString());
 //		Uni.of(abox)
 //		.filter(s->!s.isEmpty())
 //		.map(t->collectGraphs(t))
@@ -109,7 +109,7 @@ public class Belief {
 	public void addABox(Model m){
 		if(aBox == null) aBox =  ModelFactory.createDefaultModel();
 		aBox.add(m);
-		log.info("A-Box added : " + aBox.toString());
+		//log.info("A-Box added : " + aBox.toString());
 	}
 	
 	/**

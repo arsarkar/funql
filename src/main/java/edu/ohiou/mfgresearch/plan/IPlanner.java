@@ -312,8 +312,8 @@ public interface IPlanner {
 							Binding bind = Algebra.merge(b, b1);
 							res.addBinding(bind);
 						});
-					log.info("Resolution derived-->");
-					res.rows().forEachRemaining(r->log.info(r.toString()));
+					//log.info("Resolution derived-->");
+					//res.rows().forEachRemaining(r->log.info(r.toString()));
 			}); 
 			return res;
 		};

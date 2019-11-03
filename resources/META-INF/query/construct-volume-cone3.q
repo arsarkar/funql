@@ -15,8 +15,8 @@ WHERE{
 	?d ivao:hasValue ?dia.
 	?h ivao:hasValue ?ht.
 	?c rdf:type geom:circularCone.
-	?d rdf:type geom:diameter.
-	?h rdf:type geom:height
+	?d rdf:type ivao:diameter.
+	?h rdf:type ivao:height
 }
 FUNCTION{
 	?vol <- conic:calculateVolume(?dia, ?ht)
