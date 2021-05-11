@@ -1,5 +1,6 @@
 package edu.ohiou.mfgresearch.belief;
 
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -198,6 +199,13 @@ public class Belief {
 
 	public Model getaBox() {
 		return aBox;
+	}
+
+	public String writeaBox(String format){
+		StringWriter s = new StringWriter();
+		aBox.write(s, format);
+		s.flush();
+		return s.toString();
 	}
 
 	public Model getLocalABox() {

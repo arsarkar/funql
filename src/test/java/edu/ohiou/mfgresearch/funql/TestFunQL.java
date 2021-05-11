@@ -57,7 +57,7 @@ import edu.ohiou.mfgresearch.plan.IPlan;
 import edu.ohiou.mfgresearch.simplanner.IMPM;
 
 public class TestFunQL {
-	String folder = "C:/Users/sarkara1/git/";
+	String folder = "C:/Users/arkop/git/";
 
 	@Before
 	public void setUp() throws Exception {
@@ -68,7 +68,7 @@ public class TestFunQL {
 		try {
 			FunQL.main(new String[] { "-query", folder + "funql/resources/META-INF/query/select-psl-before.q",
 					"-belief", "https://raw.githubusercontent.com/arsarkar/SIMPOM/master/psl/psl_ext_2.0.owl",
-					"-knowledge", "C:/Users/sarkara1/git/SIMPOM/psl/psl_ind_1.owl" });
+					"-knowledge", folder + "SIMPOM/psl/psl_ind_1.owl" });
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,10 +78,9 @@ public class TestFunQL {
 	@Test
 	public void testA1PlanNoService2() {
 		try {
-			FunQL.main(new String[] { "-query",
-					"C:/Users/sarkara1/git/sparkle/resources/META-INF/query/select-psl-ax14-1.q", "-belief",
-					"https://raw.githubusercontent.com/arsarkar/SIMPOM/master/psl/psl_ext_2.0.owl", "-knowledge",
-					"C:/Users/sarkara1/git/SIMPOM/psl/psl_ind_2.owl" });
+			FunQL.main(new String[] { "-query", folder + "funql/resources/META-INF/query/select-psl-ax14-1.q", "-belief",
+					"https://raw.githubusercontent.com/arsarkar/SIMPOM/master/psl/psl_ext_2.0.owl", 
+					"-knowledge", folder + "SIMPOM/psl/psl_ind_2.owl" });
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,9 +91,9 @@ public class TestFunQL {
 	public void testA1PlanNoService_cone_volume() {
 		try {
 			FunQL.main(new String[] { "-query",
-					"C:/Users/sarkara1/git/sparkle/resources/META-INF/query/select-volume-cone.q", "-belief",
+					folder + "funql/resources/META-INF/query/select-volume-cone.q", "-belief",
 					"http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl", "-knowledge",
-					"C:/Users/sarkara1/git/SIMPOM/geometry/geom-ind1.owl" });
+					folder + "SIMPOM/geometry/geom-ind1.owl" });
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,9 +104,9 @@ public class TestFunQL {
 	public void testB1PlanNoService1() {
 		try {
 			FunQL.main(new String[] { "-query",
-					"C:/Users/sarkara1/git/sparkle/resources/META-INF/query/construct-psl-ax14-1.q", "-belief",
+					folder + "funql/resources/META-INF/query/construct-psl-ax14-1.q", "-belief",
 					"https://raw.githubusercontent.com/arsarkar/SIMPOM/master/psl/psl_ext_2.0.owl", "-knowledge",
-					"C:/Users/sarkara1/git/SIMPOM/psl/psl_ind_2.owl" });
+					folder + "SIMPOM/psl/psl_ind_2.owl" });
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -118,10 +117,10 @@ public class TestFunQL {
 	public void testB2Plan1() {
 		try {
 			FunQL.main(new String[] { "-query",
-					"C:/Users/sarkara1/git/sparkle/resources/META-INF/query/construct-volume-cone1.q", "-service",
-					"C:/Users/sarkara1/git/sparkle/resources/META-INF/services/calculateVolumeCone.json", "-belief",
+					folder + "funql/resources/META-INF/query/construct-volume-cone1.q", "-service",
+					folder + "funql/resources/META-INF/services/calculateVolumeCone.json", "-belief",
 					"http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl", "-knowledge",
-					"C:/Users/sarkara1/git/SIMPOM/geometry/geom-ind1.owl" });
+					folder + "SIMPOM/geometry/geom-ind1.owl" });
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -155,8 +154,8 @@ public class TestFunQL {
 	public void testQueryService() {
 		try {
 			Uni.of(FunQL::new).get().addTBox("http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl")
-					.addABox("C:/Users/sarkara1/git/SIMPOM/geometry/geom-ind1.owl")
-					.addPlan("C:/Users/sarkara1/git/funql/resources/META-INF/query/construct-volume-cone3.q").execute();
+					.addABox(folder + "SIMPOM/geometry/geom-ind1.owl")
+					.addPlan(folder + "funql/resources/META-INF/query/construct-volume-cone3.q").execute();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -165,22 +164,22 @@ public class TestFunQL {
 
 	@Test
 	public void testQueryService1() {
-		Uni.of("C:/Users/sarkara1/git/SIMPOM/geometry/geom-ind3.owl").map(File::new).map(FileOutputStream::new)
+		Uni.of(folder + "SIMPOM/geometry/geom-ind3.owl").map(File::new).map(FileOutputStream::new)
 				.map(os -> Uni.of(FunQL::new).get()
 						.addTBox("http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl")
 						.addABox("https://raw.githubusercontent.com/arsarkar/SIMPOM/master/geometry/geom-ind1.owl")
-						.addPlan("C:/Users/sarkara1/git/funql/resources/META-INF/query/construct-volume-cone3.q")
+						.addPlan(folder + "funql/resources/META-INF/query/construct-volume-cone3.q")
 						.execute().getBelief().getaBox().write(os))
 				.onFailure(e -> e.printStackTrace());
 	}
 
 	@Test
 	public void testMakeCube() {
-		Uni.of("C:/Users/sarkara1/git/SIMPOM/geometry/geom-ind4.owl").map(File::new).map(FileOutputStream::new)
+		Uni.of(folder + "SIMPOM/geometry/geom-ind4.owl").map(File::new).map(FileOutputStream::new)
 				.map(os -> Uni.of(FunQL::new).get()
 						.addTBox("http://www.astro.umd.edu/~eshaya/astro-onto/owl/geometry.owl")
 						.addABox("https://raw.githubusercontent.com/arsarkar/SIMPOM/master/geometry/geom-ind1.owl")
-						.addPlan("C:/Users/sarkara1/git/funql/resources/META-INF/query/construct-cube-cone.q").execute()
+						.addPlan(folder + "funql/resources/META-INF/query/construct-cube-cone.q").execute()
 						.getBelief().getaBox().write(os))
 				.onFailure(e -> e.printStackTrace());
 	}
@@ -198,12 +197,12 @@ public class TestFunQL {
 
 	@Test
 	public void testSamplePattern1() {
-		Uni.of("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/apat2.owl").map(File::new)
+		Uni.of(folder + "funql/resources/META-INF/ontology/apat2.owl").map(File::new)
 				.map(FileOutputStream::new)
 				.map(os -> Uni.of(FunQL::new).get()
-						.addTBox("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/tpat1.owl")
-						.addABox("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/apat1.owl")
-						.addPlan("C:/Users/sarkara1/git/funql/resources/META-INF/query/sample-pattern1.q").execute()
+						.addTBox(folder + "funql/resources/META-INF/ontology/tpat1.owl")
+						.addABox(folder + "funql/resources/META-INF/ontology/apat1.owl")
+						.addPlan(folder + "funql/resources/META-INF/query/sample-pattern1.q").execute()
 						.getBelief().getaBox().write(os))
 				.onFailure(e -> e.printStackTrace());
 	}
@@ -236,24 +235,24 @@ public class TestFunQL {
 
 	@Test
 	public void testSamplePattern2() {
-		Uni.of("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/apat2.owl").map(File::new)
+		Uni.of(folder + "funql/resources/META-INF/ontology/apat2.owl").map(File::new)
 				.map(FileOutputStream::new)
 				.map(os -> Uni.of(FunQL::new).get()
-						.addTBox("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/tpat1.owl")
-						.addABox("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/apat1.owl")
-						.addPlan("C:/Users/sarkara1/git/funql/resources/META-INF/query/sample-pattern2.q").execute()
+						.addTBox(folder + "funql/resources/META-INF/ontology/tpat1.owl")
+						.addABox(folder + "funql/resources/META-INF/ontology/apat1.owl")
+						.addPlan(folder + "funql/resources/META-INF/query/sample-pattern2.q").execute()
 						.getBelief().getaBox().write(os))
 				.onFailure(e -> e.printStackTrace());
 	}
 
 	@Test
 	public void testSamplePattern3() {
-		Uni.of("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/apat3.owl").map(File::new)
+		Uni.of(folder + "funql/resources/META-INF/ontology/apat3.owl").map(File::new)
 				.map(FileOutputStream::new)
 				.map(os -> Uni.of(FunQL::new).get()
-						.addTBox("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/tpat1.owl")
-						.addABox("C:/Users/sarkara1/git/funql/resources/META-INF/ontology/apat2.owl")
-						.addPlan("C:/Users/sarkara1/git/funql/resources/META-INF/query/sample-pattern3.q").execute()
+						.addTBox(folder + "funql/resources/META-INF/ontology/tpat1.owl")
+						.addABox(folder + "funql/resources/META-INF/ontology/apat2.owl")
+						.addPlan(folder + "funql/resources/META-INF/query/sample-pattern3.q").execute()
 						.getBelief().getaBox().write(os))
 				.onFailure(e -> e.printStackTrace());
 	}

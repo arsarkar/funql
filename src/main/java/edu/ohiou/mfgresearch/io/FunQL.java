@@ -727,7 +727,7 @@ public class FunQL {
 			.set(p->log.info("Service regisered :"+p));
 		
 		log.info("Belief found : " + fq.belief.gettBox().toString());
-		log.info("Knowledge found : " + fq.belief.getaBox().toString());		
+		log.info("Knowledge found : " + fq.belief.writeaBox("TURTLE"));		
 		
 		//analyze query and classify
 		Omni.of(fq.plans)
